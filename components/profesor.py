@@ -5,3 +5,7 @@ class Profesor:
     def __init__(self) -> None:
         if self._tutor:
             pass  
+    
+    def esTutor(self):
+        return self._tutor
+    
