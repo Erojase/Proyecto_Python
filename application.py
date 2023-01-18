@@ -1,7 +1,6 @@
-from flask import Flask, Request, jsonify
+from flask import Flask, request, jsonify
 from services.serviceManager import ServiceManager
 from services.dbManager import DbManager
-from components.profesor import Profesor
 
 application = Flask(__name__)
 db = DbManager()
@@ -10,7 +9,8 @@ sm = ServiceManager()
 
 @application.route('/', methods=['GET','POST'])
 def root():
-    return 'server up'
+    clientIp = request.remote_addr
+    return f'server up -- your ip is {clientIp}'
 
 @application.route('/web', methods=['GET'])
 def web():
