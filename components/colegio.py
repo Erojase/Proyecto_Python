@@ -19,8 +19,6 @@ class Asignatura:
     
     def __init__(self) -> None:
         pass
-    
-    pass
 
 class Grupo:
     
@@ -31,6 +29,4 @@ class Grupo:
     
     def __init__(self) -> None:
         pass
-    
-    pass
 
