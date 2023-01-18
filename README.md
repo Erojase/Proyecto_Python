@@ -1,7 +1,9 @@
 # Proyecto_Python
 
+## Enlace Jira
+[Proyecto Python](https://abstergosl.atlassian.net/jira/software/projects/PYT/boards/2)
 
-# Ideas
+## Ideas
 - control de asistencia
 - planificador de horarios
 - programador de plazas de garaje
