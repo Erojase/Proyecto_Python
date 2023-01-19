@@ -25,3 +25,5 @@ class DbManager:
         """
         data = self.supabase.table('usuarios').select('*').execute()
         return json.loads(json.dumps(data.data))
+    
+    

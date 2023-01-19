@@ -19,6 +19,13 @@ class Asignatura:
             self._horasSemanales = value 
         return self._horasSemanales
 
+    def ToJson(self) -> dict:
+        json = {
+            "nombre":self._nombre,
+            "horasSemanales":self._horasSemanales
+        }
+        return json
+
 
 
 class Profesor:
@@ -53,6 +60,17 @@ class Profesor:
             self._asignaturas = value 
         return self._asignaturas
 
+    def ToJson(self) -> dict:
+        json = {
+            "nombre":self._nombre,
+            "tutor":self._tutor,
+            "horario":{
+                        "inicio":self._asignaturas[0],
+                        "fin":self._asignaturas[1]
+                        },
+            "asignaturas":self._asignaturas
+        }
+        return json
 
 
 
