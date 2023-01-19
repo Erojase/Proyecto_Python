@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
-from services.serviceManager import ServiceManager
-from services.dbManager import DbManager
+from src.services.serviceManager import ServiceManager
+from src.services.dbManager import DbManager
 
 application = Flask(__name__)
 db = DbManager()

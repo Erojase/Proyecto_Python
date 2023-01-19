@@ -1,4 +1,4 @@
-from components.colegio import *
+from src.components.colegio import *
 
 class ServiceManager:
     
