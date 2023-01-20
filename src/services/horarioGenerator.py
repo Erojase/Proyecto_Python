@@ -28,11 +28,13 @@ prof5 = Profesor(True, "Olga", hor_prof5, list_prof5)
 hor_prof6 = [["8", "14:30"], ["8","14:30"], ["8", "14:30"], ["8", "14:30"], ["8", "19:40"]]
 list_prof6 = [asig9]
 prof6 = Profesor(True, "Luisa", hor_prof6, list_prof6)
-hor_profy8 = [["8", "14:30"], ["8","14:30"], ["8", "14:30"], ["8", "21:30"], ["8", "14:30"]]
-list_profy8 = [asig8]
-profy8 = Profesor(True, "Pedro", hor_profy8, list_profy8)
+hor_prof7 = [["8", "14:30"], ["8","14:30"], ["8", "14:30"], ["8", "21:30"], ["8", "14:30"]]
+list_prof7 = [asig8]
+prof7 = Profesor(True, "Pedro", hor_prof7, list_prof7)
 
+list_asignaturas1 = [asig1, asig2, asig3, asig4, asig5, asig6, asig7, asig8, asig9]
+list_profesores1 = [prof1, prof2, prof3, prof4, prof5, prof6, prof7]
+grp1 = Grupo(list_asignaturas1, prof1, list_profesores1, "TARDE")
 
-
-def generar() -> list[Hora_horario, Hora_horario]:
-    print("Hola")
+def generar(grupos:list[Grupo]) -> list[Hora_horario, Hora_horario]:
+    print("hola y david si ves esto significa q ahora te toca currar cual hdp mucha suerte con cariño david del pasado :)")
