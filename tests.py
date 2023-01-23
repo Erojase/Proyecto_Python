@@ -6,7 +6,6 @@ from src.services.serviceManager import *
 
 
 if __name__ == '__main__':
-    # prof:Profesor = Profesor(False, "Paco",["19:00", "20:00"], ["Mates", "lengua"])
+    bd:DbManager = DbManager()
     
-    # print(prof.ToJson())
-    pass
+    print(bd.listUsers())

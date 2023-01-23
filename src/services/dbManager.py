@@ -23,7 +23,7 @@ class DbManager:
         """
             Lista Los usuarios de la base de datos
         """
-        data = self.supabase.table('usuarios').select('*').execute()
+        data = self.supabase.table('python_users').select('*').execute()
         return json.loads(json.dumps(data.data))
     
     def listAnimes(self) -> dict:

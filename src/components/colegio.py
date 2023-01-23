@@ -47,7 +47,8 @@ class Profesor:
         return self._nombre
     
     def Tutor(self, value:bool=None):
-        self._tutor = value if value != None else None
+        if value != None:
+            self._tutor = value 
         return self._tutor
     
     def Horario(self, value:list[int,int]=None):
@@ -71,7 +72,6 @@ class Profesor:
             "asignaturas":self._asignaturas
         }
         return json
-
 
 
 class Grupo:
