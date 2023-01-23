@@ -1,4 +1,5 @@
 import supabase as db
+from src.components.colegio import *
 import json
 
 class DbManager:
@@ -32,5 +33,16 @@ class DbManager:
     
     def uploadAnimes(self, animes:list[dict]):
         pass
+    
+    def uploadHorario(self, listado:list[dict]):
+        data = self.supabase.table('python_users')
+        
+        for hora in listado:
+            data.insert({
+                "nombre":hora._nombre,
+                "tiempo":hora._tiempo,
+                "grupo":hora._grupo,
+                "profesor":hora._profesor
+            }).execute()
     
     

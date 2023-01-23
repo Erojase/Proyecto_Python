@@ -3,6 +3,9 @@ from src.services.horarioGenerator import *
 from src.services.dbManager import *
 from src.services.serviceManager import *
 
+from datetime import datetime as d 
+import json
+
 asig1 = Asignatura("Moviles", 4)
 asig2 = Asignatura("Servicios y procesos", 7)
 asig3 = Asignatura("Desarrollo de Interfaces", 3)
@@ -37,13 +40,19 @@ prof7 = Profesor(True, "Pedro", hor_prof7, list_prof7)
 
 list_asignaturas1 = [asig1, asig2, asig3, asig4, asig5, asig6, asig7, asig8, asig9]
 list_profesores1 = [prof1, prof2, prof3, prof4, prof5, prof6, prof7]
-grp1 = Grupo(list_asignaturas1, prof1, list_profesores1, "TARDE")
+grp1 = Grupo("Dam-2b" , list_asignaturas1, prof1, list_profesores1, "TARDE")
 
+
+h1:Hora_horario = Hora_horario(asig1, d(2023, 10, 21, 13, 45, 00, 00), grp1, prof1)
 
 if __name__ == '__main__':
     bd:DbManager = DbManager()
     
-    print(bd.listUsers())
-    generar(grp1)
+    # print(bd.listUsers())
+    # generar(grp1)
     
-    pass
+    print(h1.toJson())
+
+    
+    # bd.uploadHorario()
+    

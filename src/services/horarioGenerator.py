@@ -34,7 +34,7 @@ prof7 = Profesor(True, "Pedro", hor_prof7, list_prof7)
 
 list_asignaturas1 = [asig1, asig2, asig3, asig4, asig5, asig6, asig7, asig8, asig9]
 list_profesores1 = [prof1, prof2, prof3, prof4, prof5, prof6, prof7]
-grp1 = Grupo(list_asignaturas1, prof1, list_profesores1, "TARDE")
+grp1 = Grupo("Dam-2b" ,list_asignaturas1, prof1, list_profesores1, "TARDE")
 
 def generar(grupos:list[Grupo]) -> list[Hora_horario, Hora_horario]:
     print("hola y david si ves esto significa q ahora te toca currar cual hdp mucha suerte con cariño david del pasado :)")

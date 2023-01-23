@@ -1,3 +1,5 @@
+import datetime
+import json
 
 class Asignatura:
 
@@ -121,13 +123,13 @@ class Grupo:
 
 class Hora_horario:
     _nombre: Asignatura
-    _hora: list[str]
+    _tiempo:datetime.datetime
     _grupo: Grupo
     _profesor: Profesor
 
-    def __init__(self, nombre:Asignatura, hora:list[str], grupo:Grupo, profesor:Profesor) -> None:
+    def __init__(self, nombre:Asignatura, tiempo:datetime.datetime, grupo:Grupo, profesor:Profesor) -> None:
         self._nombre = nombre
-        self._hora = hora
+        self._tiempo = tiempo
         self._grupo = grupo
         self._profesor = profesor
         pass
@@ -137,10 +139,10 @@ class Hora_horario:
             self._nombre = value 
         return self._nombre
 
-    def Hora(self, value:list[str]=None):
+    def Tiempo(self, value:datetime.datetime=None):
         if value != None:
-            self._hora = value 
-        return self._hora
+            self._tiempo = value 
+        return self._tiempo
 
     def Grupo(self, value:Grupo=None):
         if value != None:
@@ -151,4 +153,13 @@ class Hora_horario:
         if value != None:
             self._profesor = value 
         return self._profesor
+    
+    
+    def toJson(self) -> str:
+        return json.dumps({
+            "nombre":self._nombre.Nombre(),
+            "tiempo":self._tiempo,
+            "grupo":self._grupo.Nombre(),
+            "profesor":self._profesor.Nombre()
+        }, default=str)
     
