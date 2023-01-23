@@ -47,6 +47,7 @@ li{
     margin-right: 5px;
     border: 1px solid black;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 .bot > img{
@@ -55,5 +56,6 @@ li{
 
 .bot > button{
     cursor: pointer;
+    pointer-events: none;
     height: 20%;
 }

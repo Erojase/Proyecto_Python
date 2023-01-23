@@ -6,6 +6,7 @@ from src.services.serviceManager import *
 
 
 if __name__ == '__main__':
-    prof:Profesor = Profesor(False, "Paco",["19:00", "20:00"], ["Mates", "lengua"])
+    # prof:Profesor = Profesor(False, "Paco",["19:00", "20:00"], ["Mates", "lengua"])
     
-    print(prof.ToJson())
+    # print(prof.ToJson())
+    pass

@@ -26,4 +26,11 @@ class DbManager:
         data = self.supabase.table('usuarios').select('*').execute()
         return json.loads(json.dumps(data.data))
     
+    def listAnimes(self) -> dict:
+        data = self.supabase.table('animes').select('*').execute()
+        return json.loads(json.dumps(data.data))
+    
+    def uploadAnimes(self, animes:list[dict]):
+        pass
+    
     
