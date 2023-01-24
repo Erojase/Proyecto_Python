@@ -29,12 +29,13 @@ li{
 
 .cont{
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: wrap-reverse;
     justify-content: space-around;
     position: absolute;
     margin-top: 5%;
     margin-left: 10%;
     margin-right: 10%;
+    margin-bottom: 10%;
     width: 80%;
     border-radius: 5px;
 }
@@ -42,7 +43,7 @@ li{
 .bot{
     display: flex;
     flex-direction: column;
-    width: 50%;
+    width: 30%;
     height: 300px;
     margin-left: 5px;
     margin-right: 5px;
@@ -60,4 +61,13 @@ li{
     cursor: pointer;
     pointer-events: none;
     height: 20%;
+}
+
+.iline{
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    height: 100px;
+    margin-left: 5px;
+    margin-right: 5px;
 }
