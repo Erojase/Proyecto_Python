@@ -6,7 +6,7 @@ class Asignatura:
     _nombre: str
     _horasSemanales: int
 
-    def __init__(self, nombre:str, horasSemanales:int) -> None:
+    def __init__(self, nombre:str=None, horasSemanales:int=None) -> None:
         self._nombre = nombre
         self._horasSemanales = horasSemanales
         pass
@@ -37,7 +37,7 @@ class Profesor:
     _horario:list[str,str]
     _asignaturas: list[Asignatura]
 
-    def __init__(self, tutor:bool, nombre:str, horario:list[int,int], asignaturas:list[Asignatura]):
+    def __init__(self, tutor:bool=None, nombre:str=None, horario:list[int,int]=None, asignaturas:list[Asignatura]=None):
         self._tutor = tutor
         self._nombre = nombre
         self._horario = horario
@@ -84,7 +84,7 @@ class Grupo:
     _profesores: list[Profesor]
     _horario: str
 
-    def __init__(self, nombre:str, asignaturas:list[Asignatura], tutor:Profesor, profesores:list[Profesor], horario:str) -> None:
+    def __init__(self, nombre:str=None, asignaturas:list[Asignatura]=None, tutor:Profesor=None, profesores:list[Profesor]=None, horario:str=None) -> None:
         self._nombre = nombre
         self._asignaturas = asignaturas
         self._tutor = tutor
