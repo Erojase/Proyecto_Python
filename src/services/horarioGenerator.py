@@ -54,5 +54,4 @@ def generar(grupos:Grupo) -> list[Hora_horario, Hora_horario]:
             t = t+j
             horario[i][j].Tiempo(time(t,30))
             print(horario[i][j].Tiempo())
-
     # print(horario) 
