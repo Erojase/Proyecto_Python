@@ -31,7 +31,7 @@ list_prof6 = [asig9]
 prof6 = Profesor(True, "Luisa", hor_prof6, list_prof6)
 hor_prof7 = [["8", "14:30"], ["8","14:30"], ["8", "14:30"], ["8", "21:30"], ["8", "14:30"]]
 list_prof7 = [asig8]
-prof7 = Profesor(True, "Pedro", hor_prof7, list_prof7)
+prof7 = Profesor(True, "pedro", hor_prof7, list_prof7)
 hor_prof8 = [["8", "21:30"], ["8","14:30"], ["8", "14:30"], ["8", "14:30"], ["8", "14:30"]]
 list_prof8 = [asig5]
 prof8 = Profesor(True, "Isabel/John", hor_prof7, list_prof7)
@@ -51,7 +51,21 @@ def generar(grupos:Grupo) -> list[Hora_horario, Hora_horario]:
     for i in range(5):
         for j in range(7):
             t = primera_hora.hour
-            t = t+j
+            t = t+j+1
             horario[i][j].Tiempo(time(t,30))
             print(horario[i][j].Tiempo())
-    # print(horario) 
+    
+    prf_h:list[list[str]] = [["X" for i in range(7)]for j in range(5)]
+
+
+
+    for i in range(5):
+        for j in range(7):
+            for profe in grupos.Profesores():
+                print()
+                if int(profe.Horario()[i][1].split(':')[0]) >= horario[i][j].Tiempo().hour:
+                    prf_h[i][j] += profe.Nombre()[0]
+
+    print(prf_h)
+    
+

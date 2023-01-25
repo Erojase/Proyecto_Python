@@ -34,10 +34,10 @@ class Profesor:
     
     _nombre: str
     _tutor: bool
-    _horario:list[str,str]
+    _horario:list[list[str]]
     _asignaturas: list[Asignatura]
 
-    def __init__(self, tutor:bool=None, nombre:str=None, horario:list[int,int]=None, asignaturas:list[Asignatura]=None):
+    def __init__(self, tutor:bool=None, nombre:str=None, horario:list[list[str]]=None, asignaturas:list[Asignatura]=None):
         self._tutor = tutor
         self._nombre = nombre
         self._horario = horario
@@ -53,7 +53,7 @@ class Profesor:
             self._tutor = value 
         return self._tutor
     
-    def Horario(self, value:list[str,str]=None):
+    def Horario(self, value:list[list[str]]=None):
         if value != None:
             self._horario = value 
         return self._horario
