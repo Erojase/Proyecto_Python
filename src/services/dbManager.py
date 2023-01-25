@@ -1,6 +1,9 @@
-import supabase as db
+from pymongo import MongoClient
+import urllib.parse
 from src.components.colegio import *
 import json
+
+
 
 class DbManager:
     """
@@ -11,38 +14,33 @@ class DbManager:
          - listAnime()
          - listUsers()
     """
-    url = "https://vsfzxwsmptkuukibbjcq.supabase.co"
-    key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZzZnp4d3NtcHRrdXVraWJiamNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjY4NzU4MTksImV4cCI6MTk4MjQ1MTgxOX0.KlPoTtVj4qbDIyFkXJE_00OmPN69fR2JTVsCMm_aBpg"
-
-    supabase = db.create_client(url, key)
+    
+    CONNECTION_STRING = f"mongodb+srv://admin:"+urllib.parse.quote("Joyfe@2023")+"@python.0rrjnq0.mongodb.net/?retryWrites=true&w=majority"
+    client = MongoClient(CONNECTION_STRING)
+    database = client["Python"]
+    
     
     
     def __init__(self) -> None:
         pass
     
-    def listUsers(self) -> dict:
+    def listUsers(self) -> list:
         """
             Lista Los usuarios de la base de datos
         """
-        data = self.supabase.table('python_users').select('*').execute()
-        return json.loads(json.dumps(data.data))
+        coll = self.database["Usuarios"]
+        list = []
+        for item in coll.find({}):
+            list.append(item)
+        return list
     
     def listAnimes(self) -> dict:
-        data = self.supabase.table('animes').select('*').execute()
-        return json.loads(json.dumps(data.data))
+        pass
     
     def uploadAnimes(self, animes:list[dict]):
         pass
     
     def uploadHorario(self, listado:list[dict]):
-        data = self.supabase.table('python_users')
-        
-        for hora in listado:
-            data.insert({
-                "nombre":hora._nombre,
-                "tiempo":hora._tiempo,
-                "grupo":hora._grupo,
-                "profesor":hora._profesor
-            }).execute()
+        pass
     
     
