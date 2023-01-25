@@ -52,6 +52,9 @@ if __name__ == '__main__':
     # generar(grp1)
 
     # print(bd.listUsers())
+    generar(grp1)
+    
+    # print(h1.toJson())
 
     
     # bd.uploadHorario()
