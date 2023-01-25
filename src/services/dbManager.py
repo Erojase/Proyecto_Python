@@ -34,6 +34,12 @@ class DbManager:
             list.append(item)
         return list
     
+    def getUser(self, id:int):
+        coll = self.database["Usuarios"]
+        for item in coll.find({"id":id}):
+            return item
+        
+    
     def listAnimes(self) -> dict:
         pass
     

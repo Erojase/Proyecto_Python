@@ -8,6 +8,7 @@ application = Flask(__name__)
 db = DbManager()
 sm = ServiceManager()
 
+SECRET_KEY = "JOYFE"
 
 @application.route('/', methods=['GET','POST'])
 def root():
@@ -36,10 +37,21 @@ def login():
         "id": 1,
         "exp": datetime.utcnow() + timedelta(seconds=1) #expira en 1 segundo
     }
-    SECRET_KEY = "JOYFE"
+    
     return jwt.encode(tokenData, SECRET_KEY, algorithm='HS256') # Exactamente asi es en encode
     #      try: porque cuando no se decodea lanza una excepcion
     #         jwt.decode(tokenData, SECRET_KEY, algorithms=['HS256']) Exactamente asi es el decode
+
+@application.route('/user/profile')
+def userProfile():
+    authToken = request.headers["Authorization"].split()[1]
+    data = jwt.decode(authToken, SECRET_KEY, algorithms=['HS256'])
+    
+    userdata = db.getUser(data["id"])
+    
+    if data["id"] in userdata:
+        return jsonify(userdata)
+
 
 if __name__ == '__main__':
     application.run(debug=True,host='0.0.0.0')

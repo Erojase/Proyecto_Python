@@ -52,7 +52,9 @@ if __name__ == '__main__':
     # generar(grp1)
 
     # print(bd.listUsers())
-    generar(grp1)
+    # generar(grp1)
+    
+    print(bd.getUser(1))
     
     # print(h1.toJson())
 
