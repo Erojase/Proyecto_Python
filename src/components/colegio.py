@@ -127,7 +127,7 @@ class Hora_horario:
     _grupo: Grupo
     _profesor: Profesor
 
-    def __init__(self, nombre:Asignatura, tiempo:datetime.datetime, grupo:Grupo, profesor:Profesor) -> None:
+    def __init__(self, nombre:Asignatura=None, tiempo:datetime.datetime=None, grupo:Grupo=None, profesor:Profesor=None) -> None:
         self._nombre = nombre
         self._tiempo = tiempo
         self._grupo = grupo

@@ -1,4 +1,5 @@
 from src.components.colegio import *
+from datetime import *
 
 asig1 = Asignatura("Moviles", 4)
 asig2 = Asignatura("Servicios y procesos", 7)
@@ -31,10 +32,27 @@ prof6 = Profesor(True, "Luisa", hor_prof6, list_prof6)
 hor_prof7 = [["8", "14:30"], ["8","14:30"], ["8", "14:30"], ["8", "21:30"], ["8", "14:30"]]
 list_prof7 = [asig8]
 prof7 = Profesor(True, "Pedro", hor_prof7, list_prof7)
+hor_prof8 = [["8", "21:30"], ["8","14:30"], ["8", "14:30"], ["8", "14:30"], ["8", "14:30"]]
+list_prof8 = [asig5]
+prof8 = Profesor(True, "Isabel/John", hor_prof7, list_prof7)
 
 list_asignaturas1 = [asig1, asig2, asig3, asig4, asig5, asig6, asig7, asig8, asig9]
 list_profesores1 = [prof1, prof2, prof3, prof4, prof5, prof6, prof7]
 grp1 = Grupo("Dam-2b" ,list_asignaturas1, prof1, list_profesores1, "TARDE")
 
-def generar(grupos:list[Grupo]) -> list[Hora_horario, Hora_horario]:
-    print("hola y david si ves esto significa q ahora te toca currar cual hdp mucha suerte con cariño david del pasado :)")
+def generar(grupos:Grupo) -> list[Hora_horario, Hora_horario]:
+    # print("hola y david si ves esto significa q ahora te toca currar cual hdp mucha suerte con cariño david del pasado :)")
+    if grupos.Horario() == "TARDE":
+        primera_hora = time(14,30)
+    elif grupos.Horario() == "MAÑANA":
+        primera_hora = time(8)
+
+    horario:list = [[Hora_horario() for x in range(7)] for j in range(5)]
+    for i in range(5):
+        for j in range(7):
+            t = primera_hora.hour
+            t = t+j
+            horario[i][j].Tiempo(time(t,30))
+            print(horario[i][j].Tiempo())
+
+    # print(horario) 

@@ -49,9 +49,9 @@ if __name__ == '__main__':
     bd:DbManager = DbManager()
     
     # print(bd.listUsers())
-    # generar(grp1)
+    generar(grp1)
     
-    print(h1.toJson())
+    # print(h1.toJson())
 
     
     # bd.uploadHorario()
