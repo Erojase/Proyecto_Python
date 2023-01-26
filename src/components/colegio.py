@@ -90,7 +90,6 @@ class Grupo:
         self._tutor = tutor
         self._profesores = profesores
         self._horario = horario
-        pass
 
 
     def Nombre(self, value:str=None):
