@@ -3,6 +3,7 @@ from src.components.users import *
 from src.services.horarioGenerator import *
 from src.services.dbManager import *
 from src.services.serviceManager import *
+from src.bot.bot import *
 
 from datetime import datetime as d 
 import json
@@ -47,22 +48,5 @@ grp1 = Grupo("Dam-2b" , list_asignaturas1, prof1, list_profesores1, "TARDE")
 h1:Hora_horario = Hora_horario(asig1, d(2023, 10, 21, 13, 45, 00, 00), grp1, prof1)
 
 if __name__ == '__main__':
-    bd:DbManager = DbManager()
-    
-    usr1:Usuario = Usuario(1, "prueba", "ejemplo", "0okm8yg56fi8767bo98v4wb6", "example@gmail.com")
-    
-    print(bd.insertUser(usr1.toDict()))
-    
-    # print(bd.listUsers())
-    # generar(grp1)
-
-    # print(bd.listUsers())
-    # generar(grp1)
-    
-    # print(bd.getUser(1))
-    
-    # print(h1.toJson())
-
-    
-    # bd.uploadHorario()
-    
+    bot.run(f'{TOKEN}')    
+ 
