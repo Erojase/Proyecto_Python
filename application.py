@@ -10,60 +10,69 @@ sm = ServiceManager()
 
 SECRET_KEY = "JOYFE"
 
+
 @application.route('/', methods=['GET','POST'])
 def root():
     clientIp = request.remote_addr
     return f'server up -- your ip is {clientIp}'
 
 @application.route('/web', methods=['GET'])
-def web():
+def webMain():
     return open('pages/index.html', 'r')
 
+@application.route('/login', methods=['GET'])
+def webLogin():
+    return open('pages/login.html', 'r')
+
+@application.route('/login', methods=['POST'])
+def login():
+    tokenData = {}
+    data = request.get_json(silent=True)
+    if "user" not in data or "password" not in data:
+        return jsonify("Expected more from you"), 400
+    
+    for user in db.listUsers():
+        if user["nombre"] == data["user"] and user["password"] == data["password"]:
+            tokenData = {"exp": datetime.utcnow() + timedelta(seconds=1)} #expira en 1 segundo
+            tokenData.update(data)
+            return jwt.encode(tokenData, SECRET_KEY, algorithm='HS256') # Exactamente asi es en encode
+        else:
+            return jsonify("We do not do that here"), 400
+            
+    return jsonify("Internal server error, duh"), 500 # Exactamente asi es en encode
+    #      try: porque cuando no se decodea lanza una excepcion
+    #         jwt.decode(tokenData, SECRET_KEY, algorithms=['HS256']) Exactamente asi es el decode
 # --------------------------------------------------------------------------------------------------
 
-# @application.route('/testAction', methods=['POST'])
-# def testAction():
-#     print("Test Action Triggered")
-#     return "Test Action Triggered"
+@application.route('/testAction', methods=['POST'])
+def testAction():
+    print("Test Action Triggered")
+    return "Test Action Triggered"
 
 @application.route('/calendario', methods=['GET'])
 def calendario():
     return  db.listUsers()
     
-@application.route('/report', mehtods=[''])#<--- tipo de metodos
+@application.route('/report', methods=['GET'])
 def report():
-    return  # no terminadpo
+    return "Not yet implemented"
 
-@application.route('/asistencia', mehtods=[''])#<--- tipo de metodos
-def report():
-    return  # no terminadpo
+@application.route('/asistencia', methods=['GET'])
+def asistencia():
+    return "Not yet implemented"
 
-@application.route('/parking', mehtods=[''])#<--- tipo de metodos
-def report():
-    return  # no terminadpo
+@application.route('/parking', methods=['GET'])
+def parking():
+    return "Not yet implemented"
 
-@application.route('/discord', mehtods=[''])#<--- tipo de metodos
-def report():
-    return  # no terminadpo
+@application.route('/discord', methods=['GET'])
+def discord():
+    return "Not yet implemented"
 
-@application.route('/mail', mehtods=[''])#<--- tipo de metodos
-def report():
-    return  # no terminadpo
+@application.route('/mail', methods=['GET'])
+def mail():
+    return "Not yet implemented"
 
-
-@application.route('/login', methods=['POST'])
-def login():
-    data = request.get_json(silent=True)
-    request.headers
-    # Comprobar si existe y esas cosas
-    tokenData = {
-        "id": 1,
-        "exp": datetime.utcnow() + timedelta(seconds=1) #expira en 1 segundo
-    }
-    
-    return jwt.encode(tokenData, SECRET_KEY, algorithm='HS256') # Exactamente asi es en encode
-    #      try: porque cuando no se decodea lanza una excepcion
-    #         jwt.decode(tokenData, SECRET_KEY, algorithms=['HS256']) Exactamente asi es el decode
 
 @application.route('/user/profile')
 def userProfile():

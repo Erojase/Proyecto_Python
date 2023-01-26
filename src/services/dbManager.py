@@ -1,6 +1,7 @@
 from pymongo import MongoClient
 import urllib.parse
 from src.components.colegio import *
+from src.components.users import *
 import json
 
 
@@ -34,17 +35,17 @@ class DbManager:
             list.append(item)
         return list
     
-    def getUser(self, id:int):
+    def getUser(self, id:int) -> list[dict]:
         coll = self.database["Usuarios"]
         for item in coll.find({"id":id}):
             return item
-        
     
-    def listAnimes(self) -> dict:
-        pass
-    
-    def uploadAnimes(self, animes:list[dict]):
-        pass
+    def insertUser(self, usuario:dict):
+        for user in self.listUsers():
+            if user["id"] == usuario["id"]:
+                return "Not a valid id"
+        coll = self.database["Usuarios"]
+        coll.insert_one(usuario)
     
     def uploadHorario(self, listado:list[dict]):
         pass
