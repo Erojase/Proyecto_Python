@@ -120,24 +120,21 @@ def generar(grupos:Grupo) -> list[Hora_horario, Hora_horario]:
                             h_restantes[cont] -= 1
                         cont += 1
                     cont = 0
-                # if horario[i][j].Profesor() == None:
-                #     print("None")
-                # else:
-                #     print(horario[i][j].Profesor().Nombre())
-        # print(h_restantes) 
         
+        # //Comprueba si no quedan horas restantes
         for h in h_restantes:
             if h != 0:
                 chiv = True
 
         
-
+        # //Te quita el profesor si ya tiene clase asignada en esa hora
         for i in range(5):
             for j in range(7):
                 if horario[i][j].Profesor() != None:
                     ind = '-' + str(horario[i][j].Profesor().Id())
                     prf_h[i][j] = prf_h[i][j].replace(ind,'')
 
+        # //Te quita el profesor si las horas restantes son 0
         for pro in grupos.Profesores():
             if h_restantes[cont2] == 0:
                 for i in range(5):
