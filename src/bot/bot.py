@@ -1,11 +1,11 @@
 import discord #importamos para conectarnos con el bot
 from discord.ext import commands #importamos los comandos
 import datetime, random
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
-TOKEN = "MTA2ODE5NjM5NDY4NDQwMzcxMg.GYn8CD.2mkqKwUufUzX0WS-bKTRJWUaL7KjuMioLAQ_kQ"
-ID_CANAL = "1068194499454578840"
-
-
+TOKEN = os.getenv('TOKEN')
 bot = commands.Bot(command_prefix='¡', description="Robot Asistente de prueba", help_command=None, intents=discord.Intents.all())
 
 #Status
