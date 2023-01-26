@@ -19,14 +19,37 @@ def root():
 def web():
     return open('pages/index.html', 'r')
 
+# --------------------------------------------------------------------------------------------------
+
+# @application.route('/testAction', methods=['POST'])
+# def testAction():
+#     print("Test Action Triggered")
+#     return "Test Action Triggered"
+
 @application.route('/calendario', methods=['GET'])
 def calendario():
     return  db.listUsers()
+    
+@application.route('/report', mehtods=[''])#<--- tipo de metodos
+def report():
+    return  # no terminadpo
 
-@application.route('/testAction', methods=['POST'])
-def testAction():
-    print("Test Action Triggered")
-    return "Test Action Triggered"
+@application.route('/asistencia', mehtods=[''])#<--- tipo de metodos
+def report():
+    return  # no terminadpo
+
+@application.route('/parking', mehtods=[''])#<--- tipo de metodos
+def report():
+    return  # no terminadpo
+
+@application.route('/discord', mehtods=[''])#<--- tipo de metodos
+def report():
+    return  # no terminadpo
+
+@application.route('/mail', mehtods=[''])#<--- tipo de metodos
+def report():
+    return  # no terminadpo
+
 
 @application.route('/login', methods=['POST'])
 def login():
