@@ -32,16 +32,21 @@ class Asignatura:
 
 class Profesor:
     
+    _id: int
     _nombre: str
     _tutor: bool
     _horario:list[list[str]]
     _asignaturas: list[Asignatura]
 
-    def __init__(self, tutor:bool=None, nombre:str=None, horario:list[list[str]]=None, asignaturas:list[Asignatura]=None):
+    def __init__(self, id, tutor:bool=None, nombre:str=None, horario:list[list[str]]=None, asignaturas:list[Asignatura]=None):
+        self._id = id
         self._tutor = tutor
         self._nombre = nombre
         self._horario = horario
         self._asignaturas = asignaturas
+
+    def Id(self, value:str=None):
+        return self._id
 
     def Nombre(self, value:str=None):
         if value != None:
