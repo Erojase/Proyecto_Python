@@ -18,11 +18,11 @@ def root():
 
 @application.route('/web', methods=['GET'])
 def webMain():
-    return open('pages/index.html', 'r')
+    return open('pages/index.html', 'r', encoding='utf-8')
 
 @application.route('/login', methods=['GET'])
 def webLogin():
-    return open('pages/login.html', 'r')
+    return open('pages/login.html', 'r', encoding='utf-8')
 
 @application.route('/login', methods=['POST'])
 def login():

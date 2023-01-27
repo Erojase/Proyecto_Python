@@ -5,6 +5,16 @@ let headersList = {
 
 document.addEventListener('DOMContentLoaded', ()=>{})
 
+function toggle(obj) {
+    if (obj == "reg") {
+        document.getElementById("login").style.display = 'none';
+        document.getElementById("register").style.display = 'flex';
+    } else{
+        document.getElementById("register").style.display = 'none';
+        document.getElementById("login").style.display = 'flex';
+    }
+}
+
 
 async function login() {
     let username = document.getElementById("name").value;
