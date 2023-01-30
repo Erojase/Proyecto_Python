@@ -16,11 +16,11 @@
 
     <div class="logCont" id="login">
 
-        <label for="name">Nombre:</label>
-        <input type="text" id="name" >
+        <label for="log_usename">Usuario:</label>
+        <input type="text" id="log_usename" required>
 
-        <label for="passwd">Contraseña:</label>
-        <input type="password" id="passwd">
+        <label for="log_passwd">Contraseña:</label>
+        <input type="password" id="log_passwd" required>
 
         <button onclick="login()">Log In</button>
         <div>No tienes una cuenta? <span class="toggle" onclick="toggle('reg')">Regístrate</span></div> 
@@ -29,13 +29,16 @@
 
     <div class="regCont" id="register">
 
-        <label for="name">Nombre:</label>
-        <input type="text" id="name" >
+        <label for="reg_username">Nombre:</label>
+        <input type="text" id="reg_username" required>
 
-        <label for="passwd">Contraseña:</label>
-        <input type="password" id="passwd">
+        <label for="reg_mail">Mail:</label>
+        <input type="text" id="reg_mail" required>
 
-        <button onclick="login()">Log In</button>
+        <label for="reg_passwd">Contraseña:</label>
+        <input type="password" id="reg_passwd" required>
+
+        <button onclick="register()">Log In</button>
         <div>Ya tienes una cuenta? <span class="toggle" onclick="toggle('log')">Inicia Sesión</span></div> 
         
     </div>

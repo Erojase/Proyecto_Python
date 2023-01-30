@@ -53,5 +53,5 @@ if __name__ == '__main__':
     
     # print(bd.insertUser(usr1.toDict()))
     
-    sendTestMail()
+    broadcast("IMPORTANT NOTICE", "0 f's given")
     

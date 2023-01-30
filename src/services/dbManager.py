@@ -25,7 +25,7 @@ class DbManager:
     def __init__(self) -> None:
         pass
     
-    def listUsers(self) -> list:
+    def listUsers(self) -> list[dict]:
         """
             Lista Los usuarios de la base de datos
         """
@@ -41,9 +41,10 @@ class DbManager:
             return item
     
     def insertUser(self, usuario:dict):
+        ids = []
         for user in self.listUsers():
-            if user["id"] == usuario["id"]:
-                return "Not a valid id"
+            ids.append(user["id"])
+        usuario["id"] = max(ids)+1
         coll = self.database["Usuarios"]
         coll.insert_one(usuario)
     
