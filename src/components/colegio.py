@@ -168,3 +168,4 @@ class Hora_horario:
             "profesor":self._profesor.Nombre()
         }, default=str)
     
+

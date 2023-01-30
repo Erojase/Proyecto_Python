@@ -41,148 +41,176 @@ list_asignaturas1 = [asig1, asig2, asig3, asig4, asig5, asig6, asig7, asig8, asi
 list_profesores1 = [prof1, prof2, prof3, prof4, prof5, prof6, prof7, prof8]
 grp1 = Grupo("Dam-2b" ,list_asignaturas1, prof1, list_profesores1, "TARDE")
 
-def generar(grupos:list[Grupo]) -> list[Hora_horario, Hora_horario]:
+def generar(_grupos:list[Grupo]) -> list[list[list[Hora_horario]]]:
     """
         Genera un horario para un solo grupo
     """
 
-    # Fase 3 hacerlo para varios grupos hacer solo cuando fase 2 ya este completa
-    grupos = grupos[0]
+    rtn:list[list[list[Hora_horario]]] = []
 
-    
-    h_restantes:list[int] = []
-    cont:int = 0
+    for grupos in _grupos:
+        # Fase 3 hacerlo para varios grupos hacer solo cuando fase 2 ya este completa
+        
+        h_restantes:list[int] = []
+        cont:int = 0
+        num_clases:int = 0
 
+        # Crea un array con las horas restantes de cada profesor
 
+        for pro in grupos.Profesores():
+            if len(pro.Asignaturas()) > 1:
+                for asig in pro.Asignaturas():
+                    cont += asig.HorasSemanales()
+                h_restantes.append(cont)
+                cont = 0
+            else:
+                h_restantes.append(pro.Asignaturas()[0].HorasSemanales())
 
-    # Crea un array con las horas restantes de cada profesor
+        print(h_restantes)
 
-    for pro in grupos.Profesores():
-        if len(pro.Asignaturas()) > 1:
-            for asig in pro.Asignaturas():
-                cont += asig.HorasSemanales()
-            h_restantes.append(cont)
-            cont = 0
-        else:
-            h_restantes.append(pro.Asignaturas()[0].HorasSemanales())
+        if grupos.Horario() == "TARDE":
+            primera_hora = time(14,30)
+            
+        elif grupos.Horario() == "MAÑANA":
+            primera_hora = time(8)
+            
 
-    print(h_restantes)
-
-    if grupos.Horario() == "TARDE":
-        primera_hora = time(14,30)
-    elif grupos.Horario() == "MAÑANA":
-        primera_hora = time(8)
-
-    # Le da una hora a cada clase del horario
-    horario:list = [[Hora_horario() for x in range(7)] for j in range(5)]
-    for i in range(5):
-        for j in range(7):
-            t = primera_hora.hour
-            t = t+j+1
-            horario[i][j].Tiempo(time(t,30))
-            # print(horario[i][j].Tiempo())
-    
-    prf_h:list[list[str]] = [["0" for i in range(7)]for j in range(5)]
-
-    # Crea el horario de disponibilidad de los profesores
-    for i in range(5):
-        for j in range(7):
-            for profe in grupos.Profesores():
-                if int(profe.Horario()[i][1].split(':')[0]) >= horario[i][j].Tiempo().hour:
-                    prf_h[i][j] += '-' + str(profe.Id())
-    
-  
-
-    # Elimina las X de las clases en las que hay algun profesor    
-    for i in range(5):
-        for j in range(7):
-            if len(prf_h[i][j]) != 1:
-                prf_h[i][j] = prf_h[i][j][1:]
-
-    print(prf_h)
-
-    
-
-    # print("hola y david si ves esto significa q ahora te toca currar cual hdp mucha suerte con cariño david del pasado :)")
-    # //Asigna clase a los profesores con 2 coincidencias  esta puede llegar a ser toda la funcion   
-    coinc_p:list[Profesor] = []
-    coinc_hr:list[int] = []
-    aux_p:Profesor = ''
-    aux_hr:int = 0
-    aux = 0
-    cont3 = 0
-    chiv = True
-    flug = True
-    cont = 0
-
-    while chiv:
-        chiv = False
-        if flug == True:
-            cont += 1
-        else:
-            cont = 1
-        flug = True
+        # Le da una hora a cada clase del horario
+        horario:list = [[Hora_horario() for x in range(7)] for j in range(5)]
         for i in range(5):
             for j in range(7):
-                if len(prf_h[i][j].split('-'))-1 == cont:
-                    flug = False
-                    for pro in grupos.Profesores():
-                        for p in prf_h[i][j].split('-'):
-                            # print(f'p: {p}, pro.id: {pro.Id()}, pro.nombre: {pro.Nombre()}')
-                            if p != '':
-                                if int(p) == pro.Id():
-                                    # print("Hola")
-                                    coinc_p.append(pro)
-                                    coinc_hr.append(cont3)          
-                        cont3 += 1
-                    cont3 = 0
-                    if coinc_hr[0] != None:
-                        aux_hr = h_restantes[coinc_hr[0]]
-                        aux_p = coinc_p[0]
-                        aux = coinc_hr[0]
-                        for t in range(len(coinc_p)):
-                            # print(f'{coinc_p[i].Nombre()}: {h_restantes[coinc_hr[i]]}')
-                            if aux_hr < h_restantes[coinc_hr[t]]:
-                                aux_hr = h_restantes[coinc_hr[t]]
-                                aux_p = coinc_p[t]
-                                aux = coinc_hr[t]
-                        horario[i][j].Profesor(aux_p)
-                        h_restantes[aux] -= 1
-                        ind = '-' + str(horario[i][j].Profesor().Id())
-                        prf_h[i][j] = '0'
-                        if h_restantes[aux] == 0:
-                            for i in range(5):
-                                for j in range(7):
-                                    prf_h[i][j] = prf_h[i][j].replace(ind,'')
-                                    if prf_h[i][j] == '':
-                                        prf_h[i][j] = '0'
+                t = primera_hora.hour
+                t = t+j+1
+                if grupos.Horario() == 'TARDE':
+                    horario[i][j].Tiempo(time(t,30))
+                elif grupos.Horario() == 'MAÑANA':
+                    horario[i][j].Tiempo(time(t))
+                # print(horario[i][j].Tiempo())
+        
+        prf_h:list[list[str]] = [["0" for i in range(7)]for j in range(5)]
 
-        for h in h_restantes:
-            if h != 0:
-                chiv = True
-
-                        
-
-            
+        # Crea el horario de disponibilidad de los profesores
+        
+        for i in range(5):
+            for j in range(7):
+                chiv = False
+                for profe in grupos.Profesores():
+                    if int(profe.Horario()[i][1].split(':')[0]) >= horario[i][j].Tiempo().hour:
+                        if rtn != []:
+                            for horario_grupo in rtn: 
+                                if grupos.Horario() == 'TARDE' and horario_grupo[0][0].Tiempo() == time(15,30):
+                                    chiv = True
+                                elif grupos.Horario() == 'MAÑANA' and horario_grupo[0][0].Tiempo() == time(9):
+                                    chiv = True
+                            if chiv:   
+                                if horario_grupo[i][j].Profesor() != None:
+                                    if profe.Id() != horario_grupo[i][j].Profesor().Id():
+                                        prf_h[i][j] += '-' + str(profe.Id())
+                                else:
+                                        prf_h[i][j] += '-' + str(profe.Id())                            
+                            else:
+                                prf_h[i][j] += '-' + str(profe.Id())
+                        else:
+                            prf_h[i][j] += '-' + str(profe.Id())
+        
     
-    # //Te imprime el horario
-    arrd = []
-    arr = []
 
-    for i in range(5):
-        for j in range(7):
-            if horario[i][j].Profesor() == None:
-                 arr.append("None")
+        # Elimina las X de las clases en las que hay algun profesor    
+        for i in range(5):
+            for j in range(7):
+                if len(prf_h[i][j]) != 1:
+                    prf_h[i][j] = prf_h[i][j][1:]
+
+        print(prf_h)
+
+        
+
+        # print("hola y david si ves esto significa q ahora te toca currar cual hdp mucha suerte con cariño david del pasado :)")
+        # //Asigna clase a los profesores con 2 coincidencias  esta puede llegar a ser toda la funcion   
+        coinc_p:list[Profesor] = []
+        coinc_hr:list[int] = []
+        aux_p:Profesor = ''
+        aux_hr:int = 0
+        aux = 0
+        cont3 = 0
+        chiv = True
+        flug = True
+        cont = 0
+
+        while chiv:
+            chiv = False
+            if flug == True:
+                cont += 1
             else:
-                arr.append(horario[i][j].Profesor().Nombre())
-        arrd.append(arr)
+                cont = 1
+            flug = True
+            for i in range(5):
+                for j in range(7):
+                    if len(prf_h[i][j].split('-'))-1 == cont:
+                        flug = False
+                        coinc_hr = []
+                        coinc_p = []
+                        for pro in grupos.Profesores():
+                            for p in prf_h[i][j].split('-'):
+                                # print(f'p: {p}, pro.id: {pro.Id()}, pro.nombre: {pro.Nombre()}')
+                                if p != '':
+                                    if int(p) == pro.Id():
+                                        # print("Hola")
+                                        coinc_p.append(pro)
+                                        coinc_hr.append(cont3)          
+                            cont3 += 1
+                        cont3 = 0
+                        if coinc_hr[0] != None:
+                            aux_hr = h_restantes[coinc_hr[0]]
+                            aux_p = coinc_p[0]
+                            aux = coinc_hr[0]
+                            for t in range(len(coinc_p)):
+                                # print(f'{coinc_p[i].Nombre()}: {h_restantes[coinc_hr[i]]}')
+                                if aux_hr < h_restantes[coinc_hr[t]]:
+                                    aux_hr = h_restantes[coinc_hr[t]]
+                                    aux_p = coinc_p[t]
+                                    aux = coinc_hr[t]
+                            horario[i][j].Profesor(aux_p)
+                            h_restantes[aux] -= 1
+                            ind = '-' + str(horario[i][j].Profesor().Id())
+                            prf_h[i][j] = str(aux_p.Id())
+                            if h_restantes[aux] == 0:
+                                for i in range(5):
+                                    for j in range(7):
+                                        prf_h[i][j] = prf_h[i][j].replace(ind,'')
+                                        if prf_h[i][j] == '':
+                                            prf_h[i][j] = '0'
+
+            for h in h_restantes:
+                if h != 0:
+                    chiv = True
+
+                            
+
+                
+        
+        # //Te imprime el horario
+        arrd = []
         arr = []
 
-    for ar in arrd:
-        print(ar)  
+        for i in range(5):
+            for j in range(7):
+                if horario[i][j].Profesor() == None:
+                    arr.append("None")
+                else:
+                    arr.append(horario[i][j].Profesor().Nombre())
+            arrd.append(arr)
+            arr = []
 
-    print(h_restantes)
-    print(prf_h)
+        for ar in arrd:
+            print(ar)  
+
+        print(h_restantes)
+        print(prf_h)
+
+        rtn.append(horario)
+
+    return rtn
 
 
     # //Les añade a las clases del horario un profesor en el caso de que solo pueda el a esa hora
