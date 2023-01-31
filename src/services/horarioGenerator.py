@@ -125,9 +125,6 @@ def generar(_grupos:list[Grupo]) -> list[list[list[Hora_horario]]]:
 
         print(prf_h)
 
-        
-
-
         # //Asigna clase a los profesores con 2 coincidencias  esta puede llegar a ser toda la funcion   
         coinc_p:list[Profesor] = []
         coinc_hr:list[int] = []
@@ -188,7 +185,7 @@ def generar(_grupos:list[Grupo]) -> list[list[list[Hora_horario]]]:
 
                 
         
-        # //Te imprime el horario
+        # //Te imprime el horario (Profesores)
         arrd = []
         arr = []
 
@@ -200,12 +197,48 @@ def generar(_grupos:list[Grupo]) -> list[list[list[Hora_horario]]]:
                     arr.append(horario[i][j].Profesor().Nombre())
             arrd.append(arr)
             arr = []
-
         for ar in arrd:
             print(ar)  
 
         print(h_restantes)
         print(prf_h)
+
+        # //Crea un array con el numero de horas semanales que se deben dar cada asignatura
+        asignaturas_hr:list[int] =  []
+
+        for asignatura in grupos.Asignaturas():
+                asignaturas_hr.append(asignatura.HorasSemanales())
+        
+        print(asignaturas_hr)
+
+        # //Le asigna una asignatura a cada hora del horario
+        for i in range(5):
+            for j in range(7):
+                if horario[i][j].Profesor() != None:
+                    if len(horario[i][j].Profesor().Asignaturas()) > 1:
+                        for t in range(len(grupos.Asignaturas())):
+                            if grupos.Asignaturas()[t] in horario[i][j].Profesor().Asignaturas() and asignaturas_hr[t] > 0:
+                                horario[i][j].Nombre(grupos.Asignaturas()[t])
+                                asignaturas_hr[t] -= 1
+                    else:
+                        horario[i][j].Nombre(horario[i][j].Profesor().Asignaturas()[0])
+                
+
+
+        # //Te imprime el horario (Asignaturas)
+        arrd = []
+        arr = []
+
+        for i in range(5):
+            for j in range(7):
+                if horario[i][j].Nombre() == None:
+                    arr.append("None")
+                else:
+                    arr.append(horario[i][j].Nombre().Nombre())
+            arrd.append(arr)
+            arr = []
+        for ar in arrd:
+            print(ar)            
 
         rtn.append(horario)
 
