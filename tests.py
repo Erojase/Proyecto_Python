@@ -48,9 +48,9 @@ grp1 = Grupo("Dam-2b" ,list_asignaturas1, prof1, list_profesores1, "TARDE")
 
 grp2 = Grupo("Dam-2a" ,list_asignaturas1, prof1, list_profesores1, "TARDE")
 
-grp3 = Grupo("Dam-2c" ,list_asignaturas1, prof1, list_profesores1, "MAÑANA")
+grp3 = Grupo("Dam-2c" ,list_asignaturas1, prof1, list_profesores1, "TARDE")
 
-
+grp4 = Grupo("Dam-2d" ,list_asignaturas1, prof1, list_profesores1, "MAÑANA")
 
 
 h1:Hora_horario = Hora_horario(asig1, d(2023, 10, 21, 13, 45, 00, 00), grp1, prof1)
@@ -62,7 +62,7 @@ if __name__ == '__main__':
     # generar(grp1)
 
     # print(bd.listUsers())
-    generar([grp1, grp2, grp3])
+    generar([grp1, grp2, grp3, grp4])
     
     # print(h1.toJson())
 
