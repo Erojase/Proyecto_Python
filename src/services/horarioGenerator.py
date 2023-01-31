@@ -115,25 +115,7 @@ def generar(_grupos:list[Grupo]) -> list[list[list[Hora_horario]]]:
                             if str(profe.Id()) not in prf_hg[i][j].split('-'):
                                 prf_h[i][j] += '-' + str(profe.Id())
                         else:
-                            prf_h[i][j] += '-' + str(profe.Id())
-
-
-                        # if rtn != []:
-                        #     for horario_grupo in rtn: 
-                        #         if grupos.Horario() == horario_grupo[0][0].Grupo().Horario():
-                        #             chiv = True
-                        #     if chiv:   
-                        #         if horario_grupo[i][j].Profesor() != None:
-                        #             if profe.Id() != horario_grupo[i][j].Profesor().Id():
-                        #                 prf_h[i][j] += '-' + str(profe.Id())
-                        #         else:
-                        #                 prf_h[i][j] += '-' + str(profe.Id())                            
-                        #     else:
-                        #         prf_h[i][j] += '-' + str(profe.Id())
-                        # else:
-                        #     prf_h[i][j] += '-' + str(profe.Id())
-        
-    
+                            prf_h[i][j] += '-' + str(profe.Id())    
 
         # Elimina los 0 de las clases en las que hay algun profesor    
         for i in range(5):
