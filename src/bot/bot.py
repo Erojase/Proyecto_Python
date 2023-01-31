@@ -14,56 +14,53 @@ async def on_ready():
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="como aprobar Python"))
     print('Bot en funcionamiento')
 
+#DEVUELVE MENSAJE
+@bot.command()
+async def copy(ctx, arg):
+    await ctx.channel.send(arg)
 
-#Comandos
-async def cmd(message):
-    username = str(message.author).split("#")[0]
-    user_message = str(message.content)[1:]
-    
-    #Saludos y 
-    if user_message.lower() == "hola" or user_message.lower() == "ey":
-        await message.channel.send(f'Hola {username}')
-        return
-    
-    elif user_message.lower() == "adios" or user_message.lower() == "bye":
-        await message.channel.send(f'Adiós {username}')
-        return
-    
-    elif user_message.lower() == "chiste":
-        jokes = [" Can someone please shed more light on how my lamp got stolen?",
+#PING
+@bot.command()
+async def ping(ctx):
+    await ctx.channel.send("PONG!")
+
+#HOLA
+@bot.command()
+async def hola(ctx):
+    username = str(ctx.author).split("#")[0]
+    await ctx.channel.send(f'Hola {username}')
+
+#ADIOS
+@bot.command()
+async def adios(ctx):
+    username = str(ctx.author).split("#")[0]
+    await ctx.channel.send(f'Adiós {username}')
+
+#CHISTE 
+@bot.command()
+async def chiste(ctx):
+    jokes = [" Can someone please shed more light on how my lamp got stolen?",
                  "Why is she called llene? She stands on equal legs.",
                  "What do you call a gazelle in a lions territory? Denzel."]
-        await message.channel.send(random.choice(jokes))
-        return
-    
+    await ctx.channel.send(random.choice(jokes))
 
 
 
 #IA
-async def ia(message):
-    username = str(message.author).split("#")[0]
-    user_message = str(message.content)
-    await message.channel.send('PRUEBA DE RESPUESTA IA')
-    return
-
-
-#MENSAJES
 @bot.event
 async def on_message(message):
-    username = str(message.author).split("#")[0]
     channel = str(message.channel.name)
+    username = str(message.author).split("#")[0]
     user_message = str(message.content)
-  
-    print(f'Message {user_message} by {username} on {channel}')
-  
+
     if message.author == bot.user:
         return
-    
-    if PREFIX in user_message.lower():
-        await cmd(message)
-    
-    if channel == "chatbot":
-        await ia(message)
+
+    if channel == "chatbot" and not user_message.startswith(PREFIX):
+        await message.channel.send('PRUEBA DE RESPUESTA IA')
+            
+    await bot.process_commands(message)
+
 
 # #Run y token
 # bot.run(f'{TOKEN}')
