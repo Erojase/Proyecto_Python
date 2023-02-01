@@ -75,7 +75,7 @@ def generar(_grupos:list[Grupo]) -> list[list[list[Hora_horario]]]:
             primera_hora = time(8)
             
 
-        # Le da una hora a cada clase del horario
+       # Le da una hora a cada clase del horario y le asigna el grupo al que pertenece
         horario:list = [[Hora_horario() for x in range(7)] for j in range(5)]
         for i in range(5):
             for j in range(7):
