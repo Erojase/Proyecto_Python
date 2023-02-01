@@ -1,8 +1,9 @@
 from src.components.colegio import *
 from src.components.users import *
-from services.scheduler import *
+from src.services.scheduler import *
 from src.services.dbManager import *
 from src.services.serviceManager import *
+from src.services.tasker import *
 
 from datetime import datetime as d 
 import json
@@ -58,16 +59,9 @@ h1:Hora_horario = Hora_horario(asig1, d(2023, 10, 21, 13, 45, 00, 00), grp1, pro
 
 if __name__ == '__main__':
     # bd:DbManager = DbManager()
+    task:Tarea = Tarea()
 
-    
-    # print(bd.listUsers())
-    # generar(grp1)
+    task.Nombre()
 
-    # print(bd.listUsers())
-    generar([grp1, grp2, grp3, grp4])
-    
-    # print(h1.toJson())
-
-    
-    # bd.uploadHorario()
+    pass
     
