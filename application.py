@@ -51,7 +51,7 @@ def testAction():
 
 @application.route('/calendario', methods=['GET'])
 def calendario():
-    return  db.listUsers()
+    return open('pages/calendar.html', 'r', encoding='utf-8')
     
 @application.route('/report', methods=['GET'])
 def report():
