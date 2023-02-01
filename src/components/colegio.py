@@ -169,3 +169,49 @@ class Hora_horario:
         }, default=str)
     
 
+class dia:
+    _horario: list[Hora_horario] 
+    _dia_semana: str
+    _grupo: Grupo
+
+    def __init__(self, horario:list[Hora_horario]=None, dia_semana:str=None, grupo:Grupo=None) -> None:
+        self._horario = horario
+        self._dia_semana = dia_semana
+        self._grupo = grupo
+
+    def Horario(self, value:list[Hora_horario]=None):
+        if value != None:
+            self._horario = value
+        return self._horario
+
+    def DiaSemana(self, value:str=None):
+        if value != None:
+            self._dia_semana = value
+        return self._dia_semana
+
+    def Grupo(self, value:Grupo=None):
+        if value != None:
+            self._grupo = value 
+        return self._grupo
+
+
+class semana:
+    _horario: list[dia]
+    _grupo: Grupo
+
+    def __init__(self, horario:list[dia]=None, grupo:Grupo=None) -> None:
+        self._horario = horario
+        self._grupo = grupo
+
+    def Horario(self, value:list[dia]=None):
+        if value != None:
+            self._horario = value
+        return self._horario
+
+    def Grupo(self, value:Grupo=None):
+        if value != None:
+            self._grupo = value 
+        return self._grupo
+
+    
+

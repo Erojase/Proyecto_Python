@@ -64,7 +64,8 @@ if __name__ == '__main__':
     # generar(grp1)
 
     # print(bd.listUsers())
-    generar([grp1, grp2, grp3, grp4])
+    carcarodontosaurio = generar([grp1, grp2, grp3, grp4])
+    print("estopa")
     
     # print(h1.toJson())
 
