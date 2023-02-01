@@ -218,8 +218,9 @@ def generar(_grupos:list[Grupo]) -> list[list[list[Hora_horario]]]:
                     if len(horario[i][j].Profesor().Asignaturas()) > 1:
                         for t in range(len(grupos.Asignaturas())):
                             if grupos.Asignaturas()[t] in horario[i][j].Profesor().Asignaturas() and asignaturas_hr[t] > 0:
-                                horario[i][j].Nombre(grupos.Asignaturas()[t])
-                                asignaturas_hr[t] -= 1
+                                if horario[i][j].Nombre() == None:
+                                    horario[i][j].Nombre(grupos.Asignaturas()[t])
+                                    asignaturas_hr[t] -= 1
                     else:
                         horario[i][j].Nombre(horario[i][j].Profesor().Asignaturas()[0])
                 
