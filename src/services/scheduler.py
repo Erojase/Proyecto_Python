@@ -150,11 +150,9 @@ def generar(_grupos:list[Grupo]) -> list[semana]:
                         coinc_hr = []
                         coinc_p = []
                         for pro in grupos.Profesores():
-                            for p in prf_h[i][j].split('-'):
-                                if p != '':
-                                    if int(p) == pro.Id():
-                                        coinc_p.append(pro)
-                                        coinc_hr.append(cont3)          
+                            if str(pro.Id()) in prf_h[i][j].split('-'): 
+                                coinc_p.append(pro)
+                                coinc_hr.append(cont3)           
                             cont3 += 1
                         cont3 = 0
                         if coinc_hr[0] != None:
@@ -171,11 +169,11 @@ def generar(_grupos:list[Grupo]) -> list[semana]:
                             ind = '-' + str(horario[i][j].Profesor().Id())
                             prf_h[i][j] = str(aux_p.Id())
                             if h_restantes[aux] == 0:
-                                for i in range(5):
-                                    for j in range(7):
-                                        prf_h[i][j] = prf_h[i][j].replace(ind,'')
-                                        if prf_h[i][j] == '':
-                                            prf_h[i][j] = '0'
+                                for k in range(5):
+                                    for l in range(7):
+                                        prf_h[k][l] = prf_h[k][l].replace(ind,'')
+                                        if prf_h[k][l] == '':
+                                            prf_h[k][l] = '0'
 
             for h in h_restantes:
                 if h != 0:
