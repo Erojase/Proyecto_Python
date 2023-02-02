@@ -53,6 +53,10 @@ def testAction():
 def calendario():
     return open('pages/calendar.html', 'r', encoding='utf-8')
 
+@application.route('/calTest', methods=['GET'])
+def calTest():
+    return sm.CalendarTestRun()
+
 @application.route("/ponerTarea", methods=['POST'])
 def ponerTatea():
     # data = request.get_json(silent=True)
@@ -77,8 +81,21 @@ def discord():
 
 @application.route('/mail', methods=['GET'])
 def mail():
-    return "Not yet implemented"
+    return open('pages/mail.html', 'r', encoding='utf-8')
 
+@application.route('/sendMail', methods=['POST'])
+def sendMail():
+    data = request.get_json(silent=True)
+    data
+    
+
+@application.route('/listUsers', methods=['GET'])
+def listUsers():
+    users = db.listUsers()
+    userlist = []
+    for user in users:
+        userlist.append(user['mail'])
+    return jsonify(userlist)
 
 @application.route('/user/profile')
 def userProfile():

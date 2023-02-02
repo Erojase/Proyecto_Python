@@ -64,8 +64,8 @@ if __name__ == '__main__':
     # generar(grp1)
 
     # print(bd.listUsers())
-    carcarodontosaurio = generar([grp1, grp2, grp3, grp4])
-    print("estopa")
+    sm:ServiceManager = ServiceManager()
+    sm.CalendarTestRun()
     
     # print(h1.toJson())
 
