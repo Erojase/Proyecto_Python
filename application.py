@@ -86,7 +86,7 @@ def mail():
 @application.route('/sendMail', methods=['POST'])
 def sendMail():
     data = request.get_json(silent=True)
-    data
+    return "Not yet implemented"
     
 
 @application.route('/listUsers', methods=['GET'])
