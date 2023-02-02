@@ -1,0 +1,66 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+    background-color: rgb(48, 67, 85);
+}
+
+ul{
+    width: 100%;
+    list-style-type: none;
+    display: flex;
+    justify-content: space-around;
+}
+
+li{
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+}
+
+.nav{
+    background-color: rgb(72, 72, 223);
+    width: 100%;
+    color: white;
+    height: 5vh;
+}
+
+.calendar{
+    margin: 5%;
+    height: 50vh;
+}
+
+tr, th{
+    text-align: center;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+}
+
+.calendar > table{
+    table-layout: fixed;
+    border-spacing: 0;
+    border-radius: 5px;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(202, 110, 94);
+}
+
+.dia{
+    text-align: center;
+    border-radius: 5px;
+    background-color: rgb(212, 36, 36);
+}
+
+.hora{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
