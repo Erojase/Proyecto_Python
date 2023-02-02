@@ -13,28 +13,28 @@ asig8 = Asignatura("Amazon", 2)
 asig9 = Asignatura("Acceso a datos", 5)
 asig10 = Asignatura("Big data", 2)
 
-hor_prof1 = [["8", "21:30"], ["8","20:30"], ["8", "21:30"], ["8", "21:30"], ["8", "21:30"]]
+hor_prof1 = [["8", "20:30"], ["8","20:30"], ["8", "20:30"], ["8", "20:30"], ["8", "20:30"]]
 list_prof1 = [asig7, asig8]
 prof1 = Profesor(1,True, "Paco", hor_prof1, list_prof1)
-hor_prof2 = [["8", "21:30"], ["8","21:30"], ["8", "21:30"], ["8", "21:30"], ["8", "21:30"]]
+hor_prof2 = [["8", "20:30"], ["8","21:30"], ["8", "20:30"], ["8", "20:30"], ["8", "20:30"]]
 list_prof2 = [asig1, asig4]
 prof2 = Profesor(2, False, "Guillermo", hor_prof2, list_prof2)
-hor_prof3 = [["8", "21:30"], ["8","21:30"], ["8", "20:30"], ["8", "21:30"], ["8", "21:30"]]
+hor_prof3 = [["8", "20:30"], ["8","21:30"], ["8", "20:30"], ["8", "01:30"], ["8", "19:30"]]
 list_prof3 = [asig3]
 prof3 = Profesor(3, False, "David", hor_prof3, list_prof3)
-hor_prof4 = [["8", "21:30"], ["8","21:30"], ["8", "21:30"], ["8", "21:30"], ["8", "21:30"]]
+hor_prof4 = [["8", "20:30"], ["8","21:30"], ["8", "20:30"], ["8", "21:30"], ["8", "19:30"]]
 list_prof4 = [asig2]
 prof4 = Profesor(4, False, "Tere", hor_prof4, list_prof4)
-hor_prof5 = [["8", "21:30"], ["8","21:30"], ["8", "16:25"], ["8", "21:30"], ["8", "21:30"]]
+hor_prof5 = [["8", "20:30"], ["8","20:30"], ["8", "16:25"], ["8", "21:30"], ["8", "19:30"]]
 list_prof5 = [asig5]
 prof5 = Profesor(5, False, "Olga", hor_prof5, list_prof5)
-hor_prof6 = [["8", "21:30"], ["8","21:30"], ["8", "21:30"], ["8", "21:30"], ["8", "19:40"]]
+hor_prof6 = [["8", "20:30"], ["8","20:30"], ["8", "21:30"], ["8", "21:30"], ["8", "19:40"]]
 list_prof6 = [asig10]
 prof6 = Profesor(6, False, "Luisa", hor_prof6, list_prof6)
-hor_prof7 = [["8", "21:30"], ["8","21:30"], ["8", "21:30"], ["8", "21:30"], ["8", "21:30"]]
+hor_prof7 = [["8", "21:30"], ["8","20:30"], ["8", "21:30"], ["8", "20:30"], ["8", "19:30"]]
 list_prof7 = [asig9]
 prof7 = Profesor(7, False, "pedro", hor_prof7, list_prof7)
-hor_prof8 = [["8", "21:30"], ["8","21:30"], ["8", "21:30"], ["8", "21:30"], ["8", "21:30"]]
+hor_prof8 = [["8", "21:30"], ["8","20:30"], ["8", "21:30"], ["8", "20:30"], ["8", "19:30"]]
 list_prof8 = [asig6]
 prof8 = Profesor(8, False, "Isabel/John", hor_prof8, list_prof8)
 
@@ -46,11 +46,17 @@ grp2 = Grupo("Dam-2a" ,list_asignaturas1, prof1, list_profesores1, "TARDE")
 
 grp3 = Grupo("Dam-2c" ,list_asignaturas1, prof1, list_profesores1, "TARDE")
 
-grp4 = Grupo("Dam-2d" ,list_asignaturas1, prof1, list_profesores1, "MAÑANA")
+grp5 = Grupo("Dam-2e" ,list_asignaturas1, prof1, list_profesores1, "TARDE")
 
+grp6 = Grupo("Dam-2f" ,list_asignaturas1, prof1, list_profesores1, "TARDE")
+
+grp4 = Grupo("Dam-2d" ,list_asignaturas1, prof1, list_profesores1, "TARDE")
+
+
+# h1:Hora_horario = Hora_horario(asig1, d(2023, 10, 21, 13, 45, 00, 00), grp1, prof1)
 
 def testRun() -> list[semana]:
-    return generar([grp1, grp2, grp3, grp4]) 
+    return generar([grp1, grp2]) 
 
 def generar(_grupos:list[Grupo]) -> list[semana]:
     """
@@ -134,7 +140,7 @@ def generar(_grupos:list[Grupo]) -> list[semana]:
                 if len(prf_h[i][j]) != 1:
                     prf_h[i][j] = prf_h[i][j][1:]
 
-        # print(prf_h)
+        print(prf_h)
 
         # //Asigna clase a los profesores con 2 coincidencias  esta puede llegar a ser toda la funcion   
         coinc_p:list[Profesor] = []
@@ -145,14 +151,19 @@ def generar(_grupos:list[Grupo]) -> list[semana]:
         cont3 = 0
         chiv = True
         flug = True
+        pulp = False
+        camb = False
         cont = 0
 
         while chiv:
             chiv = False
-            if flug == True:
+            if camb == False:
                 cont += 1
             else:
                 cont = 1
+            if cont > len(grupos.Profesores()):
+                cont = 1
+            camb = False
             flug = True
             for i in range(5):
                 for j in range(7):
@@ -171,20 +182,26 @@ def generar(_grupos:list[Grupo]) -> list[semana]:
                             aux_p = coinc_p[0]
                             aux = coinc_hr[0]
                             for t in range(len(coinc_p)):
-                                if aux_hr < h_restantes[coinc_hr[t]]:
+                                if aux_hr <= h_restantes[coinc_hr[t]]:
                                     aux_hr = h_restantes[coinc_hr[t]]
                                     aux_p = coinc_p[t]
                                     aux = coinc_hr[t]
-                            horario[i][j].Profesor(aux_p)
-                            h_restantes[aux] -= 1
-                            ind = '-' + str(horario[i][j].Profesor().Id())
-                            prf_h[i][j] = str(aux_p.Id())
-                            if h_restantes[aux] == 0:
-                                for k in range(5):
-                                    for l in range(7):
-                                        prf_h[k][l] = prf_h[k][l].replace(ind,'')
-                                        if prf_h[k][l] == '':
-                                            prf_h[k][l] = '0'
+                            pulp = False
+                            for u in range(j):
+                                if horario[i][u].Profesor() == None:
+                                    pulp = True
+                            if pulp == False:
+                                camb = True
+                                horario[i][j].Profesor(aux_p)
+                                ind = '-' + str(horario[i][j].Profesor().Id())
+                                prf_h[i][j] = str(aux_p.Id())
+                                h_restantes[aux] -= 1
+                                if h_restantes[aux] == 0:
+                                    for k in range(5):
+                                        for l in range(7):
+                                            prf_h[k][l] = prf_h[k][l].replace(ind,'')
+                                            if prf_h[k][l] == '':
+                                                prf_h[k][l] = '0'
 
             for h in h_restantes:
                 if h != 0:
@@ -207,8 +224,8 @@ def generar(_grupos:list[Grupo]) -> list[semana]:
             arrd.append(arr)
             arr = []
         # for ar in arrd:
-            # print(ar)  
-
+        #     print(ar)  
+        # print()
         # print(h_restantes)
         # print(prf_h)
 
