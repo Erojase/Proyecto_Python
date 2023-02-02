@@ -37,10 +37,8 @@ function loadTable(data){
 
         grupos[grpName] = grupo;
     });
-    console.log(grupos);
     let cont = 0;
     for (const grupo in grupos) {
-        console.log(grupo);
         cont = 0;
         grupos[grupo].forEach(dia => {
             grupos[grupo][dias[cont]] = dia;
@@ -48,9 +46,50 @@ function loadTable(data){
             cont++;
         });
     }
+
 }
 
 function cargarGrupo() {
-    let currgrp = grupos[selector.value];
-    
+    let ElHoras = document.getElementsByClassName("hora");
+    let currgrp = {}
+    currgrp = grupos[selector.value];
+    for(const key in currgrp){
+        tmpdict = {}
+        currgrp[key].forEach((hora, i) => {
+            if(hora != "None"){
+                // currgrp[key][i] = JSON.parse(hora);
+                newkey = parseInt(JSON.parse(hora)['tiempo'].split(':')[0])-1
+                +":"
+                +JSON.parse(hora)['tiempo'].split(':')[1]
+                +" - "
+                +parseInt(JSON.parse(hora)['tiempo'].split(':')[0])
+                +":"
+                +JSON.parse(hora)['tiempo'].split(':')[1];
+                tmpdict[newkey] = JSON.parse(hora);
+            } else{
+                tmpdict["None"+i] = "None"
+            }
+            currgrp[key] = tmpdict;
+        });
+    }
+    console.log(currgrp);
+
+    for(const elem of ElHoras){
+        for (const key in currgrp) {
+            for (const key2 in currgrp[key]) {
+                if (key2 == elem.innerText) {
+                    console.log("");
+                    console.log(key);// dia de la semana
+                    console.log(elem.innerText); //rango de horas
+                    console.log(currgrp[key][key2]);
+                    for (const el of elem.parentNode.getElementsByTagName('td')) {
+                        
+                    }
+                };
+            }
+            
+        }
+        // console.log(elem.innerHTML);
+    }
+
 }
