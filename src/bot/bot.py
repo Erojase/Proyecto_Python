@@ -13,12 +13,22 @@ bot = commands.Bot(command_prefix = PREFIX, description="Robot Asistente de prue
 
 ia_bot = ChatBot(name='Tick', read_only=True, logic_adapters=['chatterbot.logic.MathematicalEvaluation','chatterbot.logic.BestMatch'])
 trainer = ChatterBotCorpusTrainer(ia_bot)
+trainer.train(
+    "src/bot/spanish/conver.yml",
+    "src/bot/spanish/dinero.yml",
+    "src/bot/spanish/emociones.yml",
+    "src/bot/spanish/greetings.yml",
+    "src/bot/spanish/ia.yml",
+    "src/bot/spanish/perfil.yml",
+    "src/bot/spanish/psicologia.yml",
+    "src/bot/spanish/trivia.yml"
+)
+
 # for i in (small_talk, math_talk_1, math_talk_2):
 #     trainer.train(i)
-# trainer.train(
-#     "./data/greetings_corpus/custom.corpus.json"
-# )
-trainer.train('chatterbot.corpus.spanish')
+
+# trainer.train('chatterbot.corpus.spanish')
+
 
 #Status
 @bot.event
