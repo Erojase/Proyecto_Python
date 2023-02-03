@@ -2,11 +2,23 @@ import discord #importamos para conectarnos con el bot
 from discord.ext import commands #importamos los comandos
 import datetime, random, os
 from dotenv import load_dotenv #importamos token
+from chatterbot import ChatBot
+from chatterbot.trainers import ChatterBotCorpusTrainer
 load_dotenv()
 
 TOKEN = os.getenv('TOKEN')
 PREFIX = '!'
+
 bot = commands.Bot(command_prefix = PREFIX, description="Robot Asistente de prueba", help_command=None, intents=discord.Intents.all())
+
+ia_bot = ChatBot(name='Tick', read_only=True, logic_adapters=['chatterbot.logic.MathematicalEvaluation','chatterbot.logic.BestMatch'])
+trainer = ChatterBotCorpusTrainer(ia_bot)
+# for i in (small_talk, math_talk_1, math_talk_2):
+#     trainer.train(i)
+# trainer.train(
+#     "./data/greetings_corpus/custom.corpus.json"
+# )
+trainer.train('chatterbot.corpus.spanish')
 
 #Status
 @bot.event
@@ -57,7 +69,7 @@ async def on_message(message):
         return
 
     if channel == "chatbot" and not user_message.startswith(PREFIX):
-        await message.channel.send('PRUEBA DE RESPUESTA IA')
+        await message.channel.send(ia_bot.get_response(user_message))
             
     await bot.process_commands(message)
 
