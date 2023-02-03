@@ -1,4 +1,3 @@
-
 let headersList = {
     "Accept": "*/*",
     "Content-Type": "application/json"
@@ -23,7 +22,7 @@ function Parking() {
 }
 
 function asistencia() {
-    window.location.href = '/asistencia';
+    window.location.href = '/attendance';
 }
 
 function report(){

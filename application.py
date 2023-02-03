@@ -64,9 +64,9 @@ def ponerTatea():
 def report():
     return "Not yet implemented"
 
-@application.route('/asistencia', methods=['GET'])
+@application.route('/attendance', methods=['GET'])
 def asistencia():
-    return "Not yet implemented"
+    return open('pages/attender.html', 'r', encoding='utf-8')
 
 @application.route('/parking', methods=['GET'])
 def parking():
