@@ -61,6 +61,8 @@ def testRun() -> list[semana]:
 def generar(_grupos:list[Grupo], numero_clases_dia:int=7) -> list[semana]:
     """
         Genera un horario para un solo grupo
+        
+        Properties
     """
 
     # # print("hola y david si ves esto significa q ahora te toca currar cual hdp mucha suerte con cariño david del pasado :)")

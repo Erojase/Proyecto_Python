@@ -61,15 +61,15 @@ grp4 = Grupo("Dam-2d" ,list_asignaturas1, prof1, list_profesores1, "TARDE")
 h1:Hora_horario = Hora_horario(asig1, d(2023, 10, 21, 13, 45, 00, 00), grp1, prof1)
 
 if __name__ == '__main__':
-    # bd:DbManager = DbManager()
+    bd:DbManager = DbManager()
 
     
     # print(bd.listUsers())
     # generar(grp1)
 
-    # print(bd.listUsers())
-    sm:ServiceManager = ServiceManager()
-    sm.CalendarTestRun()
+    print(bd.listUsers())
+    # sm:ServiceManager = ServiceManager()
+    # sm.CalendarTestRun()
     
     # print(h1.toJson())
 

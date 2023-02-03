@@ -55,7 +55,7 @@ function cargarGrupo() {
     currgrp = grupos[selector.value];
     for(const key in currgrp){
         tmpdict = {}
-        currgrp[key].forEach((hora, i) => {
+        grupos[selector.value][key].forEach((hora, i) => {
             if(hora != "None"){
                 // currgrp[key][i] = JSON.parse(hora);
                 newkey = parseInt(JSON.parse(hora)['tiempo'].split(':')[0])-1
@@ -83,7 +83,13 @@ function cargarGrupo() {
                     console.log(elem.innerText); //rango de horas
                     console.log(currgrp[key][key2]);
                     for (const el of elem.parentNode.getElementsByTagName('td')) {
-                        
+                        if(el.className == key){
+                            el.style.border = "1px solid black";
+                            el.style.borderRadius = "5px";
+                            el.innerText = "";
+                            el.innerText += currgrp[key][key2]["nombre"] + "\n";
+                            el.innerText += key2 ;
+                        }
                     }
                 };
             }
