@@ -4,7 +4,12 @@ import datetime, random, os
 from dotenv import load_dotenv #importamos token
 from chatterbot import ChatBot
 from chatterbot.trainers import ChatterBotCorpusTrainer
+import json
+from flask import jsonify
+from src.services.dbManager import *
 load_dotenv()
+
+db:DbManager = DbManager()
 
 TOKEN = os.getenv('TOKEN')
 PREFIX = '!'
@@ -67,6 +72,13 @@ async def chiste(ctx):
     await ctx.channel.send(random.choice(jokes))
 
 
+#LISTAR USUARIOS 
+@bot.command()
+async def list_users(ctx):
+    print('Listando Usuarios...')
+    users = db.listUsers()
+    for i in users:
+        await ctx.channel.send(jsonify(users[i]))
 
 #IA
 @bot.event
