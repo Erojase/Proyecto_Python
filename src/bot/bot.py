@@ -29,11 +29,6 @@ trainer.train(
     "src/bot/spanish/trivia.yml"
 )
 
-# for i in (small_talk, math_talk_1, math_talk_2):
-#     trainer.train(i)
-
-# trainer.train('chatterbot.corpus.spanish')
-
 
 #Status
 @bot.event
@@ -75,10 +70,9 @@ async def chiste(ctx):
 #LISTAR USUARIOS 
 @bot.command()
 async def list_users(ctx):
-    print('Listando Usuarios...')
     users = db.listUsers()
     for i in users:
-        await ctx.channel.send(jsonify(users[i]))
+        await ctx.channel.send(json.dumps(i['nombre']))
 
 #IA
 @bot.event
