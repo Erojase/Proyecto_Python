@@ -36,7 +36,7 @@ def login():
             tokenData.update(data)
             return jwt.encode(tokenData, SECRET_KEY, algorithm='HS256') # Exactamente asi es en encode
             
-    return jsonify("We do not do that here"), 400
+    return jsonify("We do not do that here"), 400        
     #      try: porque cuando no se decodea lanza una excepcion
     #         jwt.decode(tokenData, SECRET_KEY, algorithms=['HS256']) Exactamente asi es el decode
 # --------------------------------------------------------------------------------------------------
