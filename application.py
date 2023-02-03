@@ -10,7 +10,6 @@ sm = ServiceManager()
 
 SECRET_KEY = "JOYFE"
 
-
 @application.route('/', methods=['GET','POST'])
 def root():
     clientIp = request.remote_addr
@@ -36,10 +35,8 @@ def login():
             tokenData = {"exp": datetime.utcnow() + timedelta(seconds=1)} #expira en 1 segundo
             tokenData.update(data)
             return jwt.encode(tokenData, SECRET_KEY, algorithm='HS256') # Exactamente asi es en encode
-        else:
-            return jsonify("We do not do that here"), 400
             
-    return jsonify("Internal server error, duh"), 500 # Exactamente asi es en encode
+    return jsonify("We do not do that here"), 400
     #      try: porque cuando no se decodea lanza una excepcion
     #         jwt.decode(tokenData, SECRET_KEY, algorithms=['HS256']) Exactamente asi es el decode
 # --------------------------------------------------------------------------------------------------
