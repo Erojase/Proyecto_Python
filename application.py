@@ -53,14 +53,17 @@ def testAction():
 def calendario():
     return open('pages/calendar.html', 'r', encoding='utf-8')
 
+
+@application.route("/tasker",methods=['GET'])
+def tasker():
+    return open('pages/tasker.html', 'r', encoding='utf-8')
+
+
+
 @application.route("/ponerTarea", methods=['POST'])
 def ponerTatea():
     # data = request.get_json(silent=True)
     # sm.ponerTarea(data['Tarea'])
-    return "Not yet implemented"
-
-@application.route('/report', methods=['GET'])
-def report():
     return "Not yet implemented"
 
 @application.route('/asistencia', methods=['GET'])

@@ -27,7 +27,7 @@ function asistencia() {
 }
 
 function report(){
-    window.location.href = '/report';
+    window.location.href = '/tasker';
 }
 
 function discord(){
