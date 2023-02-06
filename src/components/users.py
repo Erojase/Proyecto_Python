@@ -1,3 +1,10 @@
+from enum import Enum
+from src.components.colegio import *
+
+class Tipo(Enum):
+    Alumno = 0
+    Profesor = 1
+
 class Usuario:
     
     _id:int
@@ -5,14 +12,21 @@ class Usuario:
     _apellido:str
     _passwd:str
     _mail:str
+    _tipo:Tipo
+    
+    _profesor:Profesor | None
     
     
-    def __init__(self, id:int, nombre:str, apellido:str, passwd:str, mail:str) -> dict:
+    
+    
+    def __init__(self, id:int, nombre:str, apellido:str, passwd:str, mail:str, tipo:Tipo, profesor:Profesor | None = None) -> dict:
         self._id = id
         self._nombre = nombre
         self._apellido = apellido
         self._passwd = passwd
         self._mail = mail     
+        self._tipo = tipo
+        self._profesor = profesor
     
     def Id(self, value:int=None):
         if value != None:
@@ -39,11 +53,30 @@ class Usuario:
             self._pass = value
         return self._pass
     
-    def toDict(self):
-        return {
-            "id": self._id,
-            "nombre": self._nombre,
-            "apellido": self._apellido,
-            "mail": self._mail,
-            "password": self._passwd
-        }   
+    def Tipo(self, value:Tipo=None):
+        if value != None:
+            self._tipo = value
+        return self._tipo
+    
+    def toJson(self):
+        if self._tipo == Tipo.Alumno:
+            return {
+                "id": self._id,
+                "nombre": self._nombre,
+                "apellido": self._apellido,
+                "mail": self._mail,
+                "password": self._passwd,
+                "tipo" : self._tipo.name
+            }   
+        else:
+            return {
+                "id": self._id,
+                "nombre": self._nombre,
+                "apellido": self._apellido,
+                "mail": self._mail,
+                "password": self._passwd,
+                "tipo" : self._tipo.name,
+                "tutor" : self._profesor.ToJson()['tutor'],
+                "horario": self._profesor.ToJson()['horario'],
+                "asignaturas": self._profesor.ToJson()['asignaturas']
+            }  

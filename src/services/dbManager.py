@@ -40,12 +40,13 @@ class DbManager:
         for item in coll.find({"id":id}):
             return item
     
-    def insertUser(self, usuario:dict):
+    def insertUser(self, usuario:Usuario):
+        insertDict = usuario.toJson()
         for user in self.listUsers():
-            if user["id"] == usuario["id"]:
+            if user["id"] == insertDict["id"]:
                 return "Not a valid id"
         coll = self.database["Usuarios"]
-        coll.insert_one(usuario)
+        coll.insert_one(insertDict)
     
     def uploadHorario(self, listado:list[dict]):
         pass
