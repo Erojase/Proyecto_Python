@@ -60,7 +60,17 @@ def testRun() -> list[semana]:
 
 def generar(_grupos:list[Grupo], numero_clases_dia:int=7) -> list[semana]:
     """
-        Genera un horario para un solo grupo
+        Genera un horario para varios grupos, le has de introducir el numero de clases que se tienen por dia
+        
+        Parameters
+        ---------
+        grupos : list[Grupo]
+            Son los grupos a los cuales les vas ha hacer un horario 
+            
+        numero_clases : int
+            Numero de clases por dia
+            
+        Returns -> list[semana]
     """
 
     # # print("hola y david si ves esto significa q ahora te toca currar cual hdp mucha suerte con cariño david del pasado :)")
@@ -86,7 +96,6 @@ def generar(_grupos:list[Grupo], numero_clases_dia:int=7) -> list[semana]:
         # Asigna la primera hora dependiendo del turno
         if grupos.Horario() == "TARDE":
             primera_hora = time(14,30)
-            
         elif grupos.Horario() == "MAÑANA":
             primera_hora = time(8)
             
@@ -149,7 +158,6 @@ def generar(_grupos:list[Grupo], numero_clases_dia:int=7) -> list[semana]:
         aux = 0
         cont3 = 0
         chiv = True
-        flug = True
         pulp = False
         camb = False
         cont = 0
@@ -163,7 +171,6 @@ def generar(_grupos:list[Grupo], numero_clases_dia:int=7) -> list[semana]:
             if cont > len(grupos.Profesores()):
                 cont = 1
             camb = False
-            flug = True
             for i in range(5):
                 for j in range(numero_clases_dia):
                     if len(prf_h[i][j].split('-'))-1 == cont:

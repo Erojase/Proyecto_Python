@@ -70,7 +70,6 @@ if __name__ == '__main__':
     # print(bd.listUsers())
     sm:ServiceManager = ServiceManager()
     sm.CalendarTestRun()
-    
     # print(h1.toJson())
 
     
