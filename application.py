@@ -36,10 +36,8 @@ def login():
             tokenData = {"exp": datetime.utcnow() + timedelta(seconds=1)} #expira en 1 segundo
             tokenData.update(data)
             return jwt.encode(tokenData, SECRET_KEY, algorithm='HS256') # Exactamente asi es en encode
-        else:
-            return jsonify("We do not do that here"), 400
             
-    return jsonify("Internal server error, duh"), 500 # Exactamente asi es en encode
+    return jsonify("We do not do that here"), 400        
     #      try: porque cuando no se decodea lanza una excepcion
     #         jwt.decode(tokenData, SECRET_KEY, algorithms=['HS256']) Exactamente asi es el decode
 # --------------------------------------------------------------------------------------------------
@@ -59,6 +57,9 @@ def tasker():
     return open('pages/tasker.html', 'r', encoding='utf-8')
 
 
+@application.route('/calTest', methods=['GET'])
+def calTest():
+    return sm.CalendarTestRun()
 
 @application.route("/ponerTarea", methods=['POST'])
 def ponerTatea():
@@ -80,8 +81,21 @@ def discord():
 
 @application.route('/mail', methods=['GET'])
 def mail():
-    return "Not yet implemented"
+    return open('pages/mail.html', 'r', encoding='utf-8')
 
+@application.route('/sendMail', methods=['POST'])
+def sendMail():
+    data = request.get_json(silent=True)
+    return "Not yet implemented"
+    
+
+@application.route('/listUsers', methods=['GET'])
+def listUsers():
+    users = db.listUsers()
+    userlist = []
+    for user in users:
+        userlist.append(user['mail'])
+    return jsonify(userlist)
 
 @application.route('/user/profile')
 def userProfile():

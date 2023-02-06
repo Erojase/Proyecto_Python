@@ -69,14 +69,18 @@ class Profesor:
         return self._asignaturas
 
     def ToJson(self) -> dict:
+        asignatura_list = ""
+        for asign in self._asignaturas:
+            asignatura_list += asign.Nombre()+","
+        
         json = {
             "nombre":self._nombre,
             "tutor":self._tutor,
             "horario":{
-                        "inicio":self._asignaturas[0],
-                        "fin":self._asignaturas[1]
+                        "inicio":self._horario[0][0],
+                        "fin":self._horario[0][1]
                         },
-            "asignaturas":self._asignaturas
+            "asignaturas":asignatura_list
         }
         return json
 
@@ -204,3 +208,49 @@ class Tarea:
         }, default=str)
 
     
+class dia:
+    _horario: list[Hora_horario] 
+    _dia_semana: str
+    _grupo: Grupo
+
+    def __init__(self, horario:list[Hora_horario]=None, dia_semana:str=None, grupo:Grupo=None) -> None:
+        self._horario = horario
+        self._dia_semana = dia_semana
+        self._grupo = grupo
+
+    def Horario(self, value:list[Hora_horario]=None):
+        if value != None:
+            self._horario = value
+        return self._horario
+
+    def DiaSemana(self, value:str=None):
+        if value != None:
+            self._dia_semana = value
+        return self._dia_semana
+
+    def Grupo(self, value:Grupo=None):
+        if value != None:
+            self._grupo = value 
+        return self._grupo
+
+
+class semana:
+    _horario: list[dia]
+    _grupo: Grupo
+
+    def __init__(self, horario:list[dia]=None, grupo:Grupo=None) -> None:
+        self._horario = horario
+        self._grupo = grupo
+
+    def Horario(self, value:list[dia]=None):
+        if value != None:
+            self._horario = value
+        return self._horario
+
+    def Grupo(self, value:Grupo=None):
+        if value != None:
+            self._grupo = value 
+        return self._grupo
+
+    
+
