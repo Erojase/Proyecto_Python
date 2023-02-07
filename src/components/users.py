@@ -8,6 +8,7 @@ class Tipo(Enum):
 class Usuario:
     
     _id:int
+    _nick:str
     _nombre:str
     _apellido:str
     _passwd:str
@@ -16,11 +17,17 @@ class Usuario:
     
     _profesor:Profesor | None
     
+   
+    def Nick(self, value:str=None):
+        if value != None:
+            self._nick = value
+        return self._nick
     
     
     
-    def __init__(self, id:int, nombre:str, apellido:str, passwd:str, mail:str, tipo:Tipo, profesor:Profesor | None = None) -> dict:
+    def __init__(self, id:int, nick:str, nombre:str, apellido:str, passwd:str, mail:str, tipo:Tipo, profesor:Profesor | None = None) -> dict:
         self._id = id
+        self._nick = nick
         self._nombre = nombre
         self._apellido = apellido
         self._passwd = passwd

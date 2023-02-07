@@ -63,16 +63,9 @@ h1:Hora_horario = Hora_horario(asig1, d(2023, 10, 21, 13, 45, 00, 00), grp1, pro
 if __name__ == '__main__':
     bd:DbManager = DbManager()
 
-    usr1 = Usuario(4, "Paco", "Moyano", "FMoyano", "Fmoyano@gmail.com", Tipo.Profesor, prof1)
-    # print(bd.listUsers())
-    # generar(grp1)
-    print(bd.insertUser(usr1))
-    # print(bd.listUsers())
-    # sm:ServiceManager = ServiceManager()
-    # sm.CalendarTestRun()
     
-    # print(h1.toJson())
+    prof56 = Profesor(3, False, "David", hor_prof3, list_prof3)
+    usr1 = Usuario(3, "deivid", "David", "Castellanos", "7eaa9d9fb331b06da210375c1be0d539", "david.sanchez.castellanos@alumnojoyfe.iepgroup.es", Tipo.Profesor, prof56)
 
-    
-    # bd.uploadHorario()
-    
+
+
