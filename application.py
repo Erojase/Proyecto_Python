@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 import jwt
-from datetime import datetime, timedelta
+from datetime import datetime as dt, timedelta
 from src.services.serviceManager import ServiceManager
 from src.services.dbManager import DbManager
 from src.components.users import *
@@ -33,7 +33,7 @@ def login():
     
     for user in db.listUsers():
         if user["nick"] == data["user"] and user["password"] == data["password"]:
-            tokenData = {"exp": datetime.utcnow() + timedelta(days=1)} #expira en 1 segundo
+            tokenData = {"exp": dt.utcnow() + timedelta(days=1)} #expira en 1 segundo
             data["id"] = user["id"]
             data["tipo"] = user["tipo"]
             tokenData.update(data)
