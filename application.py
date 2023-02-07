@@ -33,7 +33,7 @@ def login():
     
     for user in db.listUsers():
         if user["nick"] == data["user"] and user["password"] == data["password"]:
-            tokenData = {"exp": dt.utcnow() + timedelta(days=1)} #expira en 1 segundo
+            tokenData = {"exp": dt.utcnow() + timedelta(days=1)} #expira en 1 dia
             data["id"] = user["id"]
             data["tipo"] = user["tipo"]
             tokenData.update(data)
@@ -69,11 +69,11 @@ def report():
 
 @application.route('/attendance', methods=['GET'])
 def asistencia():
-    id:int = 3
-    tipo = db.getUser(id)['tipo']
-    if tipo == Tipo.Profesor.name:
+    
+    tipo = parseToken(request.args.get('token'))
+    if tipo['tipo'] == Tipo.Profesor.name:
         return open('pages/attender_profesor.html', 'r', encoding='utf-8')
-    elif tipo == Tipo.Alumno:
+    elif tipo['tipo'] == Tipo.Alumno.name:
         return open('pages/attender_alumno.html', 'r', encoding='utf-8')
 
 @application.route('/parking', methods=['GET'])
@@ -103,12 +103,17 @@ def listUsers():
     return jsonify(userlist)
 
 @application.route('/token', methods=['POST'])
-def userProfile():
+def token():
     authToken = request.headers["Authorization"].split()[1]
-    data = jwt.decode(authToken, SECRET_KEY, algorithms=['HS256'])
+    data = parseToken(authToken)
     
     return data
 
+
+def parseToken(token:str):
+    data = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+    
+    return data
 
 if __name__ == '__main__':
     application.run(debug=True,host='0.0.0.0')
