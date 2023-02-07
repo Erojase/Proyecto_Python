@@ -31,7 +31,7 @@ def login():
         return jsonify("Expected more from you"), 400
     
     for user in db.listUsers():
-        if user["nombre"] == data["user"] and user["password"] == data["password"]:
+        if user["nick"] == data["user"] and user["password"] == data["password"]:
             tokenData = {"exp": datetime.utcnow() + timedelta(seconds=1)} #expira en 1 segundo
             tokenData.update(data)
             return jwt.encode(tokenData, SECRET_KEY, algorithm='HS256') # Exactamente asi es en encode

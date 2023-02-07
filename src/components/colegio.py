@@ -69,14 +69,18 @@ class Profesor:
         return self._asignaturas
 
     def ToJson(self) -> dict:
+        asignatura_list = ""
+        for asign in self._asignaturas:
+            asignatura_list += asign.Nombre()+","
+        
         json = {
             "nombre":self._nombre,
             "tutor":self._tutor,
             "horario":{
-                        "inicio":self._asignaturas[0],
-                        "fin":self._asignaturas[1]
+                        "inicio":self._horario[0][0],
+                        "fin":self._horario[0][1]
                         },
-            "asignaturas":self._asignaturas
+            "asignaturas":asignatura_list
         }
         return json
 
