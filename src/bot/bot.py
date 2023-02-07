@@ -1,9 +1,9 @@
 import discord #importamos para conectarnos con el bot
 from discord.ext import commands #importamos los comandos
 import datetime, random, os
-from dotenv import load_dotenv #importamos token
-from chatterbot import ChatBot
-from chatterbot.trainers import ChatterBotCorpusTrainer
+from dotenv import load_dotenv #importamos EL token
+from chatterbot import ChatBot #importamos el chatbot
+from chatterbot.trainers import ChatterBotCorpusTrainer #importamos el entrenador
 import json
 from flask import jsonify
 from src.services.dbManager import *
@@ -12,6 +12,7 @@ load_dotenv()
 db:DbManager = DbManager()
 
 TOKEN = os.getenv('TOKEN')
+
 PREFIX = '!'
 
 bot = commands.Bot(command_prefix = PREFIX, description="Robot Asistente de prueba", help_command=None, intents=discord.Intents.all())
@@ -61,9 +62,9 @@ async def adios(ctx):
 #CHISTE 
 @bot.command()
 async def chiste(ctx):
-    jokes = [" Can someone please shed more light on how my lamp got stolen?",
-                 "Why is she called llene? She stands on equal legs.",
-                 "What do you call a gazelle in a lions territory? Denzel."]
+    jokes = ["¿Qué le dice el uno al diez? Para ser como yo tenés que ser sincero",
+                 "¿Qué le dijo un pato a otro pato? Estamos empatados",
+                 "¿Qué le dijo un mosquito a un grupo de niños? No aplaudas, que todavía no es mi cumpleaños"]
     await ctx.channel.send(random.choice(jokes))
 
 
