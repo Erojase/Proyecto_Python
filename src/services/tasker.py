@@ -1,35 +1,38 @@
 from src.components.colegio import *
 from src.components.users import *
+import json 
+import datetime
+
+
+
+
 
 
 
 def __init__(self) -> None:
-        pass
-    
-    
-    
-# --------------------------------------------------------------------------------------------
-def getUser(self, id:int) -> list[dict]:
-        coll = self.database["Usuarios"]
-        for item in coll.find({"id":id}):
-            return item
-    
-def insertUser(self, usuario:Usuario):
-        insertDict = usuario.toJson()
-        for user in self.listUsers():
-            if user["id"] == insertDict["id"]:
-                return "Not a valid id"
-        coll = self.database["Usuarios"]
-        coll.insert_one(insertDict)
-# ----------------------------------------------------------------------------------------
+    pass
+
+
+
 
 
  # profesores publican tareas
-def crearTarea():
+def crearTarea(datos:str,):
+ 
+    titulo = datos["titulo"]
+    asignacion = datos["tarea"]
     
+    hora_actual = datetime.datetime.now()
+    # busca quien inicio secion (profesor)
+    # profe =  tengo que pillara el json que me da edu en appliation
     
-    
-    return 
+    tarea = json.loads({
+    "profesor": profe,
+    "tiempo": hora_actual,
+    "cuerpo": asignacion, 
+    "titulo": titulo
+})
+    return json.loads(tarea)
 
 
 # alumno sube respuesta de la tarea

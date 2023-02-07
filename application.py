@@ -3,6 +3,7 @@ import jwt
 from datetime import datetime, timedelta
 from src.services.serviceManager import ServiceManager
 from src.services.dbManager import DbManager
+from src.services.tasker import *
 
 application = Flask(__name__)
 db = DbManager()
@@ -31,6 +32,8 @@ def login():
     if "user" not in data or "password" not in data:
         return jsonify("Expected more from you"), 400
     
+    # nombre_de_profesor = data["nombre"]
+    
     for user in db.listUsers():
         if user["nombre"] == data["user"] and user["password"] == data["password"]:
             tokenData = {"exp": datetime.utcnow() + timedelta(seconds=1)} #expira en 1 segundo
@@ -52,9 +55,29 @@ def calendario():
     return open('pages/calendar.html', 'r', encoding='utf-8')
 
 
+
+
+# ---------------------------------------------------------------------------------------------------
+
+
 @application.route("/tasker",methods=['GET'])
-def tasker():
+def taskerr():
     return open('pages/tasker.html', 'r', encoding='utf-8')
+
+@application.route("/tasker",methods=['POST'])
+def tasker():
+    data = request.get_json(silent=True)
+   
+    crearTarea(data)
+    if "titulo" not in data or "tarea" not in data:
+        return jsonify("Expected more from you"), 400
+    return 
+# ---------------------------------------------------------------------------------------------------
+
+
+
+
+
 
 
 @application.route('/calTest', methods=['GET'])

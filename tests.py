@@ -63,9 +63,10 @@ h1:Hora_horario = Hora_horario(asig1, d(2023, 10, 21, 13, 45, 00, 00), grp1, pro
 
 if __name__ == '__main__':
     # bd:DbManager = DbManager()
-    task:Tarea = Tarea()
+    # task:Tarea = Tarea()
 
-    task.Nombre()
+    # task.Nombre()
+    # crearTarea()
 
     pass
     
