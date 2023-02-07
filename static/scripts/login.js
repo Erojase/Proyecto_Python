@@ -31,5 +31,6 @@ async function login() {
 
     let data = await response.text();
     console.log(data);
+    window.localStorage.setItem("token", data);
 }
 

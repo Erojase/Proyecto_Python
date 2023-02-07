@@ -33,7 +33,9 @@ def login():
     
     for user in db.listUsers():
         if user["nick"] == data["user"] and user["password"] == data["password"]:
-            tokenData = {"exp": datetime.utcnow() + timedelta(seconds=1)} #expira en 1 segundo
+            tokenData = {"exp": datetime.utcnow() + timedelta(days=1)} #expira en 1 segundo
+            data["id"] = user["id"]
+            data["tipo"] = user["tipo"]
             tokenData.update(data)
             return jwt.encode(tokenData, SECRET_KEY, algorithm='HS256') # Exactamente asi es en encode
             
@@ -100,15 +102,12 @@ def listUsers():
         userlist.append(user['mail'])
     return jsonify(userlist)
 
-@application.route('/user/profile')
+@application.route('/token', methods=['POST'])
 def userProfile():
     authToken = request.headers["Authorization"].split()[1]
     data = jwt.decode(authToken, SECRET_KEY, algorithms=['HS256'])
     
-    userdata = db.getUser(data["id"])
-    
-    if data["id"] in userdata:
-        return jsonify(userdata)
+    return data
 
 
 if __name__ == '__main__':
