@@ -66,6 +66,7 @@ def report():
 
 @application.route('/attendance', methods=['GET'])
 def asistencia():
+    if 
     return open('pages/attender.html', 'r', encoding='utf-8')
 
 @application.route('/parking', methods=['GET'])
