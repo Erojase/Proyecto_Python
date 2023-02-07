@@ -35,7 +35,7 @@ class DbManager:
             list.append(item)
         return list
     
-    def getUser(self, id:int) -> list[dict]:
+    def getUser(self, id:int) -> dict:
         coll = self.database["Usuarios"]
         for item in coll.find({"id":id}):
             return item

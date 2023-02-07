@@ -15,15 +15,7 @@ class Usuario:
     _mail:str
     _tipo:Tipo
     
-    _profesor:Profesor | None
-    
-   
-    def Nick(self, value:str=None):
-        if value != None:
-            self._nick = value
-        return self._nick
-    
-    
+    _profesor:Profesor | None 
     
     def __init__(self, id:int, nick:str, nombre:str, apellido:str, passwd:str, mail:str, tipo:Tipo, profesor:Profesor | None = None) -> dict:
         self._id = id
@@ -65,6 +57,11 @@ class Usuario:
             self._tipo = value
         return self._tipo
     
+    def Nick(self, value:str=None):
+        if value != None:
+            self._nick = value
+        return self._nick
+    
     def toJson(self):
         if self._tipo == Tipo.Alumno:
             return {
@@ -87,3 +84,33 @@ class Usuario:
                 "horario": self._profesor.ToJson()['horario'],
                 "asignaturas": self._profesor.ToJson()['asignaturas']
             }  
+            
+            
+class Clase:
+    
+    _clave: str
+    _profesor: Profesor
+    _alumnos: list[Usuario]
+    
+    def __init__(self, clave:str = None, profesor:Profesor = None, alumnos:list[Usuario] = None) -> None:
+        self._clave = clave
+        self._profesor = profesor
+        self._alumnos = alumnos
+        
+    def Clave(self, value:str):
+        if value != None:
+            self._clave = value
+        return self._clave
+    
+    def Profesor(self, value:Profesor):
+        if value != None:
+            self._profesor = value
+        return self._profesor
+    
+    def Alumnos(self, value:list[Usuario]):
+        if value != None:
+            self._alumnos = value
+        return self._alumnos
+    
+    def addAlumno(self, value:Usuario):
+        self._alumnos.append(value)

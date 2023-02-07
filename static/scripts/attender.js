@@ -14,5 +14,13 @@ async function connect_clase_Click() {
         body: content 
     });
 
+
+
     // let data = await response.text();
+}
+
+function create_clase_Click() {
+    
+    
+
 }

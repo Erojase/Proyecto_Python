@@ -3,6 +3,7 @@ import jwt
 from datetime import datetime, timedelta
 from src.services.serviceManager import ServiceManager
 from src.services.dbManager import DbManager
+from src.components.users import *
 
 application = Flask(__name__)
 db = DbManager()
@@ -66,8 +67,12 @@ def report():
 
 @application.route('/attendance', methods=['GET'])
 def asistencia():
-    if 
-    return open('pages/attender.html', 'r', encoding='utf-8')
+    id:int = 3
+    tipo = db.getUser(id)['tipo']
+    if tipo == Tipo.Profesor.name:
+        return open('pages/attender_profesor.html', 'r', encoding='utf-8')
+    elif tipo == Tipo.Alumno:
+        return open('pages/attender_alumno.html', 'r', encoding='utf-8')
 
 @application.route('/parking', methods=['GET'])
 def parking():
