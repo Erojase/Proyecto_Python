@@ -4,21 +4,59 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel= "stylesheet" type= "text/css" href="static/styles/globals.css">
+    <link rel= "stylesheet" type= "text/css" href="static/styles/login.css">
     <script src="https://cdn.jsdelivr.net/npm/md5-js-tools@1.0.2/lib/md5.min.js"></script>
     <script src="static/scripts/login.js"></script>
+    <script src="static/scripts/token.js"></script>
     <title>Login</title>
 </head>
 <body>
-    
+    <div class="bak">
+        <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/23298a55526729.5988857400116.jpg" alt="">
+    </div>
 
-    <div class="logCont">
-        <label for="name">Nombre:</label>
-        <input type="text" id="name">
+    <div class="nav" >
+        <ul>
+            <li>
+                Buenas tardes
+            </li>
+            <li>
+                Buenas noches
+            </li>
+            <li>
+                Buenas tardes
+            </li>
+            <li>
+                <a href="/login">Login</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="logCont" id="login">
+
+        <label for="name">Nombre de Usuario:</label>
+        <input type="text" id="name" >
 
         <label for="passwd">Contraseña:</label>
         <input type="password" id="passwd">
-        
+
         <button onclick="login()">Log In</button>
+        <div>No tienes una cuenta? <span class="toggle" onclick="toggle('reg')">Regístrate</span></div> 
+        
+    </div>
+
+    <div class="regCont" id="register">
+
+        <label for="name">Nombre:</label>
+        <input type="text" id="name" >
+
+        <label for="passwd">Contraseña:</label>
+        <input type="password" id="passwd">
+
+        <button onclick="login()">Log In</button>
+        <div>Ya tienes una cuenta? <span class="toggle" onclick="toggle('log')">Inicia Sesión</span></div> 
+        
     </div>
 </body>
 </html>

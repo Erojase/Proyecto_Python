@@ -35,5 +35,5 @@ function discord(){
 }
 
 function mail(){
-    window.location.href = '/report';
+    window.location.href = '/mail';
 }

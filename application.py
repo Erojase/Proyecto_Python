@@ -18,11 +18,11 @@ def root():
 
 @application.route('/web', methods=['GET'])
 def webMain():
-    return open('pages/index.html', 'r')
+    return open('pages/index.html', 'r', encoding='utf-8')
 
 @application.route('/login', methods=['GET'])
 def webLogin():
-    return open('pages/login.html', 'r')
+    return open('pages/login.html', 'r', encoding='utf-8')
 
 @application.route('/login', methods=['POST'])
 def login():
@@ -32,14 +32,14 @@ def login():
         return jsonify("Expected more from you"), 400
     
     for user in db.listUsers():
-        if user["nombre"] == data["user"] and user["password"] == data["password"]:
-            tokenData = {"exp": datetime.utcnow() + timedelta(seconds=1)} #expira en 1 segundo
+        if user["nick"] == data["user"] and user["password"] == data["password"]:
+            tokenData = {"exp": datetime.utcnow() + timedelta(days=1)} #expira en 1 segundo
+            data["id"] = user["id"]
+            data["tipo"] = user["tipo"]
             tokenData.update(data)
             return jwt.encode(tokenData, SECRET_KEY, algorithm='HS256') # Exactamente asi es en encode
-        else:
-            return jsonify("We do not do that here"), 400
             
-    return jsonify("Internal server error, duh"), 500 # Exactamente asi es en encode
+    return jsonify("We do not do that here"), 400        
     #      try: porque cuando no se decodea lanza una excepcion
     #         jwt.decode(tokenData, SECRET_KEY, algorithms=['HS256']) Exactamente asi es el decode
 # --------------------------------------------------------------------------------------------------
@@ -51,8 +51,18 @@ def testAction():
 
 @application.route('/calendario', methods=['GET'])
 def calendario():
-    return  db.listUsers()
-    
+    return open('pages/calendar.html', 'r', encoding='utf-8')
+
+@application.route('/calTest', methods=['GET'])
+def calTest():
+    return sm.CalendarTestRun()
+
+@application.route("/ponerTarea", methods=['POST'])
+def ponerTatea():
+    # data = request.get_json(silent=True)
+    # sm.ponerTarea(data['Tarea'])
+    return "Not yet implemented"
+
 @application.route('/report', methods=['GET'])
 def report():
     return "Not yet implemented"
@@ -71,18 +81,28 @@ def discord():
 
 @application.route('/mail', methods=['GET'])
 def mail():
+    return open('pages/mail.html', 'r', encoding='utf-8')
+
+@application.route('/sendMail', methods=['POST'])
+def sendMail():
+    data = request.get_json(silent=True)
     return "Not yet implemented"
+    
 
+@application.route('/listUsers', methods=['GET'])
+def listUsers():
+    users = db.listUsers()
+    userlist = []
+    for user in users:
+        userlist.append(user['mail'])
+    return jsonify(userlist)
 
-@application.route('/user/profile')
+@application.route('/token', methods=['POST'])
 def userProfile():
     authToken = request.headers["Authorization"].split()[1]
     data = jwt.decode(authToken, SECRET_KEY, algorithms=['HS256'])
     
-    userdata = db.getUser(data["id"])
-    
-    if data["id"] in userdata:
-        return jsonify(userdata)
+    return data
 
 
 if __name__ == '__main__':

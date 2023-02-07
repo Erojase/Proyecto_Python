@@ -25,13 +25,13 @@ class DbManager:
     def __init__(self) -> None:
         pass
     
-    def listUsers(self) -> list:
+    def listUsers(self) -> list[dict]:
         """
             Lista Los usuarios de la base de datos
         """
         coll = self.database["Usuarios"]
         list = []
-        for item in coll.find({}):
+        for item in coll.find({},{"_id":0}):
             list.append(item)
         return list
     
@@ -40,12 +40,13 @@ class DbManager:
         for item in coll.find({"id":id}):
             return item
     
-    def insertUser(self, usuario:dict):
+    def insertUser(self, usuario:Usuario):
+        insertDict = usuario.toJson()
         for user in self.listUsers():
-            if user["id"] == usuario["id"]:
+            if user["id"] == insertDict["id"]:
                 return "Not a valid id"
         coll = self.database["Usuarios"]
-        coll.insert_one(usuario)
+        coll.insert_one(insertDict)
     
     def uploadHorario(self, listado:list[dict]):
         pass

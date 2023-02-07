@@ -1,0 +1,68 @@
+.regCont{
+    display: none;
+
+    background-color: rgb(33, 204, 133);
+    position: absolute;
+    flex-direction: column;
+    justify-content: space-around;
+    text-align: center;
+    top: 25%;
+    height: 40vh;
+    width: 50%;
+    margin-left: 25%;
+    margin-right: 25%;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.bak{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    overflow: hidden;
+    z-index: -100;
+}
+
+.bak > img{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -100;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    overflow: hidden;
+}
+
+.logCont{
+    background-color: rgb(33, 204, 133);
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    text-align: center;
+    top: 25%;
+    height: 40vh;
+    width: 50%;
+    margin-left: 25%;
+    margin-right: 25%;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+input{
+    margin-left: 15%;
+    margin-right: 15%;
+    height: 5vh;
+    border-radius: 5px;
+    border: 0;
+}
+
+.toggle{
+    text-decoration: underline;
+    color: blue;
+    cursor: pointer;
+}
