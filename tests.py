@@ -3,6 +3,7 @@ from src.components.users import *
 from services.scheduler import *
 from src.services.dbManager import *
 from src.services.serviceManager import *
+from src.bot.bot import *
 
 from datetime import datetime as d 
 import json
@@ -73,3 +74,5 @@ if __name__ == '__main__':
     sm.CalendarTestRun()
     # print(h1.toJson())
 
+    bot.run(f'{TOKEN}')    
+ 
