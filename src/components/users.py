@@ -97,20 +97,26 @@ class Clase:
         self._profesor = profesor
         self._alumnos = alumnos
         
-    def Clave(self, value:str):
+    def Clave(self, value:str = None):
         if value != None:
             self._clave = value
         return self._clave
     
-    def Profesor(self, value:str):
+    def Profesor(self, value:str = None):
         if value != None:
             self._profesor = value
         return self._profesor
     
-    def Alumnos(self, value:list[Usuario]):
+    def Alumnos(self, value:list[Usuario] = None):
         if value != None:
             self._alumnos = value
         return self._alumnos
     
-    def addAlumno(self, value:Usuario):
+    def addAlumno(self, value:Usuario = None):
         self._alumnos.append(value)
+        
+    def toJson(self):
+        return {
+                "clave": self._clave,
+                "profesor": self._profesor
+            }   

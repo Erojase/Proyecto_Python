@@ -78,14 +78,15 @@ def asistencia():
 
 @application.route('/attendance', methods=['POST'])
 def getclase():
-    tipo = parseToken(request.args.get('token'))
+    token = request.headers["Authorization"].split()[1]
+    tipo = parseToken(token)
     if tipo['tipo'] == Tipo.Profesor.name:
         data = request.get_json(silent=True)
         profe:str = tipo['user']
         return sm.Crear_clase(data,profe)
     elif tipo['tipo'] == Tipo.Alumno.name:
         data = request.get_json(silent=True)
-        return sm.buscar_clase(data)
+        return jsonify(sm.Buscar_clase(data).toJson())
 
 @application.route('/parking', methods=['GET'])
 def parking():
