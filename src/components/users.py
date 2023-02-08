@@ -89,10 +89,10 @@ class Usuario:
 class Clase:
     
     _clave: str
-    _profesor: Profesor
+    _profesor: str
     _alumnos: list[Usuario]
     
-    def __init__(self, clave:str = None, profesor:Profesor = None, alumnos:list[Usuario] = None) -> None:
+    def __init__(self, clave:str = None, profesor:str = None, alumnos:list[Usuario] = None) -> None:
         self._clave = clave
         self._profesor = profesor
         self._alumnos = alumnos
@@ -102,7 +102,7 @@ class Clase:
             self._clave = value
         return self._clave
     
-    def Profesor(self, value:Profesor):
+    def Profesor(self, value:str):
         if value != None:
             self._profesor = value
         return self._profesor

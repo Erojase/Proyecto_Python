@@ -69,12 +69,23 @@ def report():
 
 @application.route('/attendance', methods=['GET'])
 def asistencia():
-    
     tipo = parseToken(request.args.get('token'))
     if tipo['tipo'] == Tipo.Profesor.name:
         return open('pages/attender_profesor.html', 'r', encoding='utf-8')
     elif tipo['tipo'] == Tipo.Alumno.name:
         return open('pages/attender_alumno.html', 'r', encoding='utf-8')
+
+
+@application.route('/attendance', methods=['POST'])
+def getclase():
+    tipo = parseToken(request.args.get('token'))
+    if tipo['tipo'] == Tipo.Profesor.name:
+        data = request.get_json(silent=True)
+        profe:str = tipo['user']
+        return sm.Crear_clase(data,profe)
+    elif tipo['tipo'] == Tipo.Alumno.name:
+        data = request.get_json(silent=True)
+        return sm.buscar_clase(data)
 
 @application.route('/parking', methods=['GET'])
 def parking():
