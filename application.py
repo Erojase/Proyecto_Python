@@ -68,16 +68,18 @@ def taskerr():
 
 @application.route("/tasker",methods=['POST'])
 def tasker():
+    token = request.headers['Authorization'].split()[1]
+    user = parseToken(token)
     data = request.get_json(silent=True)
    
-    crearTarea(data)
+    
+    tarea = crearTarea(data,user)
     if "titulo" not in data or "tarea" not in data:
         return jsonify("Expected more from you"), 400
+    
+    db.insertTarea(tarea)
     return 
 # ---------------------------------------------------------------------------------------------------
-
-
-
 
 
 

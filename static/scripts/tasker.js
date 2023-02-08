@@ -1,32 +1,30 @@
 let headersList = {
-    "Accept": "*/*",
-    "Content-Type": "application/json"
-}
+    Accept: "*/*",
+    "Content-Type": "application/json",
+  };
 
-document.addEventListener('DOMContentLoaded', ()=>{})
-
+document.addEventListener("DOMContentLoaded", () => {});
 
 
 async function subirtarea() {
-let titulo = document.getElementById("titulo").value;
-let tarea = document.getElementById("tarea").value;
-let content = JSON.stringify({
-    "titulo": titulo, //esto hatml
-    "tarea": tarea //esto lo coje el html
-})
-let response = await fetch('/tasker', { 
-            method: "POST",
-            headers: headersList,
-            body: content 
-        });
+    let titulo = document.getElementById("titulo").value;
+    let tarea = document.getElementById("tarea").value;
 
-let data = await response.text();
-console.log(data);
-}
+    let token = window.localStorage.getItem('token');
+    headersList["Authorization"] = "Bearer "+token;
+    let content = JSON.stringify({
+      titulo: titulo, //esto hatml
+      tarea: tarea, //esto lo coje el html
+    });
+    let response = await fetch("/tasker", {
+      method: "POST",
+      headers: headersList,
+      body: content,
+    });
 
-
-
-
+    let data = await response.text();
+    console.log(data);
+  }
 
 // async function login() {
 //     let username = document.getElementById("name").value;
@@ -35,10 +33,10 @@ console.log(data);
 //         "user": username,
 //         "password": password
 //     });
-//     let response = await fetch('/login', { 
+//     let response = await fetch('/login', {
 //         method: "POST",
 //         headers: headersList,
-//         body: content 
+//         body: content
 //     });
 
 //     let data = await response.text();

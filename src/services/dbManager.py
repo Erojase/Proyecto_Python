@@ -35,6 +35,14 @@ class DbManager:
             list.append(item)
         return list
     
+    def listTareas(self) -> list[dict]:
+        coll = self.database["Tareas"]
+        list = []
+        for item in coll.find({},{"_id":0}):
+            list.append(item)
+        return list
+        
+    
     def getUser(self, id:int) -> dict:
         coll = self.database["Usuarios"]
         for item in coll.find({"id":id}):
@@ -47,7 +55,19 @@ class DbManager:
                 return "Not a valid id"
         coll = self.database["Usuarios"]
         coll.insert_one(insertDict)
+        
     
+    def insertTarea(self, tarea:Tarea):
+        insertDict = json.loads(tarea)
+        njlk =  self.listTareas()
+        for tarea in njlk:
+            if tarea["id"] == insertDict["id"]:
+                return "Not a valid id"
+        coll = self.database["Tareas"]
+        coll.insert_one(insertDict)
+        
+        
+        
     def uploadHorario(self, listado:list[dict]):
         pass
     

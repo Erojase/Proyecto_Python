@@ -1,38 +1,28 @@
 from src.components.colegio import *
 from src.components.users import *
+from src.services.dbManager import DbManager
 import json 
 import datetime
 
-
-
-
-
-
-
-def __init__(self) -> None:
-    pass
-
-
+db = DbManager()
 
 
 
  # profesores publican tareas
-def crearTarea(datos:str,):
- 
+def crearTarea(datos:str,user:str):
     titulo = datos["titulo"]
     asignacion = datos["tarea"]
+    Usuario = user["id"]
+
+    info = db.getUser(Usuario)
+    profe = info["nombre"] #poner "user"
     
-    hora_actual = datetime.datetime.now()
-    # busca quien inicio secion (profesor)
-    # profe =  tengo que pillara el json que me da edu en appliation
-    
-    tarea = json.loads({
+    tarea = {
     "profesor": profe,
-    "tiempo": hora_actual,
     "cuerpo": asignacion, 
     "titulo": titulo
-})
-    return json.loads(tarea)
+}        
+    return json.dumps(tarea)
 
 
 # alumno sube respuesta de la tarea

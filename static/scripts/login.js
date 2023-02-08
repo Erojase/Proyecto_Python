@@ -34,21 +34,5 @@ async function login() {
     window.localStorage.setItem("token", data);
 }
 
-async function login() {
-    let username = document.getElementById("name").value;
-    let password = MD5.generate(document.getElementById("passwd").value)
-    let content = JSON.stringify({
-        "user": username,
-        "password": password
-    });
-    let response = await fetch('/login', { 
-        method: "POST",
-        headers: headersList,
-        body: content 
-    });
 
-    let data = await response.text();
-    console.log(data);
-    window.location.href('/login');
-}
 

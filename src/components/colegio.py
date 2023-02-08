@@ -176,37 +176,41 @@ class Hora_horario:
     
 
 class Tarea:
-    _nombre: str
+    _titulo:str
+    _tarea:str
     _tiempo:datetime.datetime
     _profesor: Profesor
 
 
-    def __init__(self, Nombre:str, tiempo:datetime.datetime, profesor:Profesor):
+    def __init__(self, titulo:str,tarea:str,tiempo:datetime.datetime, profesor:Profesor):
         pass
     
-    def Nombre(self, value:str=None):
+    def Titulo(self, value:str=None):
         if value != None:
-            self._nombre = value
-        return self._nombre
-
+            self._titulo = value
+        return self._titulo
 
     def Tiempo(self, value:datetime.datetime=None):
             if value != None:
                 self._tiempo = value 
             return self._tiempo
 
-
     def Profesor(self, value:Profesor=None):
         if value != None:
             self._profesor = value 
         return self._profesor
-
+    
+    def Tarea(self, value:str=None):
+        if value != None:
+            self._tarea = value
+        return self._tarea
 
     def toJson(self) -> str:
         return json.dumps({
-            "nombre":str,
+            "titulo":self._titulo,
             "tiempo":self._tiempo,
-            "profesor":self._profesor.Nombre()
+            "profesor":self._profesor.Nombre(),
+            "tarea":self._tarea
         }, default=str)
 
     
