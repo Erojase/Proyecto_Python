@@ -31,7 +31,10 @@ function asistencia() {
 }
 
 function report(){
-    window.location.href = '/tasker';
+    let token = window.localStorage.getItem("token");
+    if (token != null) {
+        window.location.href = '/tasker?token='+token;
+    }
 }
 
 function discord(){
