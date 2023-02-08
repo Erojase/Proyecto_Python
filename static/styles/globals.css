@@ -4,8 +4,20 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
-body{
-    background-color: rgb(48, 67, 85);
+.bak{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    overflow: hidden;
+    z-index: -100;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    background: rgb(13,11,50);
+    background: linear-gradient(219deg, rgba(13,11,50,1) 0%, rgba(9,47,121,1) 36%, rgba(33,245,171,1) 100%);
 }
 
 ul{

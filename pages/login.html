@@ -12,14 +12,11 @@
     <title>Login</title>
 </head>
 <body>
-    <div class="bak">
-        <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/23298a55526729.5988857400116.jpg" alt="">
-    </div>
-
+    <div class="bak"></div>
     <div class="nav" >
         <ul>
             <li>
-                Buenas tardes
+                <a href="/web">Inicio</a>
             </li>
             <li>
                 Buenas noches
@@ -48,13 +45,16 @@
 
     <div class="regCont" id="register">
 
-        <label for="name">Nombre:</label>
-        <input type="text" id="name" >
+        <label for="name">Nombre de Usuario:</label>
+        <input type="text" id="reg_name" >
 
         <label for="passwd">Contraseña:</label>
-        <input type="password" id="passwd">
+        <input type="password" id="reg_passwd">
 
-        <button onclick="login()">Log In</button>
+        <label for="re_reg_passwd">Repite ls contraseña:</label>
+        <input type="password" id="re_reg_passwd">
+
+        <button onclick="register()">Log In</button>
         <div>Ya tienes una cuenta? <span class="toggle" onclick="toggle('log')">Inicia Sesión</span></div> 
         
     </div>
