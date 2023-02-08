@@ -1,6 +1,6 @@
 from src.components.colegio import *
 from src.components.users import *
-from services.scheduler import *
+from src.services.scheduler import *
 from src.services.dbManager import *
 from src.services.serviceManager import *
 from src.bot.bot import *
@@ -62,17 +62,17 @@ grp4 = Grupo("Dam-2d" ,list_asignaturas1, prof1, list_profesores1, "TARDE")
 h1:Hora_horario = Hora_horario(asig1, d(2023, 10, 21, 13, 45, 00, 00), grp1, prof1)
 
 if __name__ == '__main__':
-    bd:DbManager = DbManager()
+    # bd:DbManager = DbManager()
 
     
-    prof56 = Profesor(3, False, "David", hor_prof3, list_prof3)
-    usr1 = Usuario(3, "deivid", "David", "Castellanos", "7eaa9d9fb331b06da210375c1be0d539", "david.sanchez.castellanos@alumnojoyfe.iepgroup.es", Tipo.Profesor, prof56)
+    # prof56 = Profesor(3, False, "David", hor_prof3, list_prof3)
+    # usr1 = Usuario(3, "deivid", "David", "Castellanos", "7eaa9d9fb331b06da210375c1be0d539", "david.sanchez.castellanos@alumnojoyfe.iepgroup.es", Tipo.Profesor, prof56)
 
 
-    # print(bd.listUsers())
-    sm:ServiceManager = ServiceManager()
-    sm.CalendarTestRun()
-    # print(h1.toJson())
+    # # print(bd.listUsers())
+    # sm:ServiceManager = ServiceManager()
+    # sm.CalendarTestRun()
+    # # print(h1.toJson())
 
     bot.run(f'{TOKEN}')    
  
