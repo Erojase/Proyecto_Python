@@ -25,17 +25,17 @@ class DbManager:
     def __init__(self) -> None:
         pass
     
-    def listUsers(self) -> list:
+    def listUsers(self) -> list[dict]:
         """
             Lista Los usuarios de la base de datos
         """
         coll = self.database["Usuarios"]
         list = []
-        for item in coll.find({}):
+        for item in coll.find({},{"_id":0}):
             list.append(item)
         return list
     
-    def getUser(self, id:int) -> list[dict]:
+    def getUser(self, id:int) -> dict:
         coll = self.database["Usuarios"]
         for item in coll.find({"id":id}):
             return item

@@ -1,16 +1,16 @@
 from flask import Flask, request, jsonify
 import jwt
-from datetime import datetime, timedelta
+from datetime import datetime as dt, timedelta
 from src.services.serviceManager import ServiceManager
 from src.services.dbManager import DbManager
 from src.services.tasker import *
+from src.components.users import *
 
 application = Flask(__name__)
 db = DbManager()
 sm = ServiceManager()
 
 SECRET_KEY = "JOYFE"
-
 
 @application.route('/', methods=['GET','POST'])
 def root():
@@ -35,8 +35,10 @@ def login():
     # nombre_de_profesor = data["nombre"]
     
     for user in db.listUsers():
-        if user["nombre"] == data["user"] and user["password"] == data["password"]:
-            tokenData = {"exp": datetime.utcnow() + timedelta(seconds=1)} #expira en 1 segundo
+        if user["nick"] == data["user"] and user["password"] == data["password"]:
+            tokenData = {"exp": dt.utcnow() + timedelta(days=1)} #expira en 1 dia
+            data["id"] = user["id"]
+            data["tipo"] = user["tipo"]
             tokenData.update(data)
             return jwt.encode(tokenData, SECRET_KEY, algorithm='HS256') # Exactamente asi es en encode
             
@@ -90,9 +92,18 @@ def ponerTatea():
     # sm.ponerTarea(data['Tarea'])
     return "Not yet implemented"
 
-@application.route('/asistencia', methods=['GET'])
-def asistencia():
+@application.route('/report', methods=['GET'])
+def report():
     return "Not yet implemented"
+
+@application.route('/attendance', methods=['GET'])
+def asistencia():
+    
+    tipo = parseToken(request.args.get('token'))
+    if tipo['tipo'] == Tipo.Profesor.name:
+        return open('pages/attender_profesor.html', 'r', encoding='utf-8')
+    elif tipo['tipo'] == Tipo.Alumno.name:
+        return open('pages/attender_alumno.html', 'r', encoding='utf-8')
 
 @application.route('/parking', methods=['GET'])
 def parking():
@@ -120,16 +131,18 @@ def listUsers():
         userlist.append(user['mail'])
     return jsonify(userlist)
 
-@application.route('/user/profile')
-def userProfile():
+@application.route('/token', methods=['POST'])
+def token():
     authToken = request.headers["Authorization"].split()[1]
-    data = jwt.decode(authToken, SECRET_KEY, algorithms=['HS256'])
+    data = parseToken(authToken)
     
-    userdata = db.getUser(data["id"])
-    
-    if data["id"] in userdata:
-        return jsonify(userdata)
+    return data
 
+
+def parseToken(token:str):
+    data = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+    
+    return data
 
 if __name__ == '__main__':
     application.run(debug=True,host='0.0.0.0')

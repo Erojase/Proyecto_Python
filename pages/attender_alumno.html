@@ -5,10 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel= "stylesheet" type= "text/css" href="static/styles/globals.css">
-    <link rel= "stylesheet" type= "text/css" href="static/styles/mail.css">
-    <script src="static/scripts/mail.js"></script>
+    <link rel= "stylesheet" type= "text/css" href="static/styles/attender.css">
     <script src="static/scripts/token.js"></script>
-    <title>Mail</title>
+    <script src="static\scripts\attender.js"></script>
+    <title>Asistencias</title>
 </head>
 <body>
     <div class="bak"></div>
@@ -29,17 +29,10 @@
         </ul>
     </div>
 
-
-    <div class="mail">
-
-
-        <select id="reciever">
-            <option value="broadcast">A todos</option>
-        </select>
-        <input type="text" id="subject" placeholder="Asunto:">
-        <textarea id="body" cols="30" rows="10" placeholder="Cuerpo:" ></textarea>
-        <button onclick="sendMail()">Enviar</button>
-
+    <div class="alum-site">
+        <input type="text" id="cod_profe">
+        <button name="introducir" onclick="connect_clase_Click()">Introducir</button>
     </div>
+
 </body>
 </html>
