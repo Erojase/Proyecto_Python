@@ -45,16 +45,25 @@
 
     <div class="regCont" id="register">
 
-        <label for="name">Nombre de Usuario:</label>
+        <label for="reg_name">Nombre de Usuario:</label>
         <input type="text" id="reg_name" >
 
-        <label for="passwd">Contraseña:</label>
+        <label for="tipo">Tipo de Usuario:</label>
+        <select name="tipo" id="tipo">
+            <option value="Alumno">Alumno</option>
+            <option value="Profesor">Profesor</option>
+        </select>
+
+        <label for="reg_mail">Correo: </label>
+        <input type="text" id="reg_mail" >
+
+        <label for="reg_passwd">Contraseña:</label>
         <input type="password" id="reg_passwd">
 
         <label for="re_reg_passwd">Repite ls contraseña:</label>
         <input type="password" id="re_reg_passwd">
 
-        <button onclick="register()">Log In</button>
+        <button onclick="register()">Register</button>
         <div>Ya tienes una cuenta? <span class="toggle" onclick="toggle('log')">Inicia Sesión</span></div> 
         
     </div>

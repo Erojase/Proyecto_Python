@@ -44,6 +44,22 @@ def login():
     #         jwt.decode(tokenData, SECRET_KEY, algorithms=['HS256']) Exactamente asi es el decode
 # --------------------------------------------------------------------------------------------------
 
+@application.route('/register', methods=['POST'])
+def register():
+    data = request.get_json(silent=True)
+    if "user" not in data or "password" not in data:
+        return jsonify("Expected more from you"), 400
+
+    maxId = 0
+    for user in db.listUsers():
+        if user["id"] > maxId:
+            maxId = user["id"]
+    if data["tipo"] == Tipo.Alumno.name: 
+        tmpUsr:Usuario = Usuario(maxId + 1, data["user"], "", "", data["password"], data["mail"], Tipo.Alumno)
+    else:
+        tmpUsr:Usuario = Usuario(maxId + 1, data["user"], "", "", data["password"], data["mail"], Tipo.Profesor)
+    return db.insertUser(tmpUsr)
+
 @application.route('/testAction', methods=['POST'])
 def testAction():
     print("Test Action Triggered")
