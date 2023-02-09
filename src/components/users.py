@@ -90,9 +90,9 @@ class Clase:
     
     _clave: str
     _profesor: str
-    _alumnos: list[Usuario]
+    _alumnos: list[str]
     
-    def __init__(self, clave:str = None, profesor:str = None, alumnos:list[Usuario] = None) -> None:
+    def __init__(self, clave:str = None, profesor:str = None, alumnos:list[str] = None) -> None:
         self._clave = clave
         self._profesor = profesor
         self._alumnos = alumnos
@@ -107,16 +107,22 @@ class Clase:
             self._profesor = value
         return self._profesor
     
-    def Alumnos(self, value:list[Usuario] = None):
+    def Alumnos(self, value:list[str] = None):
         if value != None:
             self._alumnos = value
         return self._alumnos
     
-    def addAlumno(self, value:Usuario = None):
-        self._alumnos.append(value)
+    def addAlumno(self, value:str = None):
+        if self.Alumnos() is not None:
+            alumnos:list[str] = self.Alumnos()
+        else:
+            alumnos:list[str] = []
+        alumnos.append(value)
+        self._alumnos = alumnos
         
     def toJson(self):
         return {
                 "clave": self._clave,
-                "profesor": self._profesor
+                "profesor": self._profesor,
+                "alumnos": self._alumnos
             }   

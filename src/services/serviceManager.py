@@ -11,8 +11,11 @@ class ServiceManager:
     def Crear_clase(self, clave:str, profe:str) -> None:
         return crear_clase(clave, profe)
     
-    def Buscar_clase(self, clave:str) -> Clase:
-        return buscar_clase(clave)
+    def Buscar_clase_clave(self, clave:str) -> Clase:
+        return buscar_clase_clave(clave)
+    
+    def Buscar_clase_profe(self, profe:str) -> Clase:
+        return buscar_clase_profe(profe)
     
     def CalendarTestRun(self) -> dict:
         test = testRun()

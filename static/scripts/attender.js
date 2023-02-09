@@ -3,6 +3,12 @@ let headersList = {
     "Content-Type": "application/json"
 }
 
+document.addEventListener('DOMContentLoaded', ()=>{
+    setInterval(() => {
+        add_alumno();
+    }, 1000);
+})
+
 async function connect_clase_Click() {
     
     let clave = JSON.stringify(document.getElementById("cod_profe").value);
@@ -15,13 +21,11 @@ async function connect_clase_Click() {
         headers: headersList,
         body: clave
     });
-
-
-
+    
     let data = await response.text();
     console.log(data);
 
-    add_alumno()
+    // add_alumno()
 
 }
 
@@ -49,20 +53,39 @@ async function add_alumno() {
     let response = await fetch('/token', { 
         method: "POST",
         headers: headersList,
-    });
+     });
 
     let data = await response.text();
 
-    console.log(data);
-    console.log(JSON.parse(data)["user"]);
+    if (JSON.parse(data)["tipo"] == 'Profesor') {
+            headersList["Authorization"] = "Bearer "+token;
+        let responce = await fetch('/attendance/getclas', { 
+            method: "POST",
+            headers: headersList,
+            body: JSON.parse(data)["user"]
+        });
+
+        let dato = await responce.text();
+
+        console.log(dato);
+    
+        let ul = document.getElementById('lista_alumnos');
+        ul.innerHTML = '';
+    
+        if (dato != '' && JSON.parse(dato)['alumnos'] != null) {
+            JSON.parse(dato)['alumnos'].forEach(alumno => {
+                let li = document.createElement('li');
+                li.innerText = alumno;
+                li.appendChild(document.createTextNode("Imagen"))    
+                ul.appendChild(li)
+            });
+        }
+        
+    }
+
     
 
-    var ul = document.getElementById('lista_alumnos');
-    var li = document.createElement('li');
-    li.appendChild(document.createTextNode(JSON.parse(data)["user"]));
-    li.appendChild(document.createTextNode('imagen de este alumno'));
-    ul.appendChild(li);
-    ul.style.visibility = "hidden";
+    // ul.style.visibility = "hidden";
 
 }
 
