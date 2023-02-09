@@ -8,6 +8,7 @@
     <link rel= "stylesheet" type= "text/css" href="static/styles/index.css">
     <script src="static/scripts/index.js"></script>
     <script src="static/scripts/token.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <title>Abstergo</title>
 </head>
 <body>
@@ -28,35 +29,60 @@
             </li>
         </ul>
     </div>
-        <div class="cont">
-            <!-- <div class="bot">
-                <img src="" alt="image not found">
-                <button onclick="testActions()">Test Action</button>
-            </div> -->
-            <div class="bot" onclick="calendario()">
-                <img src="static/images/calendarios.png" alt="image not found">
-                <button>Calendario</button>
+
+    <div class="slider">
+        <div class="circular-slider circular-slider-1">
+          <div class="wrapper">
+            <div class="controls">
+              <div class="controls__left">
+                <div class="icon-wrapper"><i class="far fa-arrow-alt-circle-left"></i></div>
+              </div>
+              <div class="controls__right">
+                <div class="icon-wrapper"><i class="far fa-arrow-alt-circle-right"></i></div>
+              </div>
+              <div class="controls__autoplay controls__autoplay_running">
+                <div class="icon-wrapper">
+                  <div class="pause"><i class="far fa-pause-circle"></i></div>
+                  <div class="run"><i class="far fa-play-circle"></i></div>
+                </div>
+              </div>
             </div>
-            <div class="bot" onclick="parking()" >
-                <img src="static/images/parking.jpg" alt="image not found">
-                <button>Parking</button>
+            <div class="slides-holder">
+              <div class="slides-holder__item slides-holder__item_active" onclick="calendario()">
+                <img src="static/images/calendarios.png" alt="image not found"></div>
+              <div class="slides-holder__item" onclick="asistencia()">
+                <img src="static/images/check.jpg" alt="image not found"></div>
+              <div class="slides-holder__item" onclick="report()">
+                <img src="static/images/report.jpg" alt="image not found"></div>
+              <div class="slides-holder__item" onclick="mail()">
+                <img src="static/images/mail.jpg" alt="image not found"></div>
+              <div class="slides-holder__item"  onclick="discord()">
+                <img src="static/images/bot_discord.jpg" alt="image not found"></div>
             </div>
-            <div class="bot" onclick="asistencia()">
-                <img src="static/images/check.jpg" alt="image not found">
-                <button>Asistencia</button>
+            <div class="descriptions">
+              <div class="descriptions__item descriptions__item_visible">
+                <h1>Generador de Horarios</h1>
+                <p class="description">Crea horarios para distintos grupos con varias asignaturas y profesores</p>
+              </div>
+              <div class="descriptions__item">
+                <h1>Video Asistencia</h1>
+                <p class="description">TEXTO AQUI</p>
+              </div>
+              <div class="descriptions__item">
+                <h1>Entrega de Trabajos</h1>
+                <p class="description">TEXTO AQUI</p>
+              </div>
+              <div class="descriptions__item">
+                <h1>Email Marketing</h1>
+                <p class="description">TEXTO AQUI</p>
+              </div>
+              <div class="descriptions__item">
+                <h1>Discord Bot</h1>
+                <p class="description">TEXTO AQUI</p>
+              </div>
             </div>
-            <div class="iline"></div><div class="iline"></div><div class="iline"></div>
-            <div class="bot" onclick="report()">
-                <img src="static/images/report.jpg" alt="image not found">
-                <button>entrega de trabajos</button>
-            </div>
-            <div class="bot" onclick="mail()">
-                <img src="static/images/mail.jpg" alt="image not found">
-                <button> email marketing</button>
-            </div>
-            <div class="bot" onclick="discord()">
-                <img src="static/images/bot_discord.jpg" alt="image not found">
-                <button>bot discord </button>
-            </div>
+          </div>
+        </div>
+      </div>
 </body>
 </html>

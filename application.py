@@ -80,9 +80,9 @@ def asistencia():
 def parking():
     return "Not yet implemented"
 
-@application.route('/discord', methods=['GET'])
+@application.route('/bot', methods=['GET'])
 def discord():
-    return "Not yet implemented"
+    return open('pages/bot.html', 'r', encoding='utf-8')
 
 @application.route('/mail', methods=['GET'])
 def mail():
