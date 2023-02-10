@@ -3,7 +3,9 @@ let headersList = {
     "Content-Type": "application/json"
 }
 
-document.addEventListener('DOMContentLoaded', ()=>{})
+document.addEventListener('DOMContentLoaded', ()=>{
+
+});
 
 function toggle(obj) {
     if (obj == "reg") {
@@ -17,12 +19,16 @@ function toggle(obj) {
 
 
 async function login() {
-    let username = document.getElementById("name").value;
-    let password = MD5.generate(document.getElementById("passwd").value)
+    let username = document.getElementById("log_usename").value;
+    let password = MD5.generate(document.getElementById("log_passwd").value)
     let content = JSON.stringify({
         "user": username,
         "password": password
     });
+    if (username.length < 3 || document.getElementById("log_passwd").value.length < 8) {
+        console.error("Esto no va asi campeón");
+        return "ja"
+    }
     let response = await fetch('/login', { 
         method: "POST",
         headers: headersList,
