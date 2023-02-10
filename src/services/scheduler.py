@@ -158,7 +158,7 @@ def generar(_grupos:list[Grupo], numero_clases_dia:int=7) -> list[semana]:
         aux = 0
         cont3 = 0
         chiv = True
-        pulp = False
+        flag = False
         camb = False
         cont = 0
 
@@ -174,7 +174,6 @@ def generar(_grupos:list[Grupo], numero_clases_dia:int=7) -> list[semana]:
             for i in range(5):
                 for j in range(numero_clases_dia):
                     if len(prf_h[i][j].split('-'))-1 == cont:
-                        flug = False
                         coinc_hr = []
                         coinc_p = []
                         for pro in grupos.Profesores():
@@ -192,11 +191,11 @@ def generar(_grupos:list[Grupo], numero_clases_dia:int=7) -> list[semana]:
                                     aux_hr = h_restantes[coinc_hr[t]]
                                     aux_p = coinc_p[t]
                                     aux = coinc_hr[t]
-                            pulp = False
+                            flag = False
                             for u in range(j):
                                 if horario[i][u].Profesor() == None:
-                                    pulp = True
-                            if pulp == False:
+                                    flag = True
+                            if flag == False:
                                 camb = True
                                 horario[i][j].Profesor(aux_p)
                                 ind = '-' + str(horario[i][j].Profesor().Id())

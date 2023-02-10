@@ -85,12 +85,36 @@ def report():
 
 @application.route('/attendance', methods=['GET'])
 def asistencia():
-    
     tipo = parseToken(request.args.get('token'))
     if tipo['tipo'] == Tipo.Profesor.name:
         return open('pages/attender_profesor.html', 'r', encoding='utf-8')
     elif tipo['tipo'] == Tipo.Alumno.name:
         return open('pages/attender_alumno.html', 'r', encoding='utf-8')
+
+
+@application.route('/attendance', methods=['POST'])
+def crear_buscar_clase():
+    token = request.headers["Authorization"].split()[1]
+    tipo = parseToken(token)
+    if tipo['tipo'] == Tipo.Profesor.name:
+        data = request.get_json(silent=True)
+        profe:str = tipo['user']
+        return sm.Crear_clase(data,profe)
+    elif tipo['tipo'] == Tipo.Alumno.name:
+        data = request.get_json(silent=True)
+        if sm.Buscar_clase_clave(data) != None:
+            if  sm.Buscar_clase_clave(data).Alumnos() == None or tipo['user'] not in sm.Buscar_clase_clave(data).Alumnos():
+                sm.Buscar_clase_clave(data).addAlumno(tipo['user'])
+            return jsonify(sm.Buscar_clase_clave(data).toJson())
+        return ''
+
+@application.route('/attendance/getclas', methods=['POST'])
+def getclase():
+    token = request.headers["Authorization"].split()[1]
+    tipo = parseToken(token)
+    if sm.Buscar_clase_profe(tipo['user']) != None:
+        return jsonify(sm.Buscar_clase_profe(tipo['user']).toJson())
+    return ''
 
 @application.route('/parking', methods=['GET'])
 def parking():
