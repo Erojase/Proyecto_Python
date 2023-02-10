@@ -1,0 +1,25 @@
+.mail{
+    background-color: antiquewhite;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgb(255, 0, 0);
+    position: absolute;
+    width: 80%;
+    height: 50vh;
+    margin: 10%;
+    padding: 2%;
+}
+
+.mail > input{
+    height: 30px;
+}
+
+.mail > textarea{
+    height: 80%;
+    resize: none;
+}
+
+.mail > button{
+    cursor: pointer;
+    height: 10%;
+}

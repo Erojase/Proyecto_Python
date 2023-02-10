@@ -1,4 +1,3 @@
-
 let headersList = {
     "Accept": "*/*",
     "Content-Type": "application/json"
@@ -23,7 +22,12 @@ function Parking() {
 }
 
 function asistencia() {
-    window.location.href = '/asistencia';
+    let token = window.localStorage.getItem("token");
+    console.log('/attendance?token='+token);
+    if (token != null) {
+        window.location.href = '/attendance?token='+token;
+    }
+    
 }
 
 function report(){
@@ -35,5 +39,5 @@ function discord(){
 }
 
 function mail(){
-    window.location.href = '/report';
+    window.location.href = '/mail';
 }

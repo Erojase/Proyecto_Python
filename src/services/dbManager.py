@@ -31,22 +31,22 @@ class DbManager:
         """
         coll = self.database["Usuarios"]
         list = []
-        for item in coll.find({}):
+        for item in coll.find({},{"_id":0}):
             list.append(item)
         return list
     
-    def getUser(self, id:int) -> list[dict]:
+    def getUser(self, id:int) -> dict:
         coll = self.database["Usuarios"]
         for item in coll.find({"id":id}):
             return item
     
-    def insertUser(self, usuario:dict):
-        ids = []
+    def insertUser(self, usuario:Usuario):
+        insertDict = usuario.toJson()
         for user in self.listUsers():
-            ids.append(user["id"])
-        usuario["id"] = max(ids)+1
+            if user["id"] == insertDict["id"]:
+                return "Not a valid id"
         coll = self.database["Usuarios"]
-        coll.insert_one(usuario)
+        coll.insert_one(insertDict)
     
     def uploadHorario(self, listado:list[dict]):
         pass
