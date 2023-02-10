@@ -22,16 +22,16 @@ function Parking() {
 }
 
 function asistencia() {
-    let token = window.localStorage.getItem("token");
-    console.log('/attendance?token='+token);
-    if (token != null) {
-        window.location.href = '/attendance?token='+token;
-    }
+    window.location.href = '/attendance';
+
     
 }
 
 function report(){
-    window.location.href = '/report';
+    let token = window.localStorage.getItem("token");
+    if (token != null) {
+        window.location.href = '/tasker?token='+token;
+    }
 }
 
 function discord(){

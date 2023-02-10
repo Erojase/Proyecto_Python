@@ -175,6 +175,45 @@ class Hora_horario:
         }, default=str)
     
 
+class Tarea:
+    _titulo:str
+    _tarea:str
+    _tiempo:datetime.datetime
+    _profesor: Profesor
+
+
+    def __init__(self, titulo:str,tarea:str,tiempo:datetime.datetime, profesor:Profesor):
+        pass
+    
+    def Titulo(self, value:str=None):
+        if value != None:
+            self._titulo = value
+        return self._titulo
+
+    def Tiempo(self, value:datetime.datetime=None):
+            if value != None:
+                self._tiempo = value 
+            return self._tiempo
+
+    def Profesor(self, value:Profesor=None):
+        if value != None:
+            self._profesor = value 
+        return self._profesor
+    
+    def Tarea(self, value:str=None):
+        if value != None:
+            self._tarea = value
+        return self._tarea
+
+    def toJson(self) -> str:
+        return json.dumps({
+            "titulo":self._titulo,
+            "tiempo":self._tiempo,
+            "profesor":self._profesor.Nombre(),
+            "tarea":self._tarea
+        }, default=str)
+
+    
 class dia:
     _horario: list[Hora_horario] 
     _dia_semana: str

@@ -3,6 +3,7 @@ import jwt
 from datetime import datetime as dt, timedelta
 from src.services.serviceManager import ServiceManager
 from src.services.dbManager import DbManager
+from src.services.tasker import *
 from src.components.users import *
 
 application = Flask(__name__)
@@ -30,6 +31,8 @@ def login():
     data = request.get_json(silent=True)
     if "user" not in data or "password" not in data:
         return jsonify("Expected more from you"), 400
+    
+    # nombre_de_profesor = data["nombre"]
     
     for user in db.listUsers():
         if user["nick"] == data["user"] and user["password"] == data["password"]:
@@ -68,6 +71,33 @@ def testAction():
 @application.route('/calendario', methods=['GET'])
 def calendario():
     return open('pages/calendar.html', 'r', encoding='utf-8')
+
+
+
+
+# ---------------------------------------------------------------------------------------------------
+
+
+@application.route("/tasker",methods=['GET'])
+def taskerr():
+    return open('pages/tasker.html', 'r', encoding='utf-8')
+
+@application.route("/tasker",methods=['POST'])
+def tasker():
+    token = request.headers['Authorization'].split()[1]
+    user = parseToken(token)
+    data = request.get_json(silent=True)
+  
+    tarea = crearTarea(data,user)
+    if "titulo" not in data or "tarea" not in data:
+        return jsonify("Expected more from you"), 400
+    
+    db.insertTarea(tarea)
+    return 200
+# ---------------------------------------------------------------------------------------------------
+
+
+
 
 @application.route('/calTest', methods=['GET'])
 def calTest():
