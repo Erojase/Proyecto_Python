@@ -16,8 +16,10 @@ def crearTarea(datos:str,user:str):
 
     info = db.getUser(Usuario)
     profe = info["nombre"] #poner "user"
+    id = db.getLastId()
     
     tarea = {
+    "id" : id,
     "profesor": profe,
     "cuerpo": asignacion, 
     "titulo": titulo

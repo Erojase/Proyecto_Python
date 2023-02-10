@@ -67,6 +67,14 @@ class DbManager:
         coll.insert_one(insertDict)
         
         
+    #revisar por edu
+    def getLastId(self) -> int:
+        coll = self.database["Tareas"]
+        last_id = coll.find({},{"_id":0, "id":1}).sort("id", -1).limit(1)
+        for id in last_id:
+            print(id["id"])
+        # for i in last_id:
+            
         
     def uploadHorario(self, listado:list[dict]):
         pass
