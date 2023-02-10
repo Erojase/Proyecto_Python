@@ -18,10 +18,6 @@ function calendario() {
     window.location.href = '/calendario';
 }
 
-function Parking() {
-    window.location.href = '/parking';
-}
-
 function asistencia() {
     let token = window.localStorage.getItem("token");
     console.log('/attendance?token='+token);
