@@ -1,6 +1,6 @@
 from src.components.colegio import *
 from src.components.users import *
-from services.scheduler import *
+from src.services.scheduler import *
 from src.services.dbManager import *
 from src.services.serviceManager import *
 
