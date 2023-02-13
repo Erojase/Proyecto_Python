@@ -23,7 +23,15 @@
         </ul>
     </div>
     
-    <button onclick="testData()">Cargar datos de prueba</button>
+    <div class="tabCont">
+        <div class="tabList">
+            <div>
+                <li class="tabBtn tabMain" id="main" onclick="toggleTab(this, 'main')">Main</li>
+                <li class="tabBtn tabData" onclick="toggleTab(this, 'data')">Insert Data</li>
+            </div>
+        </div>
+        <div class="tab main">
+            <button onclick="testData()">Cargar datos de prueba</button>
     <select name="grupos" id="group">
         <option value="none">vacio</option>
     </select>
@@ -105,5 +113,16 @@
             </tbody>
             </table>
     </div>
+        </div>
+        <div class="tab data">
+            <div>
+                <h3>Insertar Asignaturas</h3>
+
+            </div>
+        </div>
+
+    </div>
+
+    
 </body>
 </html>
