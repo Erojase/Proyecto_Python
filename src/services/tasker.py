@@ -33,17 +33,17 @@ def subirTarea():
     
     
     
-    return
+    pass
 
 
 
 #profesores eliminan tareas
 def eliminarTarea():
-    return
+    pass
 
 # imprime Tarea
 def imprimeTarea():
-    return
+    pass
 
 
 

@@ -3,6 +3,35 @@
     height: 50vh;
 }
 
+.tab{
+    background-color: burlywood;
+    padding: 5px;
+}
+
+.tabList > div{
+    display: flex;
+}
+
+.tabList > div > li{
+    list-style: none;
+    padding: 10px;
+    margin-left: 5px;
+    background-color: burlywood;
+    border: 1px solid black;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.tabMain{
+    border-bottom: none;
+}
+
+.data{
+    display: none;
+}
+
 tr, th{
     text-align: center;
     border-bottom: 1px solid black;
@@ -30,3 +59,4 @@ tr, th{
     align-items: center;
     height: 100%;
 }
+
