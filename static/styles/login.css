@@ -1,34 +1,40 @@
 .regCont{
     display: none;
-
-    background-color: rgb(33, 204, 133);
+    background-color: rgba(0, 0, 0, 0.121);
     position: absolute;
     flex-direction: column;
     justify-content: space-around;
     text-align: center;
-    top: 25%;
-    height: 40vh;
+    top: 15%;
+    height: 65vh;
     width: 50%;
     margin-left: 25%;
     margin-right: 25%;
-    border: 1px solid black;
-    border-radius: 5px;
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 25px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    color: white;
 }
 
 .logCont{
-    background-color: rgb(33, 204, 133);
+    color: white;
+    background-color: rgba(0, 0, 0, 0.121);
+    font-family: Helvetica, sans-serif;
     position: absolute;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     text-align: center;
     top: 25%;
-    height: 40vh;
+    height: 45vh;
     width: 50%;
     margin-left: 25%;
     margin-right: 25%;
-    border: 1px solid black;
-    border-radius: 5px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 25px;
 }
 
 input{
@@ -43,4 +49,43 @@ input{
     text-decoration: underline;
     color: blue;
     cursor: pointer;
+}
+
+#tipo{
+    align-self: center;
+    padding: 7px 40px 7px 12px;
+    width: 15%;
+    border: 1px solid #E8EAED;
+    border-radius: 5px;
+    background: white;
+    box-shadow: 0 1px 3px -2px #9098A9;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 16px;
+    transition: all 150ms ease;
+    color: #5A667F;
+}
+
+.btn_log{
+   align-self: center;
+   margin: 10px;
+  background: #5E5DF0;
+  border-radius: 999px;
+  box-shadow: #5E5DF0 0 10px 20px -10px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-family: Helvetica,sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  opacity: 1;
+  outline: 0 solid transparent;
+  padding: 8px 48px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: fit-content;
+  word-break: break-word;
+  border: 0;
 }
