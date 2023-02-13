@@ -22,7 +22,7 @@ var constraints = {
 };
 
 /* Stream it to video element */
-console.log(navigator.);
+console.log(navigator.mediaDevices);
 navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
   video.srcObject = stream;
 });
