@@ -19,7 +19,10 @@ function calendario() {
 }
 
 function asistencia() {
-    window.location.href = '/attendance';
+    let token = window.localStorage.getItem("token");
+    if (token != null) {
+        window.location.href = '/attendance?token='+token;
+    }
 
     
 }

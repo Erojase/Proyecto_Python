@@ -19,7 +19,7 @@ function toggle(obj) {
 
 
 async function login() {
-    let username = document.getElementById("log_usename").value;
+    let username = document.getElementById("log_username").value;
     let password = MD5.generate(document.getElementById("log_passwd").value)
     let content = JSON.stringify({
         "user": username,
