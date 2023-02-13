@@ -1,6 +1,7 @@
+
+
 let headersList = {
     "Accept": "*/*",
-    "Content-Type": "application/json"
 }
 
 document.addEventListener('DOMContentLoaded', ()=>{
@@ -11,15 +12,23 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
 async function connect_clase_Click() {
     
-    let clave = JSON.stringify(document.getElementById("cod_profe").value);
+    let clave = document.getElementById("cod_profe").value;
+    let img = document.getElementById("img_alumn").files[0];
+
+
+    let dat = new FormData();
+    dat.append("img", img);
+
+    console.log(img);
 
     let token = window.localStorage.getItem("token");
     headersList["Authorization"] = "Bearer "+token;
+    headersList["clave"] = clave;
 
     let response = await fetch('/attendance', { 
         method: "POST",
         headers: headersList,
-        body: clave
+        body: dat
     });
     
     let data = await response.text();

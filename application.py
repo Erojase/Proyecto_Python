@@ -5,6 +5,8 @@ from src.services.serviceManager import ServiceManager
 from src.services.dbManager import DbManager
 from src.components.users import *
 
+from werkzeug.datastructures import ImmutableMultiDict
+
 application = Flask(__name__)
 db = DbManager()
 sm = ServiceManager()
@@ -85,10 +87,12 @@ def crear_buscar_clase():
         profe:str = tipo['user']
         return sm.Crear_clase(data,profe)
     elif tipo['tipo'] == Tipo.Alumno.name:
-        data = request.get_json(silent=True)
-        if sm.Buscar_clase_clave(data) != None:
+        clave = request.headers["clave"]
+        img = request.files.get("img")
+        if sm.Buscar_clase_clave(clave) != None:
             if  sm.Buscar_clase_clave(data).Alumnos() == None or tipo['user'] not in sm.Buscar_clase_clave(data).Alumnos():
-                sm.Buscar_clase_clave(data).addAlumno(tipo['user'])
+                sm.Buscar_clase_clave(clave).addAlumno(tipo['user'])
+                sm.Buscar_clase_clave(clave).Imagenes().append(data['img'])
             return jsonify(sm.Buscar_clase_clave(data).toJson())
         return ''
 

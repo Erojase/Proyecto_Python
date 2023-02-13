@@ -91,11 +91,13 @@ class Clase:
     _clave: str
     _profesor: str
     _alumnos: list[str]
+    _imagenes: list[bytearray]
     
-    def __init__(self, clave:str = None, profesor:str = None, alumnos:list[str] = None) -> None:
+    def __init__(self, clave:str = None, profesor:str = None, alumnos:list[str] = None, imagenes:list[bytearray] = None) -> None:
         self._clave = clave
         self._profesor = profesor
         self._alumnos = alumnos
+        self._imagenes = imagenes
         
     def Clave(self, value:str = None):
         if value != None:
@@ -120,9 +122,15 @@ class Clase:
         alumnos.append(value)
         self._alumnos = alumnos
         
+    def Imagenes(self, value:list[bytearray] = None):
+        if value != None:
+            self._imagenes = value
+        return self._imagenes
+        
     def toJson(self):
         return {
                 "clave": self._clave,
                 "profesor": self._profesor,
-                "alumnos": self._alumnos
+                "alumnos": self._alumnos,
+                "imagenes": self._imagenes
             }   
