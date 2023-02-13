@@ -71,7 +71,7 @@ def tasker():
     token = request.headers['Authorization'].split()[1]
     user = parseToken(token)
     data = request.get_json(silent=True)
-  
+    
     tarea = crearTarea(data,user)
     if "titulo" not in data or "tarea" not in data:
         return jsonify("Expected more from you"), 400

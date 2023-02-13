@@ -9,14 +9,14 @@ db = DbManager()
 
 
  # profesores publican tareas
-def crearTarea(datos:str,user:str):
+def crearTarea(datos:str,user:str,):
     titulo = datos["titulo"]
     asignacion = datos["tarea"]
     Usuario = user["id"]
 
     info = db.getUser(Usuario)
     profe = info["nombre"] #poner "user"
-    id = db.getLastId()
+    id = db.getLastId("Tareas")
     
     tarea = {
     "id" : id,

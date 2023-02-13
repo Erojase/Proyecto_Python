@@ -68,8 +68,8 @@ class DbManager:
         
         
     #revisar por edu
-    def getLastId(self) -> int:
-        coll = self.database["Tareas"]
+    def getLastId(self,nombre:str) -> int:
+        coll = self.database[nombre]
         last_id = coll.find({},{"_id":0, "id":1}).sort("id", -1).limit(1)
         for id in last_id:
             print(id["id"])
