@@ -76,11 +76,18 @@ def calendario():
 
 
 # ---------------------------------------------------------------------------------------------------
-
+# tasker
 
 @application.route("/tasker",methods=['GET'])
 def taskerr():
-    return open('pages/tasker.html', 'r', encoding='utf-8')
+    
+    tipo = parseToken(request.args.get('token'))
+    if tipo['tipo'] == Tipo.Profesor.name:
+         return open('pages/tasker.html', 'r', encoding='utf-8')
+    elif tipo['tipo'] == Tipo.Alumno.name:
+        return open('pages/deliver.html', 'r', encoding='utf-8')
+    
+    
 
 @application.route("/tasker",methods=['POST'])
 def tasker():
@@ -94,6 +101,17 @@ def tasker():
     
     db.insertTarea(tarea)
     return 200
+
+
+@application.route("/deliver",methods=['POST'])
+def deliver():
+    token = request.headers['Authorization'].split()[1]
+    
+    
+    return 200
+
+
+
 # ---------------------------------------------------------------------------------------------------
 
 

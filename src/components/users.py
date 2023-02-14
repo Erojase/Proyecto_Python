@@ -66,6 +66,7 @@ class Usuario:
         if self._tipo == Tipo.Alumno:
             return {
                 "id": self._id,
+                "nick": self._nick,
                 "nombre": self._nombre,
                 "apellido": self._apellido,
                 "mail": self._mail,
@@ -75,6 +76,7 @@ class Usuario:
         else:
             return {
                 "id": self._id,
+                "nick": self._nick,
                 "nombre": self._nombre,
                 "apellido": self._apellido,
                 "mail": self._mail,
