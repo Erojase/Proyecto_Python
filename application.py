@@ -6,8 +6,6 @@ from src.services.dbManager import DbManager
 from src.services.tasker import *
 from src.components.users import *
 
-from werkzeug.datastructures import ImmutableMultiDict
-
 application = Flask(__name__)
 db = DbManager()
 sm = ServiceManager()
@@ -63,7 +61,7 @@ def register():
         tmpUsr:Usuario = Usuario(maxId + 1, data["user"], "", "", data["password"], data["mail"], Tipo.Alumno)
     else:
         tmpUsr:Usuario = Usuario(maxId + 1, data["user"], "", "", data["password"], data["mail"], Tipo.Profesor)
-    return db.insertUser(tmpUsr)
+    return  db.insertUser(tmpUsr)
 
 @application.route('/testAction', methods=['POST'])
 def testAction():
@@ -127,19 +125,21 @@ def asistencia():
 @application.route('/attendance', methods=['POST'])
 def crear_buscar_clase():
     token = request.headers["Authorization"].split()[1]
-    tipo = parseToken(token)
-    if tipo['tipo'] == Tipo.Profesor.name:
+    tokenData = parseToken(token)
+    
+    if tokenData['tipo'] == Tipo.Profesor.name:
         data = request.get_json(silent=True)
-        profe:str = tipo['user']
+        profe:str = tokenData['user']
         return sm.Crear_clase(data,profe)
-    elif tipo['tipo'] == Tipo.Alumno.name:
+    elif tokenData['tipo'] == Tipo.Alumno.name:
         clave = request.headers["clave"]
         img = request.files.get("img")
-        if sm.Buscar_clase_clave(clave) != None:
-            if  sm.Buscar_clase_clave(data).Alumnos() == None or tipo['user'] not in sm.Buscar_clase_clave(data).Alumnos():
-                sm.Buscar_clase_clave(clave).addAlumno(tipo['user'])
-                sm.Buscar_clase_clave(clave).Imagenes().append(data['img'])
-            return jsonify(sm.Buscar_clase_clave(data).toJson())
+        clase:Clase = sm.Buscar_clase_clave(clave)
+        if clase != None:
+            if  clase.Alumnos() == None or tokenData['user'] not in clase.Alumnos():
+                clase.addAlumno(tokenData['user'])
+                clase.addImage(img, tokenData['user'])
+            return jsonify(clase.toJson())
         return ''
 
 @application.route('/attendance/getclas', methods=['POST'])
@@ -186,8 +186,14 @@ def token():
 
 def parseToken(token:str):
     data = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
-    
     return data
 
+def purgeTmpDirs():
+    dirlist = os.listdir(os.getcwd()+'\\static\\attender\\')
+    for dir in dirlist:
+        os.remove(os.getcwd()+'\\static\\attender\\'+dir)
+
 if __name__ == '__main__':
+    purgeTmpDirs()
     application.run(debug=True,host='0.0.0.0')
+    

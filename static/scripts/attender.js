@@ -43,6 +43,7 @@ async function create_clase_Click() {
     let clave = JSON.stringify(document.getElementById("cod_profe").value);
     let token = window.localStorage.getItem("token");
     headersList["Authorization"] = "Bearer "+token;
+    headersList["Content-Type"] = "application/json"
 
     let response = await fetch('/attendance', { 
         method: "POST",
@@ -85,7 +86,11 @@ async function add_alumno() {
             JSON.parse(dato)['alumnos'].forEach(alumno => {
                 let li = document.createElement('li');
                 li.innerText = alumno;
-                li.appendChild(document.createTextNode("Imagen"))    
+                let imglink = document.createElement("a");
+                imglink.href = "/static/attender/"+alumno+".png";
+                imglink.target = "_blank";
+                imglink.innerText = " Abrir Imagen"
+                li.appendChild(imglink)    
                 ul.appendChild(li)
             });
         }

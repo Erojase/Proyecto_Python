@@ -1,4 +1,5 @@
 from enum import Enum
+import os
 from src.components.colegio import *
 
 class Tipo(Enum):
@@ -66,6 +67,7 @@ class Usuario:
         if self._tipo == Tipo.Alumno:
             return {
                 "id": self._id,
+                "nick":self._nick,
                 "nombre": self._nombre,
                 "apellido": self._apellido,
                 "mail": self._mail,
@@ -91,9 +93,9 @@ class Clase:
     _clave: str
     _profesor: str
     _alumnos: list[str]
-    _imagenes: list[bytearray]
+    _imagenes: list
     
-    def __init__(self, clave:str = None, profesor:str = None, alumnos:list[str] = None, imagenes:list[bytearray] = None) -> None:
+    def __init__(self, clave:str = None, profesor:str = None, alumnos:list[str] = None, imagenes:list = []) -> None:
         self._clave = clave
         self._profesor = profesor
         self._alumnos = alumnos
@@ -122,11 +124,17 @@ class Clase:
         alumnos.append(value)
         self._alumnos = alumnos
         
-    def Imagenes(self, value:list[bytearray] = None):
+    def Imagenes(self, value = None):
         if value != None:
             self._imagenes = value
         return self._imagenes
-        
+    
+    def addImage(self, img, username):
+        self.Imagenes().append(username)
+        path = os.getcwd()+'\\static\\attender\\'+username+'.png'
+        with open(path, 'wb') as f:
+            f.write(img.stream.read())
+    
     def toJson(self):
         return {
                 "clave": self._clave,
