@@ -69,12 +69,8 @@ class Profesor:
         if value != None:
             self._asignaturas = value 
         return self._asignaturas
-
-    def ToJson(self) -> dict:
-        asignatura_list = ""
-        for asign in self._asignaturas:
-            asignatura_list += asign.Nombre()+","
-        
+    
+    def ToJson(self) -> dict:        
         json = {
             "nombre":self._nombre,
             "tutor":self._tutor,
@@ -82,7 +78,7 @@ class Profesor:
                         "inicio":self._horario[0][0],
                         "fin":self._horario[0][1]
                         },
-            "asignaturas":asignatura_list
+            "asignaturas":self._asignaturas
         }
         return json
 
@@ -101,7 +97,6 @@ class Grupo:
         self._tutor = tutor
         self._profesores = profesores
         self._horario = horario
-        pass
 
 
     def Nombre(self, value:str=None):
@@ -175,6 +170,45 @@ class Hora_horario:
         }, default=str)
     
 
+class Tarea:
+    _titulo:str
+    _tarea:str
+    _tiempo:datetime.datetime
+    _profesor: Profesor
+
+
+    def __init__(self, titulo:str,tarea:str,tiempo:datetime.datetime, profesor:Profesor):
+        pass
+    
+    def Titulo(self, value:str=None):
+        if value != None:
+            self._titulo = value
+        return self._titulo
+
+    def Tiempo(self, value:datetime.datetime=None):
+            if value != None:
+                self._tiempo = value 
+            return self._tiempo
+
+    def Profesor(self, value:Profesor=None):
+        if value != None:
+            self._profesor = value 
+        return self._profesor
+    
+    def Tarea(self, value:str=None):
+        if value != None:
+            self._tarea = value
+        return self._tarea
+
+    def toJson(self) -> str:
+        return json.dumps({
+            "titulo":self._titulo,
+            "tiempo":self._tiempo,
+            "profesor":self._profesor.Nombre(),
+            "tarea":self._tarea
+        }, default=str)
+
+    
 class dia:
     _horario: list[Hora_horario] 
     _dia_semana: str

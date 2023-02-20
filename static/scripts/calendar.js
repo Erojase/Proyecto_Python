@@ -6,7 +6,29 @@ const dias = ["Lunes","Martes","Miercoles","Jueves","Viernes"]
 let selector;
 let grupos = {}
 
+function hideAllTabs() {
+    let tabs = document.getElementsByClassName("tab");
+    let butonTabs = document.getElementsByClassName("tabBtn");
+    for (const tab of tabs) {
+        tab.style.display = "none";
+    }
+    for (const tabtn of butonTabs) {
+        tabtn.style.border = "solid 1px black";
+    }
+}
+
+function toggleTab(curr,thisTab) {
+    let tab = document.getElementsByClassName(thisTab)[0];
+    hideAllTabs();
+    tab.style.display = "block";
+    curr.style.borderBottom = "none";
+}
+
+
 document.addEventListener('DOMContentLoaded', ()=>{
+    let token = window.localStorage.getItem("token");
+    headersList["Authorization"] = "Bearer "+token;
+    document.getElementById("main").click();
     selector = document.getElementById("group");
     selector.addEventListener('change', cargarGrupo);
 
