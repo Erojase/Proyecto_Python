@@ -26,3 +26,10 @@ def buscar_clase_profe(profe:str) -> Clase:
             if clase.Profesor() == profe:
                 return clase
         return None
+
+def hechar_de_clase(profe:str, usuario:str) -> None:
+    clase:Clase = buscar_clase_profe(profe)
+    clase.Alumnos().remove(usuario)
+    clase.Imagenes().remove(usuario)
+    return 'Eliminado'
+            

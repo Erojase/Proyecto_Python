@@ -17,6 +17,9 @@ class ServiceManager:
     def Buscar_clase_profe(self, profe:str) -> Clase:
         return buscar_clase_profe(profe)
     
+    def Hechar_de_clase(self, profe:str, usuario:str) -> None:
+        return hechar_de_clase(profe, usuario)
+    
     def CalendarTestRun(self) -> dict:
         test = testRun()
         

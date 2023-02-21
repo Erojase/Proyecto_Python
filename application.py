@@ -150,6 +150,16 @@ def getclase():
         return jsonify(sm.Buscar_clase_profe(tipo['user']).toJson())
     return ''
 
+@application.route('/attendance/hechar', methods=['POST'])
+def hechar():
+    token = request.headers["Authorization"].split()[1]
+    tipo = parseToken(token)
+    data = request.get_json(silent=True)
+    
+    return sm.Hechar_de_clase(tipo['user'], data)
+    
+
+
 @application.route('/parking', methods=['GET'])
 def parking():
     return "Not yet implemented"

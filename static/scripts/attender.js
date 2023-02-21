@@ -45,6 +45,9 @@ async function create_clase_Click() {
     headersList["Authorization"] = "Bearer "+token;
     headersList["Content-Type"] = "application/json"
 
+    let clave_clase = document.getElementById('clave_clase')
+    clave_clase.innerText = clave
+
     let response = await fetch('/attendance', { 
         method: "POST",
         headers: headersList,
@@ -86,11 +89,16 @@ async function add_alumno() {
             JSON.parse(dato)['alumnos'].forEach(alumno => {
                 let li = document.createElement('li');
                 li.innerText = alumno;
+                let boton_elim = document.createElement("button")
+                boton_elim.innerText = "X"
+                boton_elim.id = alumno;
+                boton_elim.addEventListener("click", hechar_de_clase, false);
                 let imglink = document.createElement("a");
                 imglink.href = "/static/attender/"+alumno+".png";
                 imglink.target = "_blank";
                 imglink.innerText = " Abrir Imagen"
                 li.appendChild(imglink)    
+                li.appendChild(boton_elim)
                 ul.appendChild(li)
             });
         }
@@ -103,3 +111,23 @@ async function add_alumno() {
 
 }
 
+async function hechar_de_clase() {
+
+    let clave = JSON.stringify(document.getElementById("clave_clase").value);
+    let user = JSON.stringify(this.id)
+    console.log(user);
+    
+    let token = window.localStorage.getItem("token");
+    headersList["Authorization"] = "Bearer "+token;
+
+    let responce = await fetch('/attendance/hechar', { 
+        method: "POST",
+        headers: headersList,
+        body: user
+    });
+
+    let dato = await responce.text();
+
+    console.log(dato);
+
+}
