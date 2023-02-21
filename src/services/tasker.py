@@ -19,7 +19,7 @@ def crearTarea(datos:str,user:str,):
     id = db.getLastId("Tareas")
     
     tarea = {
-    "id" : id,
+    "id" : id ,
     "profesor": profe,
     "cuerpo": asignacion, 
     "titulo": titulo
@@ -28,12 +28,8 @@ def crearTarea(datos:str,user:str,):
 
 
 # alumno sube respuesta de la tarea
-def subirTarea():
-    
-    
-    
-    
-    pass
+# def subirTarea(): 
+#     pass
 
 
 
