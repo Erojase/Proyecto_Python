@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 import jwt
+import json
 from datetime import datetime as dt, timedelta
 from src.services.serviceManager import ServiceManager
 from src.services.dbManager import DbManager
@@ -193,9 +194,15 @@ def token():
     
     return data
 
+@application.route('/login/auth', methods=['POST'])
+def googleAuth():
+    data = request.get_data().decode(encoding="utf-8").split('=')[1].split('&')[0]
+    token = parseToken(data, False)
+    return token
+    
 
-def parseToken(token:str):
-    data = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+def parseToken(token:str, verify_signature=True):
+    data = jwt.decode(token, SECRET_KEY, algorithms=['HS256'], options={"verify_signature": verify_signature})
     return data
 
 def purgeTmpDirs():
