@@ -74,10 +74,7 @@ class Profesor:
         json = {
             "nombre":self._nombre,
             "tutor":self._tutor,
-            "horario":{
-                        "inicio":self._horario[0][0],
-                        "fin":self._horario[0][1]
-                        },
+            "horario": self._horario,
             "asignaturas":self._asignaturas
         }
         return json
