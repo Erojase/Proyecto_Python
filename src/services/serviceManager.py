@@ -8,8 +8,8 @@ class ServiceManager:
     def __init__(self) -> None:
         pass
     
-    def Crear_clase(self, clave:str, profe:str) -> None:
-        return crear_clase(clave, profe)
+    def Crear_clase(self, clave:str, profe:str, alumnos:list[str]) -> Clase:
+        return crear_clase(clave, profe, alumnos)
     
     def Buscar_clase_clave(self, clave:str) -> Clase:
         return buscar_clase_clave(clave)

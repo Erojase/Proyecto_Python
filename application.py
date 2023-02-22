@@ -130,7 +130,8 @@ def crear_buscar_clase():
     if tokenData['tipo'] == Tipo.Profesor.name:
         data = request.get_json(silent=True)
         profe:str = tokenData['user']
-        return sm.Crear_clase(data,profe)
+        alumnos = db.getAlumnos(data[1])
+        return jsonify(sm.Crear_clase(data[0],profe, alumnos).toJson())
     elif tokenData['tipo'] == Tipo.Alumno.name:
         clave = request.headers["clave"]
         img = request.files.get("img")
@@ -158,6 +159,10 @@ def hechar():
     
     return sm.Hechar_de_clase(tipo['user'], data)
     
+
+@application.route('/attendance/mongo', methods=['GET'])
+def getGrupos():
+    return jsonify(db.getGrupos())
 
 
 @application.route('/parking', methods=['GET'])
