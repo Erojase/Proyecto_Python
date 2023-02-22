@@ -75,16 +75,18 @@ class Usuario:
                 "tipo" : self._tipo.name
             }   
         else:
+            self._profesor = Profesor(self.Id(), None, None, None, None)
             return {
                 "id": self._id,
+                "nick": self._nick,
                 "nombre": self._nombre,
                 "apellido": self._apellido,
                 "mail": self._mail,
                 "password": self._passwd,
                 "tipo" : self._tipo.name,
-                "tutor" : self._profesor.ToJson()['tutor'],
-                "horario": self._profesor.ToJson()['horario'],
-                "asignaturas": self._profesor.ToJson()['asignaturas']
+                "tutor" : self._profesor.Tutor(),
+                "horario": self._profesor.Horario(),
+                "asignaturas": self._profesor.Asignaturas()
             }  
             
             
