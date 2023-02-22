@@ -61,7 +61,7 @@ def register():
         tmpUsr:Usuario = Usuario(maxId + 1, data["user"], "", "", data["password"], data["mail"], Tipo.Alumno)
     else:
         tmpUsr:Usuario = Usuario(maxId + 1, data["user"], "", "", data["password"], data["mail"], Tipo.Profesor)
-    return db.insertUser(tmpUsr)
+    return  db.insertUser(tmpUsr)
 
 @application.route('/testAction', methods=['POST'])
 def testAction():
@@ -143,17 +143,21 @@ def asistencia():
 @application.route('/attendance', methods=['POST'])
 def crear_buscar_clase():
     token = request.headers["Authorization"].split()[1]
-    tipo = parseToken(token)
-    if tipo['tipo'] == Tipo.Profesor.name:
+    tokenData = parseToken(token)
+    
+    if tokenData['tipo'] == Tipo.Profesor.name:
         data = request.get_json(silent=True)
-        profe:str = tipo['user']
+        profe:str = tokenData['user']
         return sm.Crear_clase(data,profe)
-    elif tipo['tipo'] == Tipo.Alumno.name:
-        data = request.get_json(silent=True)
-        if sm.Buscar_clase_clave(data) != None:
-            if  sm.Buscar_clase_clave(data).Alumnos() == None or tipo['user'] not in sm.Buscar_clase_clave(data).Alumnos():
-                sm.Buscar_clase_clave(data).addAlumno(tipo['user'])
-            return jsonify(sm.Buscar_clase_clave(data).toJson())
+    elif tokenData['tipo'] == Tipo.Alumno.name:
+        clave = request.headers["clave"]
+        img = request.files.get("img")
+        clase:Clase = sm.Buscar_clase_clave(clave)
+        if clase != None:
+            if  clase.Alumnos() == None or tokenData['user'] not in clase.Alumnos():
+                clase.addAlumno(tokenData['user'])
+                clase.addImage(img, tokenData['user'])
+            return jsonify(clase.toJson())
         return ''
 
 @application.route('/attendance/getclas', methods=['POST'])
@@ -163,6 +167,16 @@ def getclase():
     if sm.Buscar_clase_profe(tipo['user']) != None:
         return jsonify(sm.Buscar_clase_profe(tipo['user']).toJson())
     return ''
+
+@application.route('/attendance/hechar', methods=['POST'])
+def hechar():
+    token = request.headers["Authorization"].split()[1]
+    tipo = parseToken(token)
+    data = request.get_json(silent=True)
+    
+    return sm.Hechar_de_clase(tipo['user'], data)
+    
+
 
 @application.route('/parking', methods=['GET'])
 def parking():
@@ -200,8 +214,14 @@ def token():
 
 def parseToken(token:str):
     data = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
-    
     return data
 
+def purgeTmpDirs():
+    dirlist = os.listdir(os.getcwd()+'\\static\\attender\\')
+    for dir in dirlist:
+        os.remove(os.getcwd()+'\\static\\attender\\'+dir)
+
 if __name__ == '__main__':
+    purgeTmpDirs()
     application.run(debug=True,host='0.0.0.0')
+    

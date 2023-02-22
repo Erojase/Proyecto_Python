@@ -55,6 +55,7 @@ class DbManager:
                 return "Not a valid id"
         coll = self.database["Usuarios"]
         coll.insert_one(insertDict)
+        return "donete"
         
     
     def insertTarea(self, tarea:Tarea):

@@ -1,4 +1,5 @@
 from enum import Enum
+import os
 from src.components.colegio import *
 
 class Tipo(Enum):
@@ -66,7 +67,7 @@ class Usuario:
         if self._tipo == Tipo.Alumno:
             return {
                 "id": self._id,
-                "nick": self._nick,
+                "nick":self._nick,
                 "nombre": self._nombre,
                 "apellido": self._apellido,
                 "mail": self._mail,
@@ -74,6 +75,7 @@ class Usuario:
                 "tipo" : self._tipo.name
             }   
         else:
+            self._profesor = Profesor(self.Id(), None, None, None, None)
             return {
                 "id": self._id,
                 "nick": self._nick,
@@ -82,9 +84,9 @@ class Usuario:
                 "mail": self._mail,
                 "password": self._passwd,
                 "tipo" : self._tipo.name,
-                "tutor" : self._profesor.ToJson()['tutor'],
-                "horario": self._profesor.ToJson()['horario'],
-                "asignaturas": self._profesor.ToJson()['asignaturas']
+                "tutor" : self._profesor.Tutor(),
+                "horario": self._profesor.Horario(),
+                "asignaturas": self._profesor.Asignaturas()
             }  
             
             
@@ -93,11 +95,13 @@ class Clase:
     _clave: str
     _profesor: str
     _alumnos: list[str]
+    _imagenes: list
     
-    def __init__(self, clave:str = None, profesor:str = None, alumnos:list[str] = None) -> None:
+    def __init__(self, clave:str = None, profesor:str = None, alumnos:list[str] = None, imagenes:list = []) -> None:
         self._clave = clave
         self._profesor = profesor
         self._alumnos = alumnos
+        self._imagenes = imagenes
         
     def Clave(self, value:str = None):
         if value != None:
@@ -122,9 +126,21 @@ class Clase:
         alumnos.append(value)
         self._alumnos = alumnos
         
+    def Imagenes(self, value = None):
+        if value != None:
+            self._imagenes = value
+        return self._imagenes
+    
+    def addImage(self, img, username):
+        self.Imagenes().append(username)
+        path = os.getcwd()+'\\static\\attender\\'+username+'.png'
+        with open(path, 'wb') as f:
+            f.write(img.stream.read())
+    
     def toJson(self):
         return {
                 "clave": self._clave,
                 "profesor": self._profesor,
-                "alumnos": self._alumnos
+                "alumnos": self._alumnos,
+                "imagenes": self._imagenes
             }   
