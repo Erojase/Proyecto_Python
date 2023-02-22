@@ -103,11 +103,21 @@ def tasker():
     return 200
 
 
+
+# revisar
 @application.route("/deliver",methods=['POST'])
 def deliver():
     token = request.headers['Authorization'].split()[1]
+    user = parseToken(token)
+    tokenData = parseToken(token)
+    data = request.get_json(silent=True)
     
+    clave = request.headers["clave"]
+    iarchiv = request.files.get("archiv")
+
+    Tarea = subirTarea(data,user)
     
+    db.subir_tarea(Tarea)
     return 200
 
 

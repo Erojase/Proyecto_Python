@@ -94,7 +94,7 @@ async function add_alumno() {
                 boton_elim.id = alumno;
                 boton_elim.addEventListener("click", hechar_de_clase, false);
                 let imglink = document.createElement("a");
-                imglink.href = "/static/attender/"+alumno+".png";
+                imglink.href = "/static/attender/"+alumno +".png";
                 imglink.target = "_blank";
                 imglink.innerText = " Abrir Imagen"
                 li.appendChild(imglink)    

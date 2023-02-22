@@ -27,19 +27,9 @@ def crearTarea(datos:str,user:str,):
     return json.dumps(tarea)
 
 
-# alumno sube respuesta de la tarea
-# def subirTarea(): 
-#     pass
+def subirTarea(datos:str,n_tarea:int):
 
-
-
-#profesores eliminan tareas
-def eliminarTarea():
-    pass
-
-# imprime Tarea
-def imprimeTarea():
-    pass
+     Usuario = user["id"]
 
 
 
