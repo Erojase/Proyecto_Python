@@ -6,7 +6,7 @@ let headersList = {
 
 document.addEventListener('DOMContentLoaded', ()=>{
     setInterval(() => {
-        // add_alumno();
+        add_alumno();
     }, 1000);
 
     getGrupos();
@@ -53,7 +53,7 @@ async function connect_clase_Click() {
 
 
     let dat = new FormData();
-    dat.append("img", img);
+    // dat.append("img", img);
 
     console.log(img);
 
@@ -64,11 +64,14 @@ async function connect_clase_Click() {
     let response = await fetch('/attendance', { 
         method: "POST",
         headers: headersList,
-        body: dat
+        // body: dat
     });
     
     let data = await response.text();
     console.log(data);
+
+    
+
 
     // add_alumno()
 
@@ -103,16 +106,19 @@ async function create_clase_Click() {
         let nombre = alumno.split("@")[0].replaceAll("."," ");
         let li = document.createElement('li');
         li.innerText = nombre;
-        let boton_elim = document.createElement("button")
-        boton_elim.innerText = "X"
-        boton_elim.id = nombre;
-        boton_elim.addEventListener("click", hechar_de_clase, false);
+        let check = document.createElement("input");
+        check.type = "checkbox";
+        check.className = "checks";
+        check.disabled = true;
+        // boton_elim.innerText = "X"
+        // boton_elim.id = nombre;
+        // boton_elim.addEventListener("click", hechar_de_clase, false);
         // let imglink = document.createElement("a");
         // imglink.href = "/static/attender/"+alumno+".png";
         // imglink.target = "_blank";
         // imglink.innerText = " Abrir Imagen"
         // li.appendChild(imglink)    
-        li.appendChild(boton_elim)
+        li.appendChild(check)
         ul.appendChild(li)
     });
 
@@ -140,25 +146,16 @@ async function add_alumno() {
         let dato = await responce.text();
 
         console.log(dato);
-    
-        let ul = document.getElementById('lista_alumnos');
-        ul.innerHTML = '';
-    
+
+        let checks = document.getElementsByClassName("checks");
+
         if (dato != '' && JSON.parse(dato)['alumnos'] != null) {
-            JSON.parse(dato)['alumnos'].forEach(alumno => {
-                let li = document.createElement('li');
-                li.innerText = alumno;
-                let boton_elim = document.createElement("button")
-                boton_elim.innerText = "X"
-                boton_elim.id = alumno;
-                boton_elim.addEventListener("click", hechar_de_clase, false);
-                let imglink = document.createElement("a");
-                imglink.href = "/static/attender/"+alumno+".png";
-                imglink.target = "_blank";
-                imglink.innerText = " Abrir Imagen"
-                li.appendChild(imglink)    
-                li.appendChild(boton_elim)
-                ul.appendChild(li)
+            let cont = 0;
+            JSON.parse(dato)['checked'].forEach(check => {
+                if (check == "1"){
+                    checks[cont].checked = true;
+                }
+                cont++;
             });
         }
         

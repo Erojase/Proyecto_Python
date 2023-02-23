@@ -95,13 +95,13 @@ class Clase:
     _clave: str
     _profesor: str
     _alumnos: list[str]
-    _imagenes: list
+    _checked: list[int]
     
-    def __init__(self, clave:str = None, profesor:str = None, alumnos:list[str] = None, imagenes:list = []) -> None:
+    def __init__(self, clave:str = None, profesor:str = None, alumnos:list[str] = None, checked:list[int] = None) -> None:
         self._clave = clave
         self._profesor = profesor
         self._alumnos = alumnos
-        self._imagenes = imagenes
+        self._checked = checked
         
     def Clave(self, value:str = None):
         if value != None:
@@ -126,21 +126,21 @@ class Clase:
         alumnos.append(value)
         self._alumnos = alumnos
         
-    def Imagenes(self, value = None):
+    def Checked(self, value = None):
         if value != None:
-            self._imagenes = value
-        return self._imagenes
+            self._checked = value
+        return self._checked
     
-    def addImage(self, img, username):
-        self.Imagenes().append(username)
-        path = os.getcwd()+'\\static\\attender\\'+username+'.png'
-        with open(path, 'wb') as f:
-            f.write(img.stream.read())
+    # def addImage(self, img, username):
+    #     self.Imagenes().append(username)
+    #     path = os.getcwd()+'\\static\\attender\\'+username+'.png'
+    #     with open(path, 'wb') as f:
+    #         f.write(img.stream.read())
     
     def toJson(self):
         return {
                 "clave": self._clave,
                 "profesor": self._profesor,
                 "alumnos": self._alumnos,
-                "imagenes": self._imagenes
+                "checked": self._checked
             }   

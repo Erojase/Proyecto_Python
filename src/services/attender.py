@@ -12,6 +12,10 @@ def crear_clase(clave:str, profe:str, alumnos:list[str]) -> Clase:
     newclase.Clave(clave)
     newclase.Profesor(profe)
     newclase.Alumnos(alumnos)
+    checks = []
+    for alumno in newclase.Alumnos():
+        checks.append(0)
+    newclase.Checked(checks)
     arr_clas.append(newclase)
     return newclase
 

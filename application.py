@@ -38,7 +38,9 @@ def login():
         if user["nick"] == data["user"] and user["password"] == data["password"]:
             tokenData = {"exp": dt.utcnow() + timedelta(days=1)} #expira en 1 dia
             data["id"] = user["id"]
-            data["tipo"] = user["tipo"]
+            data["mail"] = user["mail"]
+            data["tipo"] = user["tipo"] 
+            del data['password']
             tokenData.update(data)
             return jwt.encode(tokenData, SECRET_KEY, algorithm='HS256') # Exactamente asi es en encode
             
@@ -137,10 +139,13 @@ def crear_buscar_clase():
         img = request.files.get("img")
         clase:Clase = sm.Buscar_clase_clave(clave)
         if clase != None:
-            if  clase.Alumnos() == None or tokenData['user'] not in clase.Alumnos():
-                clase.addAlumno(tokenData['user'])
-                clase.addImage(img, tokenData['user'])
-            return jsonify(clase.toJson())
+            if tokenData["mail"] in clase.Alumnos():
+                clase.Checked()[clase.Alumnos().index(tokenData["mail"])] = 1
+                return "Checkeado"
+            # if  clase.Alumnos() == None or tokenData['user'] not in clase.Alumnos():
+            #     clase.addAlumno(tokenData['user'])
+            #     clase.addImage(img, tokenData['user'])
+                # return jsonify(clase.toJson())
         return ''
 
 @application.route('/attendance/getclas', methods=['POST'])
