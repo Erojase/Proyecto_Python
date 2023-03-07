@@ -49,13 +49,13 @@ async function getGrupos() {
 async function connect_clase_Click() {
     
     let clave = document.getElementById("cod_profe").value;
-    let img = document.getElementById("img_alumn").files[0];
+    // let img = document.getElementById("img_alumn").files[0];
 
 
     let dat = new FormData();
     // dat.append("img", img);
 
-    console.log(img);
+    // console.log(img);
 
     let token = window.localStorage.getItem("token");
     headersList["Authorization"] = "Bearer "+token;
