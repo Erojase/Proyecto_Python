@@ -58,7 +58,7 @@ def login():
             tokenData = {"exp": dt.utcnow() + timedelta(days=1)} #expira en 1 dia
             data["id"] = user["id"]
             data["tipo"] = user["tipo"]
-            data["mail"] = user[" mail"]
+            data["mail"] = user["mail"]
             tokenData.update(data)
             return jwt.encode(tokenData, SECRET_KEY, algorithm='HS256') # Exactamente asi es en encode
             
