@@ -187,3 +187,10 @@ async function hechar_de_clase() {
     console.log(dato);
 
 }
+
+
+function crear_informe() {
+    
+       
+
+}
