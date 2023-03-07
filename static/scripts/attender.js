@@ -114,6 +114,7 @@ async function create_clase_Click() {
         // boton_elim.id = nombre;
         // boton_elim.addEventListener("click", hechar_de_clase, false);
         // let imglink = document.createElement("a");
+        // imglink.download
         // imglink.href = "/static/attender/"+alumno+".png";
         // imglink.target = "_blank";
         // imglink.innerText = " Abrir Imagen"
@@ -189,8 +190,31 @@ async function hechar_de_clase() {
 }
 
 
-function crear_informe() {
+async function crear_informe() {
     
-       
+    let token = window.localStorage.getItem("token");
+    headersList["Authorization"] = "Bearer "+token;
+
+    let dat = JSON.stringify(document.getElementById("poa").value)
+
+    let responce = await fetch('/attendance/fich', { 
+        method: "POST",
+        headers: headersList,
+        body: dat
+    });
+
+    let dato = await responce.text();
+
+    console.log(dato)
+
+    let a = document.createElement('a');
+
+    a.download = "/static/attender/Asistencia.txt"
+    // a.innerHTML = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+    a.href = "/static/attender/Asistencia.txt"
+    document.body.appendChild(a)
+    a.click();
+    document.body.removeChild(a)
+    
 
 }

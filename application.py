@@ -9,6 +9,7 @@ from src.components.users import *
 application = Flask(__name__)
 db = DbManager()
 sm = ServiceManager()
+PATH_BASE = os.path.dirname(os.path.abspath(__file__))
 
 SECRET_KEY = "JOYFE"
 
@@ -163,6 +164,35 @@ def hechar():
     data = request.get_json(silent=True)
     
     return sm.Hechar_de_clase(tipo['user'], data)
+    
+@application.route('/attendance/fich', methods=['POST'])
+def crear_fich():
+    token = request.headers["Authorization"].split()[1]
+    tipo = parseToken(token)
+    data = request.get_json(silent=True)
+    clase:Clase = sm.Buscar_clase_profe(tipo['user'])
+    
+    file = open(f'{PATH_BASE}/static/attender/Asistencia.txt','w')  
+    if data == 'Presente':
+        cont:int = 0
+        for al in clase.Alumnos():
+            if clase.Checked()[cont] == 1:
+                comp:str = al.split('@')[0]
+                apellidios:str = comp.split('.')[1] + ' ' + comp.split('.')[2]
+                nombre:str = comp.split('.')[0]
+                file.write(f'{apellidios} {nombre} \n')
+            cont += 1
+    else:
+        cont:int = 0
+        for al in clase.Alumnos():
+            if clase.Checked()[cont] == 0:
+                comp:str = al.split('@')[0]
+                apellidios:str = comp.split('.')[1] + ' ' + comp.split('.')[2]
+                nombre:str = comp.split('.')[0]
+                file.write(f'{apellidios} {nombre} \n')
+            cont += 1
+            
+    return 'Archivo creado'
     
 
 @application.route('/attendance/mongo', methods=['GET'])
