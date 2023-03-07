@@ -22,6 +22,24 @@ def root():
 def webMain():
     return open('pages/index.html', 'r', encoding='utf-8')
 
+@application.route('/login/auth', methods=['POST'])
+def googleAuth():
+    data = parseToken(request.get_data().decode(encoding="utf-8").split('=')[1].split('&')[0], False) 
+    tkdata = {}
+    token = ""
+    for user in db.listUsers():
+        if user["mail"] == data["email"]:
+            token = {"exp": dt.utcnow() + timedelta(days=1)} #expira en 1 dia
+            tkdata["id"] = user["id"]
+            tkdata["tipo"] = user["tipo"]
+            tkdata["mail"] = user["mail"]
+            tkdata["nick"] = user["nick"]
+            token.update(tkdata)
+    if token == "":
+        return "<html><script>window.localStorage.removeItem('token'); window.location.href = '/login'; </script></html>"
+    codedToken = jwt.encode(token, SECRET_KEY, algorithm='HS256')
+    return "<html><script>window.localStorage.setItem('token', '"+codedToken+"'); window.location.href = '/web'; </script></html>"
+
 @application.route('/login', methods=['GET'])
 def webLogin():
     return open('pages/login.html', 'r', encoding='utf-8')
@@ -40,6 +58,7 @@ def login():
             tokenData = {"exp": dt.utcnow() + timedelta(days=1)} #expira en 1 dia
             data["id"] = user["id"]
             data["tipo"] = user["tipo"]
+            data["mail"] = user[" mail"]
             tokenData.update(data)
             return jwt.encode(tokenData, SECRET_KEY, algorithm='HS256') # Exactamente asi es en encode
             
@@ -47,7 +66,7 @@ def login():
     #      try: porque cuando no se decodea lanza una excepcion
     #         jwt.decode(tokenData, SECRET_KEY, algorithms=['HS256']) Exactamente asi es el decode
 # --------------------------------------------------------------------------------------------------
-
+    
 @application.route('/register', methods=['POST'])
 def register():
     data = request.get_json(silent=True)
@@ -193,12 +212,6 @@ def token():
     data = parseToken(authToken)
     
     return data
-
-@application.route('/login/auth', methods=['POST'])
-def googleAuth():
-    data = request.get_data().decode(encoding="utf-8").split('=')[1].split('&')[0]
-    token = parseToken(data, False)
-    return token
     
 
 def parseToken(token:str, verify_signature=True):
