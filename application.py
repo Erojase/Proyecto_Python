@@ -59,7 +59,9 @@ def login():
             data["id"] = user["id"]
             data["tipo"] = user["tipo"]
             data["mail"] = user["mail"]
+            data["nick"] = user["nick"]
             tokenData.update(data)
+            tokenData.pop("password")
             return jwt.encode(tokenData, SECRET_KEY, algorithm='HS256') # Exactamente asi es en encode
             
     return jsonify("We do not do that here"), 400        
@@ -72,9 +74,11 @@ def register():
     data = request.get_json(silent=True)
     if "user" not in data or "password" not in data:
         return jsonify("Expected more from you"), 400
-
+    
     maxId = 0
     for user in db.listUsers():
+        if user["nick"] == data["user"]:
+            return jsonify("We do not do that here"), 400 
         if user["id"] > maxId:
             maxId = user["id"]
     if data["tipo"] == Tipo.Alumno.name: 
