@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 import jwt
+import json
 from datetime import datetime as dt, timedelta
 from src.services.serviceManager import ServiceManager
 from src.services.dbManager import DbManager
@@ -9,6 +10,7 @@ from src.components.users import *
 application = Flask(__name__)
 db = DbManager()
 sm = ServiceManager()
+PATH_BASE = os.path.dirname(os.path.abspath(__file__))
 
 SECRET_KEY = "JOYFE"
 
@@ -20,6 +22,24 @@ def root():
 @application.route('/web', methods=['GET'])
 def webMain():
     return open('pages/index.html', 'r', encoding='utf-8')
+
+@application.route('/login/auth', methods=['POST'])
+def googleAuth():
+    data = parseToken(request.get_data().decode(encoding="utf-8").split('=')[1].split('&')[0], False) 
+    tkdata = {}
+    token = ""
+    for user in db.listUsers():
+        if user["mail"] == data["email"]:
+            token = {"exp": dt.utcnow() + timedelta(days=1)} #expira en 1 dia
+            tkdata["id"] = user["id"]
+            tkdata["tipo"] = user["tipo"]
+            tkdata["mail"] = user["mail"]
+            tkdata["nick"] = user["nick"]
+            token.update(tkdata)
+    if token == "":
+        return "<html><script>window.localStorage.removeItem('token'); window.location.href = '/login'; </script></html>"
+    codedToken = jwt.encode(token, SECRET_KEY, algorithm='HS256')
+    return "<html><script>window.localStorage.setItem('token', '"+codedToken+"'); window.location.href = '/web'; </script></html>"
 
 @application.route('/login', methods=['GET'])
 def webLogin():
@@ -38,7 +58,10 @@ def login():
         if user["nick"] == data["user"] and user["password"] == data["password"]:
             tokenData = {"exp": dt.utcnow() + timedelta(days=1)} #expira en 1 dia
             data["id"] = user["id"]
-            data["tipo"] = user["tipo"]
+            data["nick"] = user["nick"]
+            data["mail"] = user["mail"]
+            data["tipo"] = user["tipo"] 
+            del data['password']
             tokenData.update(data)
             return jwt.encode(tokenData, SECRET_KEY, algorithm='HS256') # Exactamente asi es en encode
             
@@ -46,15 +69,17 @@ def login():
     #      try: porque cuando no se decodea lanza una excepcion
     #         jwt.decode(tokenData, SECRET_KEY, algorithms=['HS256']) Exactamente asi es el decode
 # --------------------------------------------------------------------------------------------------
-
+    
 @application.route('/register', methods=['POST'])
 def register():
     data = request.get_json(silent=True)
     if "user" not in data or "password" not in data:
         return jsonify("Expected more from you"), 400
-
+    
     maxId = 0
     for user in db.listUsers():
+        if user["nick"] == data["user"]:
+            return jsonify("We do not do that here"), 400 
         if user["id"] > maxId:
             maxId = user["id"]
     if data["tipo"] == Tipo.Alumno.name: 
@@ -166,25 +191,29 @@ def crear_buscar_clase():
     
     if tokenData['tipo'] == Tipo.Profesor.name:
         data = request.get_json(silent=True)
-        profe:str = tokenData['user']
-        return sm.Crear_clase(data,profe)
+        profe:str = tokenData['nick']
+        alumnos = db.getAlumnos(data[1])
+        return jsonify(sm.Crear_clase(data[0],profe, alumnos).toJson())
     elif tokenData['tipo'] == Tipo.Alumno.name:
         clave = request.headers["clave"]
         img = request.files.get("img")
         clase:Clase = sm.Buscar_clase_clave(clave)
         if clase != None:
-            if  clase.Alumnos() == None or tokenData['user'] not in clase.Alumnos():
-                clase.addAlumno(tokenData['user'])
-                clase.addImage(img, tokenData['user'])
-            return jsonify(clase.toJson())
+            if tokenData["mail"] in clase.Alumnos():
+                clase.Checked()[clase.Alumnos().index(tokenData["mail"])] = 1
+                return "Checkeado"
+            # if  clase.Alumnos() == None or tokenData['user'] not in clase.Alumnos():
+            #     clase.addAlumno(tokenData['user'])
+            #     clase.addImage(img, tokenData['user'])
+                # return jsonify(clase.toJson())
         return ''
 
 @application.route('/attendance/getclas', methods=['POST'])
 def getclase():
     token = request.headers["Authorization"].split()[1]
     tipo = parseToken(token)
-    if sm.Buscar_clase_profe(tipo['user']) != None:
-        return jsonify(sm.Buscar_clase_profe(tipo['user']).toJson())
+    if sm.Buscar_clase_profe(tipo['nick']) != None:
+        return jsonify(sm.Buscar_clase_profe(tipo['nick']).toJson())
     return ''
 
 @application.route('/attendance/hechar', methods=['POST'])
@@ -193,8 +222,41 @@ def hechar():
     tipo = parseToken(token)
     data = request.get_json(silent=True)
     
-    return sm.Hechar_de_clase(tipo['user'], data)
+    return sm.Hechar_de_clase(tipo['nick'], data)
     
+@application.route('/attendance/fich', methods=['POST'])
+def crear_fich():
+    token = request.headers["Authorization"].split()[1]
+    tipo = parseToken(token)
+    data = request.get_json(silent=True)
+    clase:Clase = sm.Buscar_clase_profe(tipo['nick'])
+    
+    file = open(f'{PATH_BASE}/static/attender/Asistencia.txt','w')  
+    if data == 'Presente':
+        cont:int = 0
+        for al in clase.Alumnos():
+            if clase.Checked()[cont] == 1:
+                comp:str = al.split('@')[0]
+                apellidios:str = comp.split('.')[1] + ' ' + comp.split('.')[2]
+                nombre:str = comp.split('.')[0]
+                file.write(f'{apellidios} {nombre} \n')
+            cont += 1
+    else:
+        cont:int = 0
+        for al in clase.Alumnos():
+            if clase.Checked()[cont] == 0:
+                comp:str = al.split('@')[0]
+                apellidios:str = comp.split('.')[1] + ' ' + comp.split('.')[2]
+                nombre:str = comp.split('.')[0]
+                file.write(f'{apellidios} {nombre} \n')
+            cont += 1
+            
+    return 'Archivo creado'
+    
+
+@application.route('/attendance/mongo', methods=['GET'])
+def getGrupos():
+    return jsonify(db.getGrupos())
 
 
 @application.route('/parking', methods=['GET'])
@@ -229,10 +291,10 @@ def token():
     data = parseToken(authToken)
     
     return data
+    
 
-
-def parseToken(token:str):
-    data = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+def parseToken(token:str, verify_signature=True):
+    data = jwt.decode(token, SECRET_KEY, algorithms=['HS256'], options={"verify_signature": verify_signature})
     return data
 
 def purgeTmpDirs():

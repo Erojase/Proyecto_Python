@@ -31,6 +31,10 @@
     border-radius: 5px;
 }
 
+#signin{
+    width: 300%!important;
+}
+
 input{
     margin-left: 15%;
     margin-right: 15%;

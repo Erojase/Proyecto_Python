@@ -27,6 +27,7 @@ async function login() {
     });
     if (username.length < 3 || document.getElementById("log_passwd").value.length < 8) {
         console.error("Esto no va asi campeón");
+        warning("Esto no va asi campeón");
         return "ja"
     }
     let response = await fetch('/login', { 
@@ -37,7 +38,13 @@ async function login() {
 
     let data = await response.text();
     console.log(data);
-    window.localStorage.setItem("token", data);
+    if (response.ok) {
+        window.localStorage.setItem("token", data);
+        window.location.href = '/web';
+    } else{
+        warning(data);
+    }
+    
 }
 
 
@@ -59,17 +66,36 @@ async function register() {
             headers: headersList,
             body: content 
         });
-    
+        
         let data = await response.text();
         console.log(data);
-        // window.location.href = '/login';
+        if (response.ok) {
+            window.location.href = '/web';
+        } else{
+            warning(data);
+        }
+        
+        
+        
     } else{
-        let warning = document.createElement("div");
-        warning.innerHTML = "Algo salió mal";
-        warning.style.backgroundColor = "red";
-        warning.style.textAlign = "center";
-        document.body.appendChild(warning);
+        warning("Algun input no es válido");
     }
     
 }   
 
+function warning(text) {
+    let warning = document.createElement("div");
+        warning.innerHTML = text.replaceAll("\"", "");
+        warning.style.backgroundColor = "red";
+        warning.style.padding = "20px";
+        warning.style.borderRadius = "10px";
+        warning.style.position = "absolute";
+        warning.style.margin = "10px";
+        warning.style.fontWeight = "bold";
+        warning.style.textAlign = "center";
+        warning.classList.add("texto-warning");
+        document.body.appendChild(warning);
+        setTimeout(() => {
+            document.getElementsByClassName("texto-warning")[0].remove();
+        }, 2000);
+}
