@@ -9,7 +9,17 @@ class ServiceManager:
         pass
     
     def Crear_clase(self, clave:str, profe:str, alumnos:list[str]) -> Clase:
-        return crear_clase(clave, profe, alumnos)
+        newclase:Clase = Clase()
+        newclase.Clave(clave)
+        newclase.Profesor(profe)
+        newclase.Alumnos(alumnos)
+        checks = []
+        for alumno in newclase.Alumnos():
+            checks.append(0)
+            newclase.Checked(checks)
+            arr_clas.append(newclase)
+        
+        return newclase
     
     def Buscar_clase_clave(self, clave:str) -> Clase:
         return buscar_clase_clave(clave)

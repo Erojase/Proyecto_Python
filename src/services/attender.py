@@ -7,17 +7,8 @@ import json
 arr_clas:list[Clase] = []
 
 
-def crear_clase(clave:str, profe:str, alumnos:list[str]) -> Clase:
-    newclase:Clase = Clase()
-    newclase.Clave(clave)
-    newclase.Profesor(profe)
-    newclase.Alumnos(alumnos)
-    checks = []
-    for alumno in newclase.Alumnos():
-        checks.append(0)
-    newclase.Checked(checks)
-    arr_clas.append(newclase)
-    return newclase
+
+    
 
 def buscar_clase_clave(clave:str) -> Clase:
     for clase in arr_clas:
