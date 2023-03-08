@@ -9,12 +9,9 @@ class ServiceManager:
         pass
     
     def Crear_clase(self, clave:str, profe:str, alumnos:list[str]) -> Clase:
-        newclase:Clase = Clase()
-        newclase.Clave(clave)
-        newclase.Profesor(profe)
-        newclase.Alumnos(alumnos)
+        newclase:Clase = Clase(clave, profe, alumnos)
         checks = []
-        for alumno in newclase.Alumnos():
+        for alumno in newclase.alumnos:
             checks.append(0)
             newclase.Checked(checks)
             arr_clas.append(newclase)
@@ -39,10 +36,10 @@ class ServiceManager:
         
         for sem in test:
             semana = []
-            for day in sem.Horario():
+            for day in sem.horario:
                 dia = []
-                for hour in day.Horario():
-                    if hour.Nombre() is not None:
+                for hour in day.horario:
+                    if hour.nombre is not None:
                         dia.append(hour.toJson())
                     else:
                         dia.append("None")
