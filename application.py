@@ -4,7 +4,6 @@ import json
 from datetime import datetime as dt, timedelta
 from src.services.serviceManager import ServiceManager
 from src.services.dbManager import DbManager
-from src.services.tasker import *
 from src.components.users import *
 
 application = Flask(__name__)
