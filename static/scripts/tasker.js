@@ -1,10 +1,12 @@
 let headersList = {
     Accept: "*/*",
-    "Content-Type": "application/json",
+    // "Content-Type": "application/json",
   };
 
 document.addEventListener("DOMContentLoaded", () => {
-  tareas_load()
+  // console.log('tumadre')
+  // tareas_load();
+  
 });
 
 
@@ -28,17 +30,21 @@ async function subirtarea() {
     console.log(data);
   }
 
-async function tareas_load(params) {
-  let token = window.localStorage.getItem("token");
-  headersList["Authorization"] = "Bearer "+token;
+// async function tareas_load() {
+//   console.log('tumadre')
+//   let token = window.localStorage.getItem("token");
+//   headersList["Authorization"] = "Bearer "+token;
 
-  let response = await fetch('/tasker/getTask', { 
-    method: "GET",
-    headers: headersList,
+//   let response = await fetch('/tasker/getTask', { 
+//     method: "POST",
+//     headers: headersList,
+//   });
 
-});
+//   let data = await response.text();
+  
 
-let data = await response.text();
-console.log(data)
-}
+
+
+
+// }
 

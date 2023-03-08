@@ -86,6 +86,7 @@ def taskerr():
          return open('pages/tasker.html', 'r', encoding='utf-8')
     elif tipo['tipo'] == Tipo.Alumno.name:
         return open('pages/deliver.html', 'r', encoding='utf-8')
+        # return open('pages/tasker.html', 'r', encoding='utf-8')
     
     
 
@@ -102,7 +103,7 @@ def tasker():
     db.insertTarea(tarea)
     return 200
 
-@application.route("/tasker/getTask",methods=['GET'])
+@application.route("/tasker/getTask",methods=['POST'])
 def getTareas():
     token = request.headers['Authorization'].split()[1]
     user = parseToken(token)
