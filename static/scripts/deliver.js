@@ -65,19 +65,19 @@ async function tareas_load() {
 
   let ul = document.getElementById('lista_tareas')
 
-  dato.forEach(tarea => {
-    let li = createElement('li')
-    let asig = createElement('ul')
-    asig.innerHTML = data['Asignatura']
-    let tit = createElement('ul')
-    tit.innerHTML = data['Titulo']
-    let desc = createElement('ul')
-    desc.innerHTML = data['Descripcion']
-    let inp = createElement('input')
-    inp.type = 'file'
-    inp.id = data['Titulo']
-    let btn = createElement('button')
-    btn.innerHTML = 'Entregar'
+  JSON.parse(data).forEach(tarea => {
+    let li = document.createElement('li');
+    let asig = document.createElement('ul');
+    asig.innerHTML = tarea['Asignatura'];
+    let tit = document.createElement('ul');
+    tit.innerHTML = tarea['Titulo'];
+    let desc = document.createElement('ul');
+    desc.innerHTML = tarea['Descripcion'];
+    let inp = document.createElement('input');
+    inp.type = 'file';
+    inp.id = tarea['Titulo'];
+    let btn = document.createElement('button');
+    btn.innerHTML = 'Entregar';
     btn.addEventListener("click", entregarTarea(), false);
     li.appendChild(asig)
     li.appendChild(tit)
@@ -88,7 +88,9 @@ async function tareas_load() {
   });
 
 
+}
 
+async function entregarTarea() {
 
-
+  console.log('tumadre')
 }
