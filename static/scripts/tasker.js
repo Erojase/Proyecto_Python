@@ -3,7 +3,9 @@ let headersList = {
     "Content-Type": "application/json",
   };
 
-document.addEventListener("DOMContentLoaded", () => {});
+document.addEventListener("DOMContentLoaded", () => {
+  tareas_load()
+});
 
 
 async function subirtarea() {
@@ -26,5 +28,17 @@ async function subirtarea() {
     console.log(data);
   }
 
+async function tareas_load(params) {
+  let token = window.localStorage.getItem("token");
+  headersList["Authorization"] = "Bearer "+token;
 
+  let response = await fetch('/tasker/getTask', { 
+    method: "GET",
+    headers: headersList,
+
+});
+
+let data = await response.text();
+console.log(data)
+}
 

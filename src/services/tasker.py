@@ -28,8 +28,8 @@ def crearTarea(datos:str,user:str,):
 
 
 def subirTarea(datos:str,n_tarea:int):
-
-     Usuario = user["id"]
+    pass
+    #  Usuario = user["id"]
 
 
 

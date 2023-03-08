@@ -79,4 +79,9 @@ class DbManager:
     def uploadHorario(self, listado:list[dict]):
         pass
     
-    
+    def getTareas(self, gmail:str) -> list[dict]:
+        tareas:Tarea = []
+        for tarea in self.listTareas():
+            if gmail in tarea['Alumnos']:
+                tareas.append(tarea)
+        return tareas

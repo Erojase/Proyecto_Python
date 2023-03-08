@@ -102,6 +102,14 @@ def tasker():
     db.insertTarea(tarea)
     return 200
 
+@application.route("/tasker/getTask",methods=['GET'])
+def getTareas():
+    token = request.headers['Authorization'].split()[1]
+    user = parseToken(token)
+    
+    if user['tipo'] == Tipo.Alumno.name :
+        return jsonify(db.getTareas(user['mail']))
+    
 
 
 # revisar

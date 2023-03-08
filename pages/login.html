@@ -7,6 +7,7 @@
     <link rel= "stylesheet" type= "text/css" href="static/styles/globals.css">
     <link rel= "stylesheet" type= "text/css" href="static/styles/login.css">
     <script src="https://cdn.jsdelivr.net/npm/md5-js-tools@1.0.2/lib/md5.min.js"></script>
+    <script src="https://accounts.google.com/gsi/client"></script>
     <script src="static/scripts/login.js"></script>
     <script src="static/scripts/token.js"></script>
     <title>Login</title>
@@ -23,9 +24,17 @@
             </li>
         </ul>
     </div>
-
-    <div class="logCont" id="login">
-
+        <div class="logCont" id="login">
+            <div id="g_id_onload"
+                data-client_id="78657655897-2fo56tg1qkhc8lb9q3ssnc09jk1hnaod.apps.googleusercontent.com"
+                data-context="signin"
+                data-ux_mode="popup"
+                data-login_uri="/login/auth"
+                data-auto_select="true"
+                data-itp_support="true">
+            </div>
+   
+        
         <label for="name">Nombre de Usuario:</label>
         <input type="text" id="log_username" >
 
@@ -33,6 +42,14 @@
         <input type="password" id="log_passwd" required>
 
         <button onclick="login()">Log In</button>
+        <div class="g_id_signin"
+                 data-type="standard"
+                 data-shape="pill"
+                 data-theme="outline"
+                 data-text="signin_with"
+                 data-size="large"
+                 data-logo_alignment="center">
+            </div>
         <div>No tienes una cuenta? <span class="toggle" onclick="toggle('reg')">Regístrate</span></div> 
         
     </div>

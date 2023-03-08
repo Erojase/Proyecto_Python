@@ -144,3 +144,28 @@ class Clase:
                 "alumnos": self._alumnos,
                 "imagenes": self._imagenes
             }   
+        
+        
+class Tarea:
+    _id:int
+    _alumnos: list[str]
+    _asignatura:str
+    _descripcion:str
+    _profesor:str
+    _titulo:str
+    
+    def __init__(self, id:int = None,  alumnos:list[str] = [], asignatura:str = None, descripcion:str = None, profesor:str = None, titulo:str = None) -> None:
+        self._id = id
+        self._alumnos = alumnos
+        self._asignatura = asignatura
+        self._descripcion = descripcion
+        self._profesor = profesor
+        self._titulo = titulo
+        
+    def toJson(self):
+        return {
+                "asignatura": self._asignatura,
+                "profesor": self._profesor,
+                "titulo": self._alumnos,
+                "descripcion": self._descripcion
+            } 
