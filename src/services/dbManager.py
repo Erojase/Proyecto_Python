@@ -39,11 +39,8 @@ class DbManager:
             list.append(item)
         return list
     
-    def getOneUser(self, filter:dict):
+    def getOneUser(self, filter:dict, projection):
         db = self.database["Usuarios"]
-        list = []
-        
-        projection = {"mail":1}
         return db.find_one(filter,projection)
     
     def listTareas(self) -> list[dict]:
