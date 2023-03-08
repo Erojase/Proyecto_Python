@@ -4,55 +4,77 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel= "stylesheet" type= "text/css" href="static/styles/globals.css">
     <link rel= "stylesheet" type= "text/css" href="static/styles/login.css">
     <script src="https://cdn.jsdelivr.net/npm/md5-js-tools@1.0.2/lib/md5.min.js"></script>
+    <script src="https://accounts.google.com/gsi/client"></script>
     <script src="static/scripts/login.js"></script>
+    <script src="static/scripts/token.js"></script>
     <title>Login</title>
 </head>
 <body>
-    <div class="bak">
-        <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/23298a55526729.5988857400116.jpg" alt="">
-    </div>
-
+    <div class="bak"></div>
     <div class="nav" >
         <ul>
             <li>
-                Buenas tardes
+                <a href="/web">Inicio</a>
             </li>
             <li>
-                Buenas noches
-            </li>
-            <li>
-                Buenas tardes
-            </li>
-            <li>
-                <a href="/login">Login</a>
+                <a id="loginAnchor" href="/login">Login</a>
             </li>
         </ul>
     </div>
+        <div class="logCont" id="login">
+            <div id="g_id_onload"
+                data-client_id="78657655897-2fo56tg1qkhc8lb9q3ssnc09jk1hnaod.apps.googleusercontent.com"
+                data-context="signin"
+                data-ux_mode="popup"
+                data-login_uri="http://localhost:5000/login/auth"
+                data-auto_select="true"
+                data-itp_support="true">
+            </div>
+   
+        
+        <label for="name">Nombre de Usuario:</label>
+        <input type="text" id="log_username" >
 
-    <div class="logCont" id="login">
-
-        <label for="name">Nombre:</label>
-        <input type="text" id="name" >
-
-        <label for="passwd">Contraseña:</label>
-        <input type="password" id="passwd">
+        <label for="log_passwd">Contraseña:</label>
+        <input type="password" id="log_passwd" required>
 
         <button onclick="login()">Log In</button>
+        <div class="g_id_signin"
+                 data-type="standard"
+                 data-shape="pill"
+                 data-theme="outline"
+                 data-text="signin_with"
+                 data-size="large"
+                 data-logo_alignment="center">
+            </div>
         <div>No tienes una cuenta? <span class="toggle" onclick="toggle('reg')">Regístrate</span></div> 
         
     </div>
 
     <div class="regCont" id="register">
 
-        <label for="name">Nombre:</label>
-        <input type="text" id="name" >
+        <label for="reg_name">Nombre de Usuario:</label>
+        <input type="text" id="reg_name" >
 
-        <label for="passwd">Contraseña:</label>
-        <input type="password" id="passwd">
+        <label for="tipo">Tipo de Usuario:</label>
+        <select name="tipo" id="tipo">
+            <option value="Alumno">Alumno</option>
+            <option value="Profesor">Profesor</option>
+        </select>
 
-        <button onclick="login()">Log In</button>
+        <label for="reg_mail">Correo: </label>
+        <input type="text" id="reg_mail" >
+
+        <label for="reg_passwd">Contraseña:</label>
+        <input type="password" id="reg_passwd">
+
+        <label for="re_reg_passwd">Repite ls contraseña:</label>
+        <input type="password" id="re_reg_passwd">
+
+        <button onclick="register()">Register</button>
         <div>Ya tienes una cuenta? <span class="toggle" onclick="toggle('log')">Inicia Sesión</span></div> 
         
     </div>

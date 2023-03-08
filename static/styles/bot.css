@@ -1,0 +1,13 @@
+.client{
+    display: flex;
+    flex-wrap: wrap-reverse;
+    justify-content: space-around;
+    position: absolute;
+    margin-top: 5%;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-bottom: 10%;
+    width: 80%;
+    border-radius: 5px;
+    top: 0;
+}

@@ -4,28 +4,34 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel= "stylesheet" type= "text/css" href="static/styles/globals.css">
     <link rel= "stylesheet" type= "text/css" href="static/styles/calendar.css">
     <script src="static/scripts/calendar.js"></script>
+    <script src="static/scripts/token.js"></script>
     <title>Calendar</title>
 </head>
 <body>
+    <div class="bak"></div>
     <div class="nav" >
         <ul>
             <li>
-                Buenas tardes
+                <a href="/web">Inicio</a>
             </li>
             <li>
-                Buenas noches
-            </li>
-            <li>
-                Buenas tardes
-            </li>
-            <li>
-                <a href="/login">Login</a>
+                <a id="loginAnchor" href="/login">Login</a>
             </li>
         </ul>
     </div>
-    <button onclick="testData()">Cargar datos de prueba</button>
+    
+    <div class="tabCont">
+        <div class="tabList">
+            <div>
+                <li class="tabBtn tabMain" id="main" onclick="toggleTab(this, 'main')">Main</li>
+                <li class="tabBtn tabData" onclick="toggleTab(this, 'data')">Insert Data</li>
+            </div>
+        </div>
+        <div class="tab main">
+            <button onclick="testData()">Cargar datos de prueba</button>
     <select name="grupos" id="group">
         <option value="none">vacio</option>
     </select>
@@ -107,5 +113,16 @@
             </tbody>
             </table>
     </div>
+        </div>
+        <div class="tab data">
+            <div>
+                <h3>Insertar Asignaturas</h3>
+
+            </div>
+        </div>
+
+    </div>
+
+    
 </body>
 </html>
