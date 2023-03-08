@@ -82,7 +82,7 @@ img{
     align-items: center;
     width: 100%;
     height: 100%;
-    color: #000000;
+    color: #ffffff;
     font-size: 1.5em;
     opacity: .7; 
   }
@@ -223,7 +223,7 @@ img{
   
   .circular-slider .wrapper .descriptions__item h1, .circular-slider .wrapper .descriptions__item .description {
     font-family: Helvetica, sans-serif;
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
     text-align: center;
    }
   

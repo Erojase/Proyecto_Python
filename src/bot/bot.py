@@ -30,50 +30,11 @@ trainer.train(
     "src/bot/spanish/trivia.yml"
 )
 
-
 #Status
 @bot.event
 async def on_ready():
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="como aprobar Python"))
     print('Bot en funcionamiento')
-
-#DEVUELVE MENSAJE
-@bot.command()
-async def copy(ctx, arg):
-    await ctx.channel.send(arg)
-
-#PING
-@bot.command()
-async def ping(ctx):
-    await ctx.channel.send("PONG!")
-
-#HOLA
-@bot.command()
-async def hola(ctx):
-    username = str(ctx.author).split("#")[0]
-    await ctx.channel.send(f'Hola {username}')
-
-#ADIOS
-@bot.command()
-async def adios(ctx):
-    username = str(ctx.author).split("#")[0]
-    await ctx.channel.send(f'Adiós {username}')
-
-#CHISTE 
-@bot.command()
-async def chiste(ctx):
-    jokes = ["¿Qué le dice el uno al diez? Para ser como yo tenés que ser sincero",
-                 "¿Qué le dijo un pato a otro pato? Estamos empatados",
-                 "¿Qué le dijo un mosquito a un grupo de niños? No aplaudas, que todavía no es mi cumpleaños"]
-    await ctx.channel.send(random.choice(jokes))
-
-
-#LISTAR USUARIOS 
-@bot.command()
-async def list_users(ctx):
-    users = db.listUsers()
-    for i in users:
-        await ctx.channel.send(json.dumps(i['nombre']))
 
 #IA
 @bot.event
@@ -87,11 +48,69 @@ async def on_message(message):
 
     if channel == "chatbot" and not user_message.startswith(PREFIX):
         await message.channel.send(ia_bot.get_response(user_message))
+        
+    #PING
+    if user_message == '!ping':
+        await message.channel.send("PONG!")
+        
+    #HOLA
+    if user_message == '!hola':
+        await message.channel.send(f'Hola {username}')
+        
+    #ADIOS
+    if user_message == '!adios':
+        await message.channel.send(f'Adiós {username}')
+        
+    #CHISTE
+    if user_message == '!chiste':
+        jokes = ["¿Qué le dice el uno al diez? Para ser como yo tenés que ser sincero",
+                  "¿Qué le dijo un pato a otro pato? Estamos empatados",
+                  "¿Qué le dijo un mosquito a un grupo de niños? No aplaudas, que todavía no es mi cumpleaños"]
+        await message.channel.send(random.choice(jokes))
+        
+    #LIST_USERS
+    if user_message == '!list_users':
+        users = db.listUsers()
+        for i in users:
+            await message.channel.send(json.dumps(i['nombre']))
+    
             
-    await bot.process_commands(message)
+    # await bot.process_commands(message)
 
 
 # #Run y token
 # bot.run(f'{TOKEN}')
 
 
+#PING
+# @bot.command()
+# async def ping(ctx):
+#     await ctx.channel.send("PONG!")
+
+# #HOLA
+# @bot.command()
+# async def hola(ctx):
+#     username = str(ctx.author).split("#")[0]
+#     await ctx.channel.send(f'Hola {username}')
+
+# #ADIOS
+# @bot.command()
+# async def adios(ctx):
+#     username = str(ctx.author).split("#")[0]
+#     await ctx.channel.send(f'Adiós {username}')
+
+# #CHISTE 
+# @bot.command()
+# async def chiste(ctx):
+#     jokes = ["¿Qué le dice el uno al diez? Para ser como yo tenés que ser sincero",
+#                  "¿Qué le dijo un pato a otro pato? Estamos empatados",
+#                  "¿Qué le dijo un mosquito a un grupo de niños? No aplaudas, que todavía no es mi cumpleaños"]
+#     await ctx.channel.send(random.choice(jokes))
+
+
+# #LISTAR USUARIOS 
+# @bot.command()
+# async def list_users(ctx):
+#     users = db.listUsers()
+#     for i in users:
+#         await ctx.channel.send(json.dumps(i['nombre']))
