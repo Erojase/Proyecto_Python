@@ -23,13 +23,19 @@
         </ul>
     </div>
 
-    <div class="teacher-site">
+    <div id="profe">
         <input type="text" id="cod_profe">
-        <button name="introducir" onclick="create_clase_Click()">tumadre</button>
+        <button name="introducir" onclick="create_clase_Click()">Crear clase</button>
+
     </div>
 
     <div class="teacher-site">
         <h1 id="clave_clase"></h1>
+        <select name="Presente o no" id="poa">
+            <option value="Presente">Presente</option>
+            <option value="Ausente">Ausente</option>
+        </select>
+        <button name="Crear fich" onclick="crear_informe()">Informe</button>
         <ul id="lista_alumnos">
             <li>
                 alumno1

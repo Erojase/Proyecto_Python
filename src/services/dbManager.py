@@ -80,4 +80,16 @@ class DbManager:
     def uploadHorario(self, listado:list[dict]):
         pass
     
+    def getGrupos(self) ->list[str]:
+        call = self.database["Grupos"]
+        grupos:list[str] = []
+        for grup in call.find({}):
+            grupos.append(grup["nombre"])
+        return grupos
+    
+    def getAlumnos(self, grupo) -> list[str]:
+        call = self.database["Grupos"]
+        jamon = call.find_one({"nombre":grupo})["alumnos"]
+        return jamon
+            
     
