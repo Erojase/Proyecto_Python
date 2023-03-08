@@ -4,8 +4,27 @@
 }
 
 .tab{
-    background-color: burlywood;
-    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.121);
+    font-family: Helvetica, sans-serif;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    text-align: center;
+    top: 13%;
+    height: 67vh;
+    width: auto;
+    padding-top: 40px;
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 25px;
+    margin-left: 10%;
+    margin-right: 10%;
+    
+}
+
+.tabList{
+    margin-left: 11%;
+    margin-top: 24px;
 }
 
 .tabList > div{
@@ -16,10 +35,9 @@
     list-style: none;
     padding: 10px;
     margin-left: 5px;
-    background-color: burlywood;
-    border: 1px solid black;
-    border-top-left-radius: 7px;
-    border-top-right-radius: 7px;
+    background-color: rgba(255, 255, 255, 0.705);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     cursor: pointer;
     user-select: none;
 }
@@ -34,23 +52,29 @@
 
 tr, th{
     text-align: center;
-    border-bottom: 1px solid black;
-    border-right: 1px solid black;
+    border: 1px solid rgb(255, 255, 255);
 }
 
-.calendar > table{
+.calendar{
+    margin-top: 3%;
+}
+
+.calendar > table {
     table-layout: fixed;
     border-spacing: 0;
-    border-radius: 5px;
     height: 100%;
     width: 100%;
-    background-color: rgb(202, 110, 94);
+    border-bottom: 1px solid rgb(255, 255, 255);
+    border-right: 1px solid rgb(255, 255, 255);
+}
+
+.calendar > table > tbody > tr > td{
+    background-color: burlywood;
 }
 
 .dia{
     text-align: center;
-    border-radius: 5px;
-    background-color: rgb(212, 36, 36);
+    background-color: rgb(209, 154, 82);
 }
 
 .hora{
@@ -58,5 +82,53 @@ tr, th{
     justify-content: center;
     align-items: center;
     height: 100%;
+    background-color: rgb(209, 154, 82);
 }
 
+.esquina{
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+}
+
+#group{
+    align-self: center;
+    padding: 7px 40px 7px 12px;
+    width: 15%;
+    border: 1px solid rgba(27, 31, 35, 0.15);
+    border-radius: 5px;
+    background: white;
+    box-shadow: 0 1px 3px -2px #9098A9;
+    cursor: pointer;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    transition: all 150ms ease;
+    color: #5A667F;
+}
+
+button{
+    appearance: none;
+    background-color: #ffffff;
+    border: 1px solid rgba(27, 31, 35, 0.15);
+    border-radius: 5px;
+    box-shadow: 0 1px 3px -2px #9098A9;
+    box-sizing: border-box;
+    color: #5A667F;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    list-style: none;
+    padding: 6px 16px;
+    position: relative;
+    user-select: none;
+}
+
+.edits{
+    margin-left: 20%;
+    margin-right: 20%;
+    width: inherit;
+    display: flex;
+    justify-content: space-evenly;
+}

@@ -16,9 +16,9 @@
     min-height: 100%;
     width: auto;
     height: auto;
-    /* background: rgb(13,11,50);
-    background: linear-gradient(219deg, rgba(13,11,50,1) 0%, rgba(9,47,121,1) 36%, rgba(33,245,171,1) 100%); */
-    background-image: url("/static/images/back.jpg");
+    background: rgb(13,11,50);
+    background: linear-gradient(219deg, rgba(13,11,50,1) 0%, rgba(9,47,121,1) 36%, rgba(33,245,171,1) 100%);
+    /* background-image: url("/static/images/back.jpg"); */
 }
 
 ul{
