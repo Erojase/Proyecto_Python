@@ -9,17 +9,17 @@ db = DbManager()
 
 
  # profesores publican tareas
-def crearTarea(datos:str,user:str):
+def crearTarea(datos:str,user:str,):
     titulo = datos["titulo"]
     asignacion = datos["tarea"]
     Usuario = user["id"]
 
     info = db.getUser(Usuario)
     profe = info["nombre"] #poner "user"
-    id = db.getLastId()
+    id = db.getLastId("Tareas")
     
     tarea = {
-    "id" : id,
+    "id" : id ,
     "profesor": profe,
     "cuerpo": asignacion, 
     "titulo": titulo
@@ -27,23 +27,9 @@ def crearTarea(datos:str,user:str):
     return json.dumps(tarea)
 
 
-# alumno sube respuesta de la tarea
-def subirTarea():
-    
-    
-    
-    
+def subirTarea(datos:str,n_tarea:int):
     pass
-
-
-
-#profesores eliminan tareas
-def eliminarTarea():
-    pass
-
-# imprime Tarea
-def imprimeTarea():
-    pass
+    #  Usuario = user["id"]
 
 
 

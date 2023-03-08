@@ -101,24 +101,61 @@ def calendario():
 
 
 # ---------------------------------------------------------------------------------------------------
-
+# tasker
 
 @application.route("/tasker",methods=['GET'])
 def taskerr():
-    return open('pages/tasker.html', 'r', encoding='utf-8')
+    
+    tipo = parseToken(request.args.get('token'))
+    if tipo['tipo'] == Tipo.Profesor.name:
+         return open('pages/tasker.html', 'r', encoding='utf-8')
+    elif tipo['tipo'] == Tipo.Alumno.name:
+        return open('pages/deliver.html', 'r', encoding='utf-8')
+        # return open('pages/tasker.html', 'r', encoding='utf-8')
+    
+    
 
 @application.route("/tasker",methods=['POST'])
 def tasker():
     token = request.headers['Authorization'].split()[1]
     user = parseToken(token)
     data = request.get_json(silent=True)
-  
+    
     tarea = crearTarea(data,user)
     if "titulo" not in data or "tarea" not in data:
         return jsonify("Expected more from you"), 400
     
     db.insertTarea(tarea)
     return 200
+
+@application.route("/tasker/getTask",methods=['POST'])
+def getTareas():
+    token = request.headers['Authorization'].split()[1]
+    user = parseToken(token)
+    
+    if user['tipo'] == Tipo.Alumno.name :
+        return jsonify(db.getTareas(user['mail']))
+    
+
+
+# revisar
+@application.route("/deliver",methods=['POST'])
+def deliver():
+    token = request.headers['Authorization'].split()[1]
+    user = parseToken(token)
+    tokenData = parseToken(token)
+    data = request.get_json(silent=True)
+    
+    clave = request.headers["clave"]
+    iarchiv = request.files.get("archiv")
+
+    Tarea = subirTarea(data,user)
+    
+    db.subir_tarea(Tarea)
+    return 200
+
+
+
 # ---------------------------------------------------------------------------------------------------
 
 
