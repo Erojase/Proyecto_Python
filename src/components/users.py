@@ -9,15 +9,15 @@ class Tipo(Enum):
 
 
 class Usuario:
-    _id: int
-    _nick: str
-    _nombre: str
-    _apellido: str
-    _passwd: str
-    _mail: str
-    _tipo: Tipo
+    id: int
+    nick: str
+    nombre: str
+    apellido: str
+    passwd: str
+    mail: str
+    tipo: Tipo
 
-    _profesor: Profesor | None
+    profesor: Profesor | None
 
     def __init__(
         self,
@@ -30,82 +30,47 @@ class Usuario:
         tipo: Tipo,
         profesor: Profesor | None = None,
     ) -> dict:
-        self._id = id
+        self.id = id
         self._nick = nick
-        self._nombre = nombre
-        self._apellido = apellido
-        self._passwd = passwd
-        self._mail = mail
-        self._tipo = tipo
-        self._profesor = profesor
-
-    def Id(self, value: int = None):
-        if value != None:
-            self._id = value
-        return self._id
-
-    def Nombre(self, value: str = None):
-        if value != None:
-            self._nombre = value
-        return self._nombre
-
-    def Apellido(self, value: str = None):
-        if value != None:
-            self._apellido = value
-        return self._apellido
-
-    def Mail(self, value: str = None):
-        if value != None:
-            self._mail = value
-        return self._mail
-
-    def Passwd(self, value: str = None):
-        if value != None:
-            self._pass = value
-        return self._pass
-
-    def Tipo(self, value: Tipo = None):
-        if value != None:
-            self._tipo = value
-        return self._tipo
-
-    def Nick(self, value: str = None):
-        if value != None:
-            self._nick = value
-        return self._nick
+        self.nombre = nombre
+        self.apellido = apellido
+        self.passwd = passwd
+        self.mail = mail
+        self.tipo = tipo
+        self.profesor = profesor
 
     def toJson(self):
-        if self._tipo == Tipo.Alumno:
+        if self.tipo == Tipo.Alumno:
             return {
-                "id": self._id,
-                "nick": self._nick,
-                "nombre": self._nombre,
-                "apellido": self._apellido,
-                "mail": self._mail,
-                "password": self._passwd,
-                "tipo": self._tipo.name,
+                "id": self.id,
+                "nick": self.nick,
+                "nombre": self.nombre,
+                "apellido": self.apellido,
+                "mail": self.mail,
+                "password": self.passwd,
+                "tipo": self.tipo.name,
             }
         else:
-            self._profesor = Profesor(self.Id(), None, None, None, None)
+            self.profesor = Profesor(self.Id(), None, None, None, None)
             return {
-                "id": self._id,
-                "nick": self._nick,
-                "nombre": self._nombre,
-                "apellido": self._apellido,
-                "mail": self._mail,
-                "password": self._passwd,
-                "tipo": self._tipo.name,
-                "tutor": self._profesor.Tutor(),
-                "horario": self._profesor.Horario(),
-                "asignaturas": self._profesor.Asignaturas(),
+                "id": self.id,
+                "nick": self.nick,
+                "nombre": self.nombre,
+                "apellido": self.apellido,
+                "mail": self.mail,
+                "password": self.passwd,
+                "tipo": self.tipo.name,
+                "tutor": self.profesor.tutor,
+                "horario": self.profesor.horario,
+                "asignaturas": self.profesor.asignaturas,
             }
 
 
 class Clase:
-    _clave: str
-    _profesor: str
-    _alumnos: list[str]
-    _checked: list[int]
+    clave: str
+    profesor: str
+    alumnos: list[str]
+    checked: list[int]
 
     def __init__(
         self,
@@ -114,61 +79,41 @@ class Clase:
         alumnos: list[str] = None,
         checked: list[int] = None,
     ) -> None:
-        self._clave = clave
-        self._profesor = profesor
-        self._alumnos = alumnos
-        self._checked = checked
+        self.clave = clave
+        self.profesor = profesor
+        self.alumnos = alumnos
+        self.checked = checked
 
-    def Clave(self, value: str = None):
-        if value != None:
-            self._clave = value
-        return self._clave
-
-    def Profesor(self, value: str = None):
-        if value != None:
-            self._profesor = value
-        return self._profesor
-
-    def Alumnos(self, value: list[str] = None):
-        if value != None:
-            self._alumnos = value
-        return self._alumnos
 
     def addAlumno(self, value: str = None):
-        if self.Alumnos() is not None:
-            alumnos: list[str] = self.Alumnos()
+        if self.alumnos is not None:
+            alumnos: list[str] = self.alumnos
         else:
             alumnos: list[str] = []
         alumnos.append(value)
-        self._alumnos = alumnos
+        self.alumnos = alumnos
 
     def Checked(self, value=None):
         if value != None:
-            self._checked = value
-        return self._checked
-
-    # def addImage(self, img, username):
-    #     self.Imagenes().append(username)
-    #     path = os.getcwd()+'\\static\\attender\\'+username+'.png'
-    #     with open(path, 'wb') as f:
-    #         f.write(img.stream.read())
+            self.checked = value
+        return self.checked
 
     def toJson(self):
         return {
-            "clave": self._clave,
-            "profesor": self._profesor,
-            "alumnos": self._alumnos,
-            "checked": self._checked,
+            "clave": self.clave,
+            "profesor": self.profesor,
+            "alumnos": self.alumnos,
+            "checked": self.checked,
         }
 
 
 class Tarea:
-    _id: int
-    _alumnos: list[str]
-    _asignatura: str
-    _descripcion: str
-    _profesor: str
-    _titulo: str
+    id: int
+    alumnos: list[str]
+    asignatura: str
+    descripcion: str
+    profesor: str
+    titulo: str
 
     def __init__(
         self,
@@ -179,17 +124,17 @@ class Tarea:
         profesor: str = None,
         titulo: str = None,
     ) -> None:
-        self._id = id
-        self._alumnos = alumnos
-        self._asignatura = asignatura
-        self._descripcion = descripcion
-        self._profesor = profesor
-        self._titulo = titulo
+        self.id = id
+        self.alumnos = alumnos
+        self.asignatura = asignatura
+        self.descripcion = descripcion
+        self.profesor = profesor
+        self.titulo = titulo
 
     def toJson(self):
         return {
-            "asignatura": self._asignatura,
-            "profesor": self._profesor,
-            "titulo": self._alumnos,
-            "descripcion": self._descripcion,
+            "asignatura": self.asignatura,
+            "profesor": self.profesor,
+            "titulo": self.alumnos,
+            "descripcion": self.descripcion,
         }
