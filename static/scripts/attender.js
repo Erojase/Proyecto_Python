@@ -138,7 +138,7 @@ async function add_alumno() {
 
     if (JSON.parse(data)["tipo"] == 'Profesor') {
             headersList["Authorization"] = "Bearer "+token;
-        let responce = await fetch('/attendance/getclas', { 
+        let responce = await fetch('/attendance/getclass', { 
             method: "POST",
             headers: headersList,
             body: JSON.parse(data)["user"]
@@ -197,7 +197,7 @@ async function crear_informe() {
 
     let dat = JSON.stringify(document.getElementById("poa").value)
 
-    let responce = await fetch('/attendance/fich', { 
+    let responce = await fetch('/attendance/fichero', { 
         method: "POST",
         headers: headersList,
         body: dat

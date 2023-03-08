@@ -9,7 +9,7 @@ class Tipo(Enum):
 
 
 class Usuario:
-    id: int
+    id: dict
     nick: str
     nombre: str
     apellido: str
@@ -21,7 +21,6 @@ class Usuario:
 
     def __init__(
         self,
-        id: int,
         nick: str,
         nombre: str,
         apellido: str,
@@ -29,6 +28,7 @@ class Usuario:
         mail: str,
         tipo: Tipo,
         profesor: Profesor | None = None,
+        id: dict = None
     ) -> dict:
         self.id = id
         self._nick = nick

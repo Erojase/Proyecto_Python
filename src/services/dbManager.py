@@ -30,23 +30,39 @@ class DbManager:
         """
             Lista Los usuarios de la base de datos
         """
-        coll = self.database["Usuarios"]
+        db = self.database["Usuarios"]
         list = []
-        for item in coll.find({},{"_id":0}):
+        
+        filter = {}
+        projection = {"_id":0}       
+        for item in db.find(filter,projection):
             list.append(item)
         return list
     
-    def listTareas(self) -> list[dict]:
-        coll = self.database["Tareas"]
+    def getOneUser(self, filter:dict):
+        db = self.database["Usuarios"]
         list = []
-        for item in coll.find({},{"_id":0}):
+        
+        projection = {"mail":1}
+        return db.find_one(filter,projection)
+    
+    def listTareas(self) -> list[dict]:
+        db = self.database["Tareas"]
+        list = []
+        
+        filter = {}
+        projection = {"_id":0}       
+        for item in db.find(filter,projection):
             list.append(item)
         return list
         
     
     def getUser(self, id:int) -> dict:
-        coll = self.database["Usuarios"]
-        for item in coll.find({"id":id}):
+        db = self.database["Usuarios"]
+        
+        filter = {"id":id}
+        projection = {}       
+        for item in db.find(filter,projection):
             return item
     
     def insertUser(self, usuario:Usuario):
@@ -54,8 +70,8 @@ class DbManager:
         for user in self.listUsers():
             if user["id"] == insertDict["id"]:
                 return "Not a valid id"
-        coll = self.database["Usuarios"]
-        coll.insert_one(insertDict)
+        db = self.database["Usuarios"]
+        db.insert_one(insertDict)
         return "donete"
         
     
@@ -65,39 +81,26 @@ class DbManager:
         for tarea in njlk:
             if tarea["id"] == insertDict["id"]:
                 return "Not a valid id"
-        coll = self.database["Tareas"]
-        coll.insert_one(insertDict)
-        
-        
-    #revisar por edu
-    def getLastId(self,nombre:str):
-        coll = self.database[nombre]
-        last_id = coll.find({},{"_id":0, "id":1}).sort("id", -1).limit(1)
-        for id in last_id:
-            print(id["id"] + 1 ) 
-        return id["id"] + 1 
-        
-    def uploadHorario(self, listado:list[dict]):
-        pass
+        db = self.database["Tareas"]
+        db.insert_one(insertDict) 
     
-    def getTareas(self, gmail:str) -> list[dict]:
-        tareas:Tarea = []
-        for tarea in self.listTareas():
-            if gmail in tarea['Alumnos']:
-                tareas.append(tarea)
-        return tareas
     
     def getGrupos(self) ->list[str]:
-        call = self.database["Grupos"]
+        db = self.database["Grupos"]
         grupos:list[str] = []
-        for grup in call.find({}):
+        
+        filter = {}
+        projection = {}
+        for grup in db.find(filter,projection):
             grupos.append(grup["nombre"])
         return grupos
     
     def getAlumnos(self, grupo) -> list[str]:
-        call = self.database["Grupos"]
-        jamon = call.find_one({"nombre":grupo})["alumnos"]
-        return jamon
+        db = self.database["Grupos"]
+        
+        filter = {"nombre":grupo}
+        projection = {"alumnos":1}
+        return db.find_one(filter,projection)
             
     def historicoCrear(self, alumnos:list[str], profesor:str):
         db = self.database['Historico']
