@@ -82,35 +82,35 @@ def generar(_grupos:list[Grupo], numero_clases_dia:int=7) -> list[semana]:
         cont:int = 0
 
         # Crea un array con las horas restantes de cada profesor
-        for pro in grupos.Profesores():
-            if len(pro.Asignaturas()) > 1:
-                for asig in pro.Asignaturas():
-                    cont += asig.HorasSemanales()
+        for pro in grupos.profesores:
+            if len(pro.asignaturas) > 1:
+                for asig in pro.asignaturas:
+                    cont += asig.horasSemanales
                 h_restantes.append(cont)
                 cont = 0
             else:
-                h_restantes.append(pro.Asignaturas()[0].HorasSemanales())
+                h_restantes.append(pro.asignaturas[0].horasSemanales)
 
         # print(h_restantes)
 
         # Asigna la primera hora dependiendo del turno
-        if grupos.Horario() == "TARDE":
+        if grupos.horario == "TARDE":
             primera_hora = time(14,30)
-        elif grupos.Horario() == "MAÑANA":
+        elif grupos.horario == "MAÑANA":
             primera_hora = time(8)
             
 
        # Le da una hora a cada clase del horario y le asigna el grupo al que pertenece
-        horario:list = [[Hora_horario() for x in range(numero_clases_dia)] for j in range(5)]
+        horario:list = [[Horahorario() for x in range(numero_clases_dia)] for j in range(5)]
         for i in range(5):
             for j in range(numero_clases_dia):
-                horario[i][j].Grupo(grupos)
+                horario[i][j].grupo = grupos
                 t = primera_hora.hour
                 t = t+j+1
-                if grupos.Horario() == 'TARDE':
-                    horario[i][j].Tiempo(time(t,30))
-                elif grupos.Horario() == 'MAÑANA':
-                    horario[i][j].Tiempo(time(t))
+                if grupos.horario == 'TARDE':
+                    horario[i][j].tiempo = time(t,30)
+                elif grupos.horario == 'MAÑANA':
+                    horario[i][j].tiempo = time(t)
                 # # print(horario[i][j].Tiempo())
         
         prf_h:list[list[str]] = [["0" for i in range(numero_clases_dia)]for j in range(5)]
@@ -122,9 +122,9 @@ def generar(_grupos:list[Grupo], numero_clases_dia:int=7) -> list[semana]:
                 if horario_grupo.grupo.horario == grupos.horario:
                     for i in range(5):
                         for j in range(numero_clases_dia):
-                            if horario_grupo.Horario()[i].Horario()[j].Profesor() != None:
-                                if str(horario_grupo.Horario()[i].Horario()[j].Profesor().Id()) not in prf_hg[i][j].split('-'):
-                                    prf_hg[i][j] += '-' + str(horario_grupo.Horario()[i].Horario()[j].Profesor().Id())
+                            if horario_grupo.horario[i].horario[j].profesor != None:
+                                if str(horario_grupo.horario[i].horario[j].profesor.id) not in prf_hg[i][j].split('-'):
+                                    prf_hg[i][j] += '-' + str(horario_grupo.horario[i].horario[j].profesor.id)
                             
 
                
@@ -134,13 +134,13 @@ def generar(_grupos:list[Grupo], numero_clases_dia:int=7) -> list[semana]:
         for i in range(5):
             for j in range(numero_clases_dia):
                 chiv = False
-                for profe in grupos.Profesores():
-                    if int(profe.Horario()[i][1].split(':')[0]) >= horario[i][j].Tiempo().hour:
+                for profe in grupos.profesores:
+                    if int(profe.horario[i][1].split(':')[0]) >= horario[i][j].tiempo.hour:
                         if prf_hg[i][j] != '0':
-                            if str(profe.Id()) not in prf_hg[i][j].split('-'):
-                                prf_h[i][j] += '-' + str(profe.Id())
+                            if str(profe.id) not in prf_hg[i][j].split('-'):
+                                prf_h[i][j] += '-' + str(profe.id)
                         else:
-                            prf_h[i][j] += '-' + str(profe.Id())    
+                            prf_h[i][j] += '-' + str(profe.id)    
 
         # Elimina los 0 de las clases en las que hay algun profesor    
         for i in range(5):
@@ -168,7 +168,7 @@ def generar(_grupos:list[Grupo], numero_clases_dia:int=7) -> list[semana]:
                 cont += 1
             else:
                 cont = 1
-            if cont > len(grupos.Profesores()):
+            if cont > len(grupos.profesores):
                 cont = 1
             camb = False
             for i in range(5):
@@ -176,8 +176,8 @@ def generar(_grupos:list[Grupo], numero_clases_dia:int=7) -> list[semana]:
                     if len(prf_h[i][j].split('-'))-1 == cont:
                         coinc_hr = []
                         coinc_p = []
-                        for pro in grupos.Profesores():
-                            if str(pro.Id()) in prf_h[i][j].split('-'): 
+                        for pro in grupos.profesores:
+                            if str(pro.id) in prf_h[i][j].split('-'): 
                                 coinc_p.append(pro)
                                 coinc_hr.append(cont3)           
                             cont3 += 1
@@ -193,13 +193,13 @@ def generar(_grupos:list[Grupo], numero_clases_dia:int=7) -> list[semana]:
                                     aux = coinc_hr[t]
                             flag = False
                             for u in range(j):
-                                if horario[i][u].Profesor() == None:
+                                if horario[i][u].profesor == None:
                                     flag = True
                             if flag == False:
                                 camb = True
-                                horario[i][j].Profesor(aux_p)
-                                ind = '-' + str(horario[i][j].Profesor().Id())
-                                prf_h[i][j] = str(aux_p.Id())
+                                horario[i][j].profesor = aux_p
+                                ind = '-' + str(horario[i][j].profesor.id)
+                                prf_h[i][j] = str(aux_p.id)
                                 h_restantes[aux] -= 1
                                 if h_restantes[aux] == 0:
                                     for k in range(5):
@@ -222,10 +222,10 @@ def generar(_grupos:list[Grupo], numero_clases_dia:int=7) -> list[semana]:
 
         for i in range(5):
             for j in range(numero_clases_dia):
-                if horario[i][j].Profesor() == None:
+                if horario[i][j].profesor == None:
                     arr.append("None")
                 else:
-                    arr.append(horario[i][j].Profesor().Nombre())
+                    arr.append(horario[i][j].profesor.nombre)
             arrd.append(arr)
             arr = []
         for ar in arrd:
@@ -237,23 +237,23 @@ def generar(_grupos:list[Grupo], numero_clases_dia:int=7) -> list[semana]:
         # //Crea un array con el numero de horas semanales que se deben dar cada asignatura
         asignaturas_hr:list[int] =  []
 
-        for asignatura in grupos.Asignaturas():
-                asignaturas_hr.append(asignatura.HorasSemanales())
+        for asignatura in grupos.asignaturas:
+                asignaturas_hr.append(asignatura.horasSemanales)
         
         # print(asignaturas_hr)
 
         # //Le asigna una asignatura a cada hora del horario
         for i in range(5):
             for j in range(numero_clases_dia):
-                if horario[i][j].Profesor() != None:
-                    if len(horario[i][j].Profesor().Asignaturas()) > 1:
-                        for t in range(len(grupos.Asignaturas())):
-                            if grupos.Asignaturas()[t] in horario[i][j].Profesor().Asignaturas() and asignaturas_hr[t] > 0:
-                                if horario[i][j].Nombre() == None:
-                                    horario[i][j].Nombre(grupos.Asignaturas()[t])
+                if horario[i][j].profesor != None:
+                    if len(horario[i][j].profesor.asignaturas) > 1:
+                        for t in range(len(grupos.asignaturas)):
+                            if grupos.asignaturas[t] in horario[i][j].profesor.asignaturas and asignaturas_hr[t] > 0:
+                                if horario[i][j].nombre == None:
+                                    horario[i][j].nombre =grupos.asignaturas[t]
                                     asignaturas_hr[t] -= 1
                     else:
-                        horario[i][j].Nombre(horario[i][j].Profesor().Asignaturas()[0])
+                        horario[i][j].nombre = horario[i][j].profesor.asignaturas[0]
                 
 
 
@@ -263,10 +263,10 @@ def generar(_grupos:list[Grupo], numero_clases_dia:int=7) -> list[semana]:
 
         for i in range(5):
             for j in range(numero_clases_dia):
-                if horario[i][j].Nombre() == None:
+                if horario[i][j].nombre == None:
                     arr.append("None")
                 else:
-                    arr.append(horario[i][j].Nombre().Nombre())
+                    arr.append(horario[i][j].nombre)
             arrd.append(arr)
             arr = []
         # for ar in arrd:
@@ -279,14 +279,14 @@ def generar(_grupos:list[Grupo], numero_clases_dia:int=7) -> list[semana]:
 
         # Convierte el horario en dias y de dias en semanas
         for i in range(5):
-            d.Horario(horario[i])
-            d.DiaSemana(dias_semana[i])
-            d.Grupo(grupos)
+            d.horario = horario[i]
+            d.dia_semana = dias_semana[i]
+            d.grupo = grupos
             dias.append(d)
             d:dia = dia()
             
-        sem.Horario(dias)
-        sem.Grupo(grupos)
+        sem.horario = dias
+        sem.grupo =  grupos
             
         rtn.append(sem)
 
