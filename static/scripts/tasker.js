@@ -1,44 +1,50 @@
 let headersList = {
     Accept: "*/*",
-    "Content-Type": "application/json",
+    // "Content-Type": "application/json",
   };
 
 document.addEventListener("DOMContentLoaded", () => {
-
-  var video = document.createElement('video');
-video.setAttribute('playsinline', '');
-video.setAttribute('autoplay', '');
-video.setAttribute('muted', '');
-video.style.width = '200px';
-video.style.height = '200px';
-
-/* Setting up the constraint */
-var facingMode = "user"; // Can be 'user' or 'environment' to access back or front camera (NEAT!)
-var constraints = {
-  audio: false,
-  video: {
-   facingMode: facingMode
-  }
-};
-
-/* Stream it to video element */
-console.log(navigator.mediaDevices);
-navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
-  video.srcObject = stream;
+  // console.log('tumadre')
+  // tareas_load();
+  getGrupos()
+  
 });
 
-});
+async function getGrupos() {
+    
+  let token = window.localStorage.getItem("token");
+  headersList["Authorization"] = "Bearer "+token;
 
+  let response = await fetch('attendance/mongo', {
+      method: "GET",
+      headers: headersList
+  })
+
+  let data = await response.text()
+
+  let div = document.getElementById("caja")
+  let select = document.createElement("select")
+  select.id = "Grupos"
+  JSON.parse(data).forEach(group => {
+      let op = document.createElement("option")
+      op.value = group
+      op.innerText = group
+      select.appendChild(op)
+  });
+  div.appendChild(select)
+}
 
 async function subirtarea() {
     let titulo = document.getElementById("titulo").value;
     let tarea = document.getElementById("tarea").value;
+    let grupo = document.getElementById("Grupos").value;
 
     let token = window.localStorage.getItem('token');
     headersList["Authorization"] = "Bearer "+token;
     let content = JSON.stringify({
       titulo: titulo, //esto hatml
       tarea: tarea, //esto lo coje el html
+      grupo : grupo
     });
     let response = await fetch("/tasker", {
       method: "POST",
@@ -50,4 +56,21 @@ async function subirtarea() {
     console.log(data);
   }
 
+// async function tareas_load() {
+//   console.log('tumadre')
+//   let token = window.localStorage.getItem("token");
+//   headersList["Authorization"] = "Bearer "+token;
+
+//   let response = await fetch('/tasker/getTask', { 
+//     method: "POST",
+//     headers: headersList,
+//   });
+
+//   let data = await response.text();
+  
+
+
+
+
+// }
 
