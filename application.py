@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 import jwt
+import json
 from datetime import datetime as dt, timedelta
 from src.services.serviceManager import ServiceManager
 from src.services.dbManager import DbManager
@@ -21,6 +22,24 @@ def root():
 @application.route('/web', methods=['GET'])
 def webMain():
     return open('pages/index.html', 'r', encoding='utf-8')
+
+@application.route('/login/auth', methods=['POST'])
+def googleAuth():
+    data = parseToken(request.get_data().decode(encoding="utf-8").split('=')[1].split('&')[0], False) 
+    tkdata = {}
+    token = ""
+    for user in db.listUsers():
+        if user["mail"] == data["email"]:
+            token = {"exp": dt.utcnow() + timedelta(days=1)} #expira en 1 dia
+            tkdata["id"] = user["id"]
+            tkdata["tipo"] = user["tipo"]
+            tkdata["mail"] = user["mail"]
+            tkdata["nick"] = user["nick"]
+            token.update(tkdata)
+    if token == "":
+        return "<html><script>window.localStorage.removeItem('token'); window.location.href = '/login'; </script></html>"
+    codedToken = jwt.encode(token, SECRET_KEY, algorithm='HS256')
+    return "<html><script>window.localStorage.setItem('token', '"+codedToken+"'); window.location.href = '/web'; </script></html>"
 
 @application.route('/login', methods=['GET'])
 def webLogin():
@@ -49,15 +68,17 @@ def login():
     #      try: porque cuando no se decodea lanza una excepcion
     #         jwt.decode(tokenData, SECRET_KEY, algorithms=['HS256']) Exactamente asi es el decode
 # --------------------------------------------------------------------------------------------------
-
+    
 @application.route('/register', methods=['POST'])
 def register():
     data = request.get_json(silent=True)
     if "user" not in data or "password" not in data:
         return jsonify("Expected more from you"), 400
-
+    
     maxId = 0
     for user in db.listUsers():
+        if user["nick"] == data["user"]:
+            return jsonify("We do not do that here"), 400 
         if user["id"] > maxId:
             maxId = user["id"]
     if data["tipo"] == Tipo.Alumno.name: 
@@ -79,24 +100,61 @@ def calendario():
 
 
 # ---------------------------------------------------------------------------------------------------
-
+# tasker
 
 @application.route("/tasker",methods=['GET'])
 def taskerr():
-    return open('pages/tasker.html', 'r', encoding='utf-8')
+    
+    tipo = parseToken(request.args.get('token'))
+    if tipo['tipo'] == Tipo.Profesor.name:
+         return open('pages/tasker.html', 'r', encoding='utf-8')
+    elif tipo['tipo'] == Tipo.Alumno.name:
+        return open('pages/deliver.html', 'r', encoding='utf-8')
+        # return open('pages/tasker.html', 'r', encoding='utf-8')
+    
+    
 
 @application.route("/tasker",methods=['POST'])
 def tasker():
     token = request.headers['Authorization'].split()[1]
     user = parseToken(token)
     data = request.get_json(silent=True)
-  
+    
     tarea = crearTarea(data,user)
     if "titulo" not in data or "tarea" not in data:
         return jsonify("Expected more from you"), 400
     
     db.insertTarea(tarea)
     return 200
+
+@application.route("/tasker/getTask",methods=['POST'])
+def getTareas():
+    token = request.headers['Authorization'].split()[1]
+    user = parseToken(token)
+    
+    if user['tipo'] == Tipo.Alumno.name :
+        return jsonify(db.getTareas(user['mail']))
+    
+
+
+# revisar
+@application.route("/deliver",methods=['POST'])
+def deliver():
+    token = request.headers['Authorization'].split()[1]
+    user = parseToken(token)
+    tokenData = parseToken(token)
+    data = request.get_json(silent=True)
+    
+    clave = request.headers["clave"]
+    iarchiv = request.files.get("archiv")
+
+    Tarea = subirTarea(data,user)
+    
+    db.subir_tarea(Tarea)
+    return 200
+
+
+
 # ---------------------------------------------------------------------------------------------------
 
 
@@ -132,7 +190,7 @@ def crear_buscar_clase():
     
     if tokenData['tipo'] == Tipo.Profesor.name:
         data = request.get_json(silent=True)
-        profe:str = tokenData['user']
+        profe:str = tokenData['nick']
         alumnos = db.getAlumnos(data[1])
         return jsonify(sm.Crear_clase(data[0],profe, alumnos).toJson())
     elif tokenData['tipo'] == Tipo.Alumno.name:
@@ -154,7 +212,7 @@ def getclase():
     token = request.headers["Authorization"].split()[1]
     tipo = parseToken(token)
     if sm.Buscar_clase_profe(tipo['nick']) != None:
-        return jsonify(sm.Buscar_clase_profe(tipo['user']).toJson())
+        return jsonify(sm.Buscar_clase_profe(tipo['nick']).toJson())
     return ''
 
 @application.route('/attendance/hechar', methods=['POST'])
@@ -163,14 +221,14 @@ def hechar():
     tipo = parseToken(token)
     data = request.get_json(silent=True)
     
-    return sm.Hechar_de_clase(tipo['user'], data)
+    return sm.Hechar_de_clase(tipo['nick'], data)
     
 @application.route('/attendance/fich', methods=['POST'])
 def crear_fich():
     token = request.headers["Authorization"].split()[1]
     tipo = parseToken(token)
     data = request.get_json(silent=True)
-    clase:Clase = sm.Buscar_clase_profe(tipo['user'])
+    clase:Clase = sm.Buscar_clase_profe(tipo['nick'])
     
     file = open(f'{PATH_BASE}/static/attender/Asistencia.txt','w')  
     if data == 'Presente':
@@ -232,10 +290,13 @@ def token():
     data = parseToken(authToken)
     
     return data
+    
+@application.route('/info', methods=['GET'])
+def info():
+    return open('pages/info.html', 'r', encoding='utf-8')
 
-
-def parseToken(token:str):
-    data = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+def parseToken(token:str, verify_signature=True):
+    data = jwt.decode(token, SECRET_KEY, algorithms=['HS256'], options={"verify_signature": verify_signature})
     return data
 
 def purgeTmpDirs():

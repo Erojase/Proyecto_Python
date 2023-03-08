@@ -18,7 +18,7 @@
                 <a href="/web">Inicio</a>
             </li>
             <li>
-                <a href="/login">Login</a>
+                <a id="loginAnchor" href="/login">Login</a>
             </li>
         </ul>
     </div>
@@ -26,7 +26,6 @@
     <div id="profe">
         <input type="text" id="cod_profe">
         <button name="introducir" onclick="create_clase_Click()">Crear clase</button>
-
     </div>
 
     <div class="teacher-site">
@@ -35,8 +34,8 @@
             <option value="Presente">Presente</option>
             <option value="Ausente">Ausente</option>
         </select>
-        <button name="Crear fich" onclick="crear_informe()">Informe</button>
-        <ul id="lista_alumnos">
+        <button name="Crear fich" onclick="crear_informe()">Descargar Informe</button>
+        <ul style="color: white;" id="lista_alumnos">
             <li>
                 alumno1
             </li>

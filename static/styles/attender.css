@@ -1,0 +1,70 @@
+.alum-site{
+    background-color: rgba(0, 0, 0, 0.121);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    border: 1px solid rgb(255, 255, 255);
+    position: absolute;
+    width: 30%;
+    margin: 10%;
+    padding: 2%;
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 25px;
+    height: 40vh;
+    left: 25%;
+}
+
+.alum-site > input{
+    height: 40px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.alum-site > textarea{
+    height: 50%;
+    resize: none;
+}
+
+.title{
+    color: #FFFFFF;
+    align-self: center;
+}
+
+select{
+    align-self: center;
+    padding: 7px 40px 7px 12px;
+    width: 10%;
+    border: 1px solid #E8EAED;
+    border-radius: 5px;
+    background: white;
+    box-shadow: 0 1px 3px -2px #9098A9;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 16px;
+    transition: all 150ms ease;
+    color: #5A667F;
+}
+
+button{
+    align-self: center;
+    margin-top: 20px;
+   background: #5E5DF0;
+   border-radius: 999px;
+   box-shadow: #5E5DF0 0 10px 20px -10px;
+   box-sizing: border-box;
+   color: #FFFFFF;
+   cursor: pointer;
+   font-family: Helvetica,sans-serif;
+   font-size: 16px;
+   font-weight: 700;
+   line-height: 24px;
+   opacity: 1;
+   outline: 0 solid transparent;
+   padding: 8px 40px;
+   user-select: none;
+   -webkit-user-select: none;
+   touch-action: manipulation;
+   width: fit-content;
+   word-break: break-word;
+   border: 0;
+}

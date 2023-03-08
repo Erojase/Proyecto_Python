@@ -1,28 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel= "stylesheet" type= "text/css" href="static/styles/globals.css">
-    <link rel= "stylesheet" type= "text/css" href="static/styles/calendar.css">
+    <link rel="stylesheet" type="text/css" href="static/styles/globals.css">
+    <link rel="stylesheet" type="text/css" href="static/styles/calendar.css">
     <script src="static/scripts/calendar.js"></script>
     <script src="static/scripts/token.js"></script>
     <title>Calendar</title>
 </head>
+
 <body>
     <div class="bak"></div>
-    <div class="nav" >
+    <div class="nav">
         <ul>
             <li>
                 <a href="/web">Inicio</a>
             </li>
             <li>
-                <a href="/login">Login</a>
+                <a id="loginAnchor" href="/login">Login</a>
             </li>
         </ul>
     </div>
-    
+
     <div class="tabCont">
         <div class="tabList">
             <div>
@@ -31,88 +33,91 @@
             </div>
         </div>
         <div class="tab main">
-            <button onclick="testData()">Cargar datos de prueba</button>
-    <select name="grupos" id="group">
-        <option value="none">vacio</option>
-    </select>
-    <div class="calendar">
-        <table>
-            <tbody>
-            <tr>
-            <th>Horas</td>
-            <th class="dia">Lunes</td>
-            <th class="dia">Martes</td>
-            <th class="dia">Miercoles</td>
-            <th class="dia">Jueves</td>
-            <th class="dia">Viernes</td>
-            </tr>
-            <tr>
-            <th class="hora">14:30 - 15:30</td>
-            <td class="Lunes"></td>
-            <td class="Martes"></td>
-            <td class="Miercoles"></td>
-            <td class="Jueves"></td>
-            <td class="Viernes"></td>
-            </tr>
-            <tr>
-            <th class="hora">15:30 - 16:30</td>
-            <td class="Lunes"></td>
-            <td class="Martes"></td>
-            <td class="Miercoles"></td>
-            <td class="Jueves"></td>
-            <td class="Viernes"></td>
-            </tr>
-            <tr>
-            <th class="hora">16:30 - 17:30</td>
-            <td class="Lunes"></td>
-            <td class="Martes"></td>
-            <td class="Miercoles"></td>
-            <td class="Jueves"></td>
-            <td class="Viernes"></td>
-            </tr>
-            <tr>
-            <th class="hora">17:30 - 18:30</td>
-            <td class="Lunes"></td>
-            <td class="Martes"></td>
-            <td class="Miercoles"></td>
-            <td class="Jueves"></td>
-            <td class="Viernes"></td>
-            </tr>
-            <tr>
-            <th class="hora">18:30 - 19:30</td>
-            <td class="Lunes"></td>
-            <td class="Martes"></td>
-            <td class="Miercoles"></td>
-            <td class="Jueves"></td>
-            <td class="Viernes"></td>
-            </tr>
-            <tr>
-            <th class="hora">19:30 - 20:30</td>
-            <td class="Lunes"></td>
-            <td class="Martes"></td>
-            <td class="Miercoles"></td>
-            <td class="Jueves"></td>
-            <td class="Viernes"></td>
-            </tr>
-            <tr>
-            <th class="hora">20:30 - 21:30</td>
-            <td class="Lunes"></td>
-            <td class="Martes"></td>
-            <td class="Miercoles"></td>
-            <td class="Jueves"></td>
-            <td class="Viernes"></td>
-            </tr>
-            <tr>
-            <th class="hora">21:30 - 21:30</td>
-            <td class="Lunes"></td>
-            <td class="Martes"></td>
-            <td class="Miercoles"></td>
-            <td class="Jueves"></td>
-            <td class="Viernes"></td>
-            </tr>
-            </tbody>
-            </table>
-    </div>
+            <div class="edits">
+                <button onclick="testData()">Cargar datos de prueba</button>
+                <select name="grupos" id="group">
+                    <option value="none">vacio</option>
+                </select>
+            </div>
+            <div class="calendar">
+                <table>
+                    <tbody>
+                        <tr>
+                            <th class="esquina">
+                                </td>
+                            <th class="dia">Lunes</td>
+                            <th class="dia">Martes</td>
+                            <th class="dia">Miercoles</td>
+                            <th class="dia">Jueves</td>
+                            <th class="dia">Viernes</td>
+                        </tr>
+                        <tr>
+                            <th class="hora">14:30 - 15:30</td>
+                            <td class="Lunes"></td>
+                            <td class="Martes"></td>
+                            <td class="Miercoles"></td>
+                            <td class="Jueves"></td>
+                            <td class="Viernes"></td>
+                        </tr>
+                        <tr>
+                            <th class="hora">15:30 - 16:30</td>
+                            <td class="Lunes"></td>
+                            <td class="Martes"></td>
+                            <td class="Miercoles"></td>
+                            <td class="Jueves"></td>
+                            <td class="Viernes"></td>
+                        </tr>
+                        <tr>
+                            <th class="hora">16:30 - 17:30</td>
+                            <td class="Lunes"></td>
+                            <td class="Martes"></td>
+                            <td class="Miercoles"></td>
+                            <td class="Jueves"></td>
+                            <td class="Viernes"></td>
+                        </tr>
+                        <tr>
+                            <th class="hora">17:30 - 18:30</td>
+                            <td class="Lunes"></td>
+                            <td class="Martes"></td>
+                            <td class="Miercoles"></td>
+                            <td class="Jueves"></td>
+                            <td class="Viernes"></td>
+                        </tr>
+                        <tr>
+                            <th class="hora">18:30 - 19:30</td>
+                            <td class="Lunes"></td>
+                            <td class="Martes"></td>
+                            <td class="Miercoles"></td>
+                            <td class="Jueves"></td>
+                            <td class="Viernes"></td>
+                        </tr>
+                        <tr>
+                            <th class="hora">19:30 - 20:30</td>
+                            <td class="Lunes"></td>
+                            <td class="Martes"></td>
+                            <td class="Miercoles"></td>
+                            <td class="Jueves"></td>
+                            <td class="Viernes"></td>
+                        </tr>
+                        <tr>
+                            <th class="hora">20:30 - 21:30</td>
+                            <td class="Lunes"></td>
+                            <td class="Martes"></td>
+                            <td class="Miercoles"></td>
+                            <td class="Jueves"></td>
+                            <td class="Viernes"></td>
+                        </tr>
+                        <tr>
+                            <th class="hora">21:30 - 22:30</td>
+                            <td class="Lunes"></td>
+                            <td class="Martes"></td>
+                            <td class="Miercoles"></td>
+                            <td class="Jueves"></td>
+                            <td class="Viernes"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="tab data">
             <div>
@@ -123,6 +128,7 @@
 
     </div>
 
-    
+
 </body>
+
 </html>

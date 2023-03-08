@@ -1,32 +1,19 @@
 import datetime
 import json
 
-
-
 class Asignatura:
 
-    _nombre: str
-    _horasSemanales: int
+    nombre: str
+    horasSemanales: int
 
     def __init__(self, nombre:str=None, horasSemanales:int=None) -> None:
-        self._nombre = nombre
-        self._horasSemanales = horasSemanales
-        pass
+        self.nombre = nombre
+        self.horasSemanales = horasSemanales
 
-    def Nombre(self, value:str=None):
-        if value != None:
-            self._nombre = value 
-        return self._nombre
-
-    def HorasSemanales(self, value:int=None):
-        if value != None:
-            self._horasSemanales = value 
-        return self._horasSemanales
-
-    def ToJson(self) -> dict:
+    def toJson(self) -> dict:
         json = {
-            "nombre":self._nombre,
-            "horasSemanales":self._horasSemanales
+            "nombre":self.nombre,
+            "horasSemanales":self.horasSemanales
         }
         return json
 
@@ -34,221 +21,106 @@ class Asignatura:
 
 class Profesor:
     
-    _id: int
-    _nombre: str
-    _tutor: bool
-    _horario:list[list[str]]
-    _asignaturas: list[Asignatura]
+    id: int
+    nombre: str
+    tutor: bool
+    horario:list[list[str]]
+    asignaturas: list[Asignatura]
 
     def __init__(self, id, tutor:bool=None, nombre:str=None, horario:list[list[str]]=None, asignaturas:list[Asignatura]=None):
-        self._id = id
-        self._tutor = tutor
-        self._nombre = nombre
-        self._horario = horario
-        self._asignaturas = asignaturas
-
-    def Id(self, value:str=None):
-        return self._id
-
-    def Nombre(self, value:str=None):
-        if value != None:
-            self._nombre = value 
-        return self._nombre
+        self.id = id
+        self.tutor = tutor
+        self.nombre = nombre
+        self.horario = horario
+        self.asignaturas = asignaturas
     
-    def Tutor(self, value:bool=None):
-        if value != None:
-            self._tutor = value 
-        return self._tutor
-    
-    def Horario(self, value:list[list[str]]=None):
-        if value != None:
-            self._horario = value 
-        return self._horario
-    
-    def Asignaturas(self, value:list[Asignatura]=None):
-        if value != None:
-            self._asignaturas = value 
-        return self._asignaturas
-    
-    def ToJson(self) -> dict:        
+    def toJson(self) -> dict:        
         json = {
-            "nombre":self._nombre,
-            "tutor":self._tutor,
-            "horario": self._horario,
-            "asignaturas":self._asignaturas
+            "nombre":self.nombre,
+            "tutor":self.tutor,
+            "horario": self.horario,
+            "asignaturas":self.asignaturas
         }
         return json
 
-
 class Grupo:
 
-    _nombre: str
-    _asignaturas: list[Asignatura]
-    _tutor: Profesor
-    _profesores: list[Profesor]
-    _horario: str
+    nombre: str
+    asignaturas: list[Asignatura]
+    tutor: Profesor
+    profesores: list[Profesor]
+    horario: str
 
     def __init__(self, nombre:str=None, asignaturas:list[Asignatura]=None, tutor:Profesor=None, profesores:list[Profesor]=None, horario:str=None) -> None:
-        self._nombre = nombre
-        self._asignaturas = asignaturas
-        self._tutor = tutor
-        self._profesores = profesores
-        self._horario = horario
+        self.nombre = nombre
+        self.asignaturas = asignaturas
+        self.tutor = tutor
+        self.profesores = profesores
+        self.horario = horario
 
 
-    def Nombre(self, value:str=None):
-        if value != None:
-            self._nombre = value 
-        return self._nombre
 
-    def Asignaturas(self, value:list[Asignatura]=None):
-        if value != None:
-            self._asignaturas = value 
-        return self._asignaturas
-
-
-    def Tutor(self, value:Profesor=None):
-        if value != None:
-            self._tutor = value 
-        return self._tutor
-
-
-    def Profesores(self, value:list[Profesor]=None):
-        if value != None:
-            self._profesores = value 
-        return self._profesores
-
-    def Horario(self, value:str=None):
-        if value != None:
-            self._horario = value 
-        return self._horario
-
-
-class Hora_horario:
-    _nombre: Asignatura
-    _tiempo:datetime.datetime
-    _grupo: Grupo
-    _profesor: Profesor
+class Horahorario:
+    nombre: Asignatura
+    tiempo:datetime.datetime
+    grupo: Grupo
+    profesor: Profesor
 
     def __init__(self, nombre:Asignatura=None, tiempo:datetime.datetime=None, grupo:Grupo=None, profesor:Profesor=None) -> None:
-        self._nombre = nombre
-        self._tiempo = tiempo
-        self._grupo = grupo
-        self._profesor = profesor
-        pass
-
-    def Nombre(self, value:Asignatura=None):
-        if value != None:
-            self._nombre = value 
-        return self._nombre
-
-    def Tiempo(self, value:datetime.datetime=None):
-        if value != None:
-            self._tiempo = value 
-        return self._tiempo
-
-    def Grupo(self, value:Grupo=None):
-        if value != None:
-            self._grupo = value 
-        return self._grupo
-
-    def Profesor(self, value:Profesor=None):
-        if value != None:
-            self._profesor = value 
-        return self._profesor
-    
+        self.nombre = nombre
+        self.tiempo = tiempo
+        self.grupo = grupo
+        self.profesor = profesor
     
     def toJson(self) -> str:
         return json.dumps({
-            "nombre":self._nombre.Nombre(),
-            "tiempo":self._tiempo,
-            "grupo":self._grupo.Nombre(),
-            "profesor":self._profesor.Nombre()
+            "nombre":self.nombre.nombre,
+            "tiempo":self.tiempo,
+            "grupo":self.grupo.nombre,
+            "profesor":self.profesor.nombre
         }, default=str)
     
 
 class Tarea:
-    _titulo:str
-    _tarea:str
-    _tiempo:datetime.datetime
-    _profesor: Profesor
+    titulo:str
+    tarea:str
+    tiempo:datetime.datetime
+    profesor: Profesor
 
 
     def __init__(self, titulo:str,tarea:str,tiempo:datetime.datetime, profesor:Profesor):
-        pass
-    
-    def Titulo(self, value:str=None):
-        if value != None:
-            self._titulo = value
-        return self._titulo
-
-    def Tiempo(self, value:datetime.datetime=None):
-            if value != None:
-                self._tiempo = value 
-            return self._tiempo
-
-    def Profesor(self, value:Profesor=None):
-        if value != None:
-            self._profesor = value 
-        return self._profesor
-    
-    def Tarea(self, value:str=None):
-        if value != None:
-            self._tarea = value
-        return self._tarea
+        self.titulo = titulo
+        self.tarea = tarea
+        self.tiempo = tiempo
+        self.profesor = profesor
 
     def toJson(self) -> str:
         return json.dumps({
-            "titulo":self._titulo,
-            "tiempo":self._tiempo,
-            "profesor":self._profesor.Nombre(),
-            "tarea":self._tarea
+            "titulo":self.titulo,
+            "tiempo":self.tiempo,
+            "profesor":self.profesor.nombre,
+            "tarea":self.tarea
         }, default=str)
 
     
 class dia:
-    _horario: list[Hora_horario] 
-    _dia_semana: str
-    _grupo: Grupo
+    horario: list[Horahorario] 
+    dia_semana: str
+    grupo: Grupo
 
-    def __init__(self, horario:list[Hora_horario]=None, dia_semana:str=None, grupo:Grupo=None) -> None:
-        self._horario = horario
-        self._dia_semana = dia_semana
-        self._grupo = grupo
-
-    def Horario(self, value:list[Hora_horario]=None):
-        if value != None:
-            self._horario = value
-        return self._horario
-
-    def DiaSemana(self, value:str=None):
-        if value != None:
-            self._dia_semana = value
-        return self._dia_semana
-
-    def Grupo(self, value:Grupo=None):
-        if value != None:
-            self._grupo = value 
-        return self._grupo
+    def __init__(self, horario:list[Horahorario]=None, dia_semana:str=None, grupo:Grupo=None) -> None:
+        self.horario = horario
+        self.dia_semana = dia_semana
+        self.grupo = grupo
 
 
 class semana:
-    _horario: list[dia]
-    _grupo: Grupo
+    horario: list[dia]
+    grupo: Grupo
 
     def __init__(self, horario:list[dia]=None, grupo:Grupo=None) -> None:
-        self._horario = horario
-        self._grupo = grupo
-
-    def Horario(self, value:list[dia]=None):
-        if value != None:
-            self._horario = value
-        return self._horario
-
-    def Grupo(self, value:Grupo=None):
-        if value != None:
-            self._grupo = value 
-        return self._grupo
+        self.horario = horario
+        self.grupo = grupo
 
     
 

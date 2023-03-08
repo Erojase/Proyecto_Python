@@ -1,13 +1,17 @@
 .mail{
-    background-color: antiquewhite;
+    background-color: rgba(0, 0, 0, 0.121);
     display: flex;
     flex-direction: column;
-    border: 1px solid rgb(255, 0, 0);
+    justify-content: space-evenly;
+    border: 1px solid rgb(255, 255, 255);
     position: absolute;
     width: 80%;
     height: 50vh;
     margin: 10%;
     padding: 2%;
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 25px;
+    height: 60vh;
 }
 
 .mail > input{
@@ -15,11 +19,35 @@
 }
 
 .mail > textarea{
-    height: 80%;
+    height: 50%;
     resize: none;
 }
 
 .mail > button{
-    cursor: pointer;
-    height: 10%;
+    align-self: center;
+   margin-top: 20px;
+  background: #5E5DF0;
+  border-radius: 999px;
+  box-shadow: #5E5DF0 0 10px 20px -10px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-family: Helvetica,sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  opacity: 1;
+  outline: 0 solid transparent;
+  padding: 8px 48px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: fit-content;
+  word-break: break-word;
+  border: 0;
+}
+
+.title{
+    color: #FFFFFF;
+    align-self: center;
 }
