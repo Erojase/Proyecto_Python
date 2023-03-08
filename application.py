@@ -153,7 +153,7 @@ def crear_buscar_clase():
 def getclase():
     token = request.headers["Authorization"].split()[1]
     tipo = parseToken(token)
-    if sm.Buscar_clase_profe(tipo['user']) != None:
+    if sm.Buscar_clase_profe(tipo['nick']) != None:
         return jsonify(sm.Buscar_clase_profe(tipo['user']).toJson())
     return ''
 
