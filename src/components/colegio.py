@@ -104,11 +104,11 @@ class Tarea:
 
     
 class dia:
-    horario: list[Hora_horario] 
+    horario: list[Horahorario] 
     dia_semana: str
     grupo: Grupo
 
-    def __init__(self, horario:list[Hora_horario]=None, dia_semana:str=None, grupo:Grupo=None) -> None:
+    def __init__(self, horario:list[Horahorario]=None, dia_semana:str=None, grupo:Grupo=None) -> None:
         self.horario = horario
         self.dia_semana = dia_semana
         self.grupo = grupo

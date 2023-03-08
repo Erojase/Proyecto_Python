@@ -110,4 +110,7 @@ class DbManager:
         return db.insert_one({'Alumnos': alumnos, 'Hora_creacion': datetime.now().strftime("%d/%m/%Y %H:%M:%S"), 'Hora_conexion_alumno': horas_conexion})
         
         
-    
+    def crearClase(self, objectId: object, alumnos:list[str], profesor:str, clave:str):
+        db = self.database['Clase']
+        return db.insert_one({'hObjectId': objectId, 'Alumnos': alumnos, 'Profesor': profesor, 'Clave': clave})
+        

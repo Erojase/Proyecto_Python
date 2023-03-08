@@ -111,8 +111,8 @@ def crear_buscar_clase():
         data = request.get_json(silent=True)
         profe:str = tokenData['nick']
         alumnos = db.getAlumnos(data[1])
-        
-        return jsonify(sm.Crear_clase(data[0],profe, alumnos).toJson())
+        # Me he quedado aqui
+        return jsonify(db.crearClase(db.historicoCrear(alumnos, profe), alumnos, profe, data[0]))
     elif tokenData['tipo'] == Tipo.Alumno.name:
         clave = request.headers["clave"]
         img = request.files.get("img")
