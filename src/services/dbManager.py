@@ -68,7 +68,7 @@ class DbManager:
         coll.insert_one(insertDict)
         
         
-    #revisar por edu
+    #revisar por edu 
     def getLastId(self,nombre:str):
         coll = self.database[nombre]
         last_id = coll.find({},{"_id":0, "id":1}).sort("id", -1).limit(1)

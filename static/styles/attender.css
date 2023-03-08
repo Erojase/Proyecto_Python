@@ -68,3 +68,53 @@ button{
    word-break: break-word;
    border: 0;
 }
+
+#profe{
+    display: flex;
+    justify-content: center;
+    position: relative;
+    margin-top: 20px;
+}
+
+#codigo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+#codigo > input{
+    height: 30px;
+    font-size: 20px;
+    text-align: center;
+    position: relative;
+    width: 10%;
+    align-self: center;
+}
+
+#informe{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+#codigo > select{
+    height: 30px;
+    font-size: 20px;
+    text-align: center;
+    position: relative;
+    width: 10%;
+    align-self: center;
+}
+
+#clave_clase{
+    color: white;
+    align-self: center;
+    margin-top: 20px;
+    font-size: 150px;
+}
