@@ -12,18 +12,18 @@ db = DbManager()
 def crearTarea(datos:str,user:str,):
     titulo = datos["titulo"]
     asignacion = datos["tarea"]
-    Usuario = user["id"]
+    Usuario = user["nick"]
 
-    info = db.getUser(Usuario)
-    profe = info["nombre"] #poner "user"
-    id = db.getLastId("Tareas")
+    
+    # profe = info["nombre"] #poner "user"
+    # id = db.getLastId("Tareas")
     
     tarea = {
-    "id" : id ,
-    "profesor": profe,
-    "cuerpo": asignacion, 
-    "titulo": titulo
-}        
+        "Alumnos": DbManager.getAlumnos(datos['grupo']),
+        "Profesor": Usuario,
+        "Descripcion": asignacion, 
+        "Titulo": titulo
+    }        
     return json.dumps(tarea)
 
 

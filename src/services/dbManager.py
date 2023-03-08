@@ -60,10 +60,10 @@ class DbManager:
     
     def insertTarea(self, tarea:Tarea):
         insertDict = json.loads(tarea)
-        njlk =  self.listTareas()
-        for tarea in njlk:
-            if tarea["id"] == insertDict["id"]:
-                return "Not a valid id"
+        # njlk =  self.listTareas()
+        # for tarea in njlk:
+        #     if tarea["id"] == insertDict["id"]:
+        #         return "Not a valid id"
         coll = self.database["Tareas"]
         coll.insert_one(insertDict)
         

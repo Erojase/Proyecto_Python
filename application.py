@@ -119,13 +119,17 @@ def taskerr():
 def tasker():
     token = request.headers['Authorization'].split()[1]
     user = parseToken(token)
-    data = request.get_json(silent=True)
+    # data = request.get_json(silent=True)
+    data = request
     
     tarea = crearTarea(data,user)
-    if "titulo" not in data or "tarea" not in data:
-        return jsonify("Expected more from you"), 400
+    # if "titulo" not in data or "tarea" not in data:
+    #     return jsonify("Expected more from you"), 400
     
-    db.insertTarea(tarea)
+    # db.insertTarea(tarea)
+    
+    
+    return db.insertTarea(tarea)
     return 200
 
 @application.route("/tasker/getTask",methods=['POST'])
