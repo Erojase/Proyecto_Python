@@ -60,7 +60,7 @@ class Grupo:
 
 
 
-class Horahorario:
+class Hora_horario:
     nombre: Asignatura
     tiempo:datetime.datetime
     grupo: Grupo

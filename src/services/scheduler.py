@@ -119,7 +119,7 @@ def generar(_grupos:list[Grupo], numero_clases_dia:int=7) -> list[semana]:
         # Crea el un array con los horarios de los profesores que ya estan asignados en otros grupos
         if rtn != []:
             for horario_grupo in rtn:
-                if horario_grupo.Grupo().Horario() == grupos.Horario():
+                if horario_grupo.grupo.horario == grupos.horario:
                     for i in range(5):
                         for j in range(numero_clases_dia):
                             if horario_grupo.Horario()[i].Horario()[j].Profesor() != None:

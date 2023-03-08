@@ -2,6 +2,7 @@ from pymongo import MongoClient
 import urllib.parse
 from src.components.colegio import *
 from src.components.users import *
+from datetime import datetime
 import json
 
 
@@ -98,4 +99,12 @@ class DbManager:
         jamon = call.find_one({"nombre":grupo})["alumnos"]
         return jamon
             
+    def historicoCrear(self, alumnos:list[str], profesor:str):
+        db = self.database['Historico']
+        horas_conexion = []
+        for al in alumnos:
+            horas_conexion.append(None)
+        return db.insert_one({'Alumnos': alumnos, 'Hora_creacion': datetime.now().strftime("%d/%m/%Y %H:%M:%S"), 'Hora_conexion_alumno': horas_conexion})
+        
+        
     
