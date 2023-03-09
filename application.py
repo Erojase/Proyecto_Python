@@ -188,9 +188,6 @@ def token():
     
     return data
     
-@application.route('/info', methods=['GET'])
-def info():
-    return open('pages/info.html', 'r', encoding='utf-8')
 
 def parseToken(token:str, verify_signature=True):
     data = jwt.decode(token, SECRET_KEY, algorithms=['HS256'], options={"verify_signature": verify_signature})

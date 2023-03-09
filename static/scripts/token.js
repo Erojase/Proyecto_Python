@@ -33,6 +33,15 @@ function replaceLoginWithName(data) {
 function click(event) {
     event.preventDefault();
     if (!toggleSession) {
+        let context = document.createElement("div");
+    context.style.backgroundColor = "#242424";
+    context.style.color = "white";
+    context.style.position = "absolute";
+    context.style.marginTop = "10px";
+    context.style.padding = "10px";
+    context.style.borderRadius = "5px";
+    context.innerHTML = "Cerrar Sesion";
+    context.id = "cerrarSesion";
 
         let btnLogout = document.createElement("div");
         btnLogout.style.backgroundColor = "#242424";
@@ -77,7 +86,7 @@ function click(event) {
         document.getElementById("loginAnchor").appendChild(div);
        
     } else{
-        document.getElementById("containeroo").remove();
+        document.getElementById("cerrarSesion").remove();
     }
     toggleSession = !toggleSession;
     
@@ -85,9 +94,5 @@ function click(event) {
 
 function logout() {
     window.localStorage.removeItem("token");
-    window.location.href = "/web";
-}
-
-function info() {
-    window.location.href = "/info";
+    window.location.href = window.location.href;
 }
