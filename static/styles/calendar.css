@@ -14,12 +14,12 @@
     top: 13%;
     height: 67vh;
     width: auto;
-    padding-top: 40px;
     border: 1px solid rgb(255, 255, 255);
     border-radius: 25px;
     margin-left: 10%;
     margin-right: 10%;
-    
+    padding: 50px;
+    padding-top: 40px;
 }
 
 .tabList{
@@ -131,4 +131,19 @@ button{
     width: inherit;
     display: flex;
     justify-content: space-evenly;
+}
+
+.lista{
+    display: flex;
+    flex-direction: column;
+}
+
+.caja{
+    display: flex;
+    flex-direction: row;
+    margin: 30px;
+}
+
+.insert{
+    margin-right: 30px;
 }

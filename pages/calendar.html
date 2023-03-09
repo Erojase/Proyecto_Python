@@ -119,8 +119,54 @@
                 </table>
             </div>
         </div>
+
         <div class="tab data">
-            <div id="asiganturas"></div>
+
+            <button style="margin-bottom: 25px;" name="introducir" onclick="crearGrupos()">Crear Grupo</button>
+
+            <div class="caja">
+                <div class="caja">
+                    <h4 class="title">Nombre del grupo:</h4>
+                    <input type="text" id="nombre_grupo">
+                </div>
+    
+                <div class="caja">
+                    <h4 class="title">Turno:</h4>
+                    <select name="turno" id="turno">
+                        <option value="MAÑANA">MAÑANA</option>
+                        <option value="TARDE">TARDE</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="caja">
+                   <div class="insert" id="profesores">
+                   <button name="introducir" onclick="añadirProfesores()">Añadir</button>
+                   </div>
+
+                   <div class="insert" id="asignaturas">
+                   <button name="introducir" onclick="añadirAsignaturas()">Añadir</button>
+                   </div>
+            </div>
+            
+            <div class="caja">  
+                <div>
+                    <ul id="lista_profesores" class="lista">
+                        <li>
+    
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="caja">
+                    <ul id="lista_asignaturas" class="lista">
+                        <li>
+    
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
         </div>
 
     </div>

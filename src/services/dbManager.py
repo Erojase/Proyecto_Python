@@ -87,7 +87,7 @@ class DbManager:
         grupos:list[str] = []
         
         filter = {}
-        projection = {}
+        projection = {"_id":0}
         for grup in db.find(filter,projection):
             grupos.append(grup["nombre"])
         return grupos
@@ -110,4 +110,30 @@ class DbManager:
     def crearClase(self, objectId: object, alumnos:list[str], profesor:str, clave:str):
         db = self.database['Clase']
         return db.insert_one({'hObjectId': objectId, 'Alumnos': alumnos, 'Profesor': profesor, 'Clave': clave})
+    
+    def getProfesores(self) ->list[str]:
+        db = self.database["Usuarios"]
+        grupos:list[str] = []
+        
+        filter = {"tipo":Tipo.Profesor.name}
+        projection = {"_id":0}
+        for grup in db.find(filter,projection):
+            grupos.append(grup["nick"])
+        return grupos
+    
+    def getAsignaturas(self) ->list[str]:
+        db = self.database["Asignaturas"]
+        grupos:list[str] = []
+        
+        filter = {}
+        projection = {"_id":0}
+        for grup in db.find(filter,projection):
+            grupos.append(grup["nombre"])
+        return grupos
+    
+    
+    def crearGrupo(self, grupo:Grupo):
+        db = self.database["Grupos"]
+        return str(db.insert_one( grupo.toJson()).inserted_id)
+        
         

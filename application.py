@@ -28,7 +28,7 @@ def googleAuth():
     tkdata = {}
     token = ""
     
-    user = db.getOneUser({"mail":data["email"]},{})
+    user = db.getOneUser({"mail":data["email"]},{"_id":0})
     if user is not None:
         token = {"exp": dt.utcnow() + timedelta(days=1)} #expira en 1 dia
         tkdata["tipo"] = user["tipo"]
@@ -168,6 +168,19 @@ def crear_fich():
 @application.route('/attendance/mongo', methods=['GET'])
 def getGrupos():
     return jsonify(db.getGrupos())
+
+@application.route('/horario/mongo/profesores', methods=['GET'])
+def getProfesores():
+    return jsonify(db.getProfesores())
+
+@application.route('/horario/mongo/asignaturas', methods=['GET'])
+def getAsignaturas():
+    return jsonify(db.getAsignaturas())
+
+@application.route('/horario/mongo/crear', methods=['POST'])
+def crearGrupo():
+    data = request.get_json(silent=True)
+    return jsonify(db.crearGrupo(Grupo(data["nombre"], data["asignaturas"], data["tutor"], data["profesores"], data["horario"])))
 
 
 @application.route('/bot', methods=['GET'])

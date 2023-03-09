@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById("main").click();
     selector = document.getElementById("group");
     selector.addEventListener('change', cargarGrupo);
+    getProfesores();
     getAsignaturas();
 
 });
@@ -117,12 +118,42 @@ function cargarGrupo() {
         }
     }
 }
+
+function añadirAsignaturas(){
+    let asign = document.getElementById("Asignaturas").value;
+    let ul = document.getElementById("lista_asignaturas");
+    let li = document.createElement('li');
+    li.innerText = asign;
+    ul.appendChild(li)
+}
+
+let tutores = [];
+function añadirProfesores(){
+    let asign = document.getElementById("Profesores").value;
+    let ul = document.getElementById("lista_profesores");
+    let li = document.createElement('li');
+    let check = document.createElement('input');
+    check.type = 'checkbox';
+    check.style.margin = "10px";
+    check.addEventListener("change", (e)=>{
+        if (e.target.checked) {
+            tutores.push(e.target.parentNode.innerText)
+        } else{
+            tutores.splice(tutores.indexOf(e.target.parentNode.innerText), 1);
+        }
+    });
+
+    li.innerText = asign;
+    ul.appendChild(li)
+    li.appendChild(check);
+}
+
 async function getAsignaturas() {
     
     let token = window.localStorage.getItem("token");
     headersList["Authorization"] = "Bearer "+token;
 
-    let response = await fetch('attendance/mongo', {
+    let response = await fetch('horario/mongo/asignaturas', {
         method: "GET",
         headers: headersList
     })
@@ -140,3 +171,54 @@ async function getAsignaturas() {
     });
     div.appendChild(select)
 }
+
+async function getProfesores() {
+    
+    let token = window.localStorage.getItem("token");
+    headersList["Authorization"] = "Bearer "+token;
+
+    let response = await fetch('horario/mongo/profesores', {
+        method: "GET",
+        headers: headersList
+    })
+
+    let data = await response.text()
+
+    let div = document.getElementById("profesores")
+    let select = document.createElement("select")
+    select.id = "Profesores"
+    JSON.parse(data).forEach(user => {
+        let op = document.createElement("option")
+        op.value = user
+        op.innerText = user
+        select.appendChild(op)
+    });
+    div.appendChild(select)
+}
+
+async function crearGrupos() {
+    let nombre = document.getElementById("nombre_grupo").value;
+    let turno = document.getElementById("turno").value;
+
+
+    
+    let token = window.localStorage.getItem("token");
+    headersList["Authorization"] = "Bearer "+token;
+
+    let response = await fetch('/horario/mongo/crear', {
+        method: "POST",
+        headers: headersList,
+        body: JSON.stringify({
+            "nombre":nombre,
+            "asignaturas": [],
+            "profesores": [],
+            "tutor": tutores,
+            "horario": turno 
+        })
+    });
+
+    let res = await response.text();
+    console.log(res);
+}
+
+

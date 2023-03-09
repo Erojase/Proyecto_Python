@@ -58,6 +58,15 @@ class Grupo:
         self.profesores = profesores
         self.horario = horario
 
+    def toJson(self) -> dict:        
+        json = {
+            "nombre":self.nombre,
+            "asignaturas":self.asignaturas,
+            "tutor": self.tutor,
+            "profesores":self.profesores,
+            "horario":self.horario
+        }
+        return json
 
 
 class Horahorario:
