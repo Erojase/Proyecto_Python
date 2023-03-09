@@ -69,6 +69,7 @@ function click(event) {
         div.style.marginTop = "10px";
         div.style.padding = "10px";
         div.style.borderRadius = "5px";
+        div.style.zIndex = "100";
         div.id = "containeroo";
 
         div.appendChild(btnInfo);

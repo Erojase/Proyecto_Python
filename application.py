@@ -29,7 +29,7 @@ def googleAuth():
     token = ""
     
     user = db.getOneUser({"mail":data["email"]},{})
-    if len(user) > 0:
+    if user is not None:
         token = {"exp": dt.utcnow() + timedelta(days=1)} #expira en 1 dia
         tkdata["tipo"] = user["tipo"]
         tkdata["mail"] = user["mail"]
