@@ -97,5 +97,12 @@ class DbManager:
         call = self.database["Grupos"]
         jamon = call.find_one({"nombre":grupo})["alumnos"]
         return jamon
+    
+    def getAsignaturas(self) ->list[str]:
+        call = self.database["Asignaturas"]
+        asignaturas:list[str] = []
+        for asign in call.find({}):
+            asignaturas.append(asign["nombre"])
+        return asignaturas
             
     
