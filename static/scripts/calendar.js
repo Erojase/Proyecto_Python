@@ -123,6 +123,7 @@ function añadirAsignaturas(){
     let asign = document.getElementById("Asignaturas").value;
     let ul = document.getElementById("lista_asignaturas");
     let li = document.createElement('li');
+    li.className = "asignatura"
     li.innerText = asign;
     ul.appendChild(li)
 }
@@ -132,6 +133,7 @@ function añadirProfesores(){
     let asign = document.getElementById("Profesores").value;
     let ul = document.getElementById("lista_profesores");
     let li = document.createElement('li');
+    li.className = "profesor"
     let check = document.createElement('input');
     check.type = 'checkbox';
     check.style.margin = "10px";
@@ -200,6 +202,18 @@ async function crearGrupos() {
     let nombre = document.getElementById("nombre_grupo").value;
     let turno = document.getElementById("turno").value;
 
+    let lista_asignaturas = document.getElementsByClassName("asignatura");
+    let lista_profesores = document.getElementsByClassName("profesor");
+    let asignaturas = [];
+    let profesores = [];
+
+    for(const elem of lista_asignaturas){
+        asignaturas.push(elem.innerText);
+    }
+
+    for(const elem of lista_profesores){
+        profesores.push(elem.innerText);
+    }
 
     
     let token = window.localStorage.getItem("token");
@@ -210,8 +224,8 @@ async function crearGrupos() {
         headers: headersList,
         body: JSON.stringify({
             "nombre":nombre,
-            "asignaturas": [],
-            "profesores": [],
+            "asignaturas": asignaturas,
+            "profesores": profesores,
             "tutor": tutores,
             "horario": turno 
         })
