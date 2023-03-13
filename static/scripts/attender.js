@@ -138,13 +138,13 @@ async function add_alumno() {
 
     if (JSON.parse(data)["tipo"] == 'Profesor') {
             headersList["Authorization"] = "Bearer "+token;
-        let responce = await fetch('/attendance/getclass', { 
+            let response = await fetch('/attendance/getclass', { 
             method: "POST",
             headers: headersList,
             body: JSON.parse(data)["user"]
         });
 
-        let dato = await responce.text();
+        let dato = await response.text();
 
         console.log(dato);
 
