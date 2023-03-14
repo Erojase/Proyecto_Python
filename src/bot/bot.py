@@ -70,7 +70,31 @@ async def on_message(message):
         
     #LIST_USERS
     if user_message == '!list_users':
-        users = db.listUsers()
+        users = db.listUsersNick()
+        for i in users:
+            await message.channel.send(json.dumps(i['nick']))
+            
+    #LIST_USERS
+    if user_message.startswith('!list_users'):       
+        user_message = user_message.split()[1]
+        print(user_message)
+        users = db.listOneUserStats(user_message)
+        for i in users:
+            await message.channel.send(json.dumps(i['nick']))
+            await message.channel.send(json.dumps(i['nombre']))
+            await message.channel.send(json.dumps(i['apellido']))
+            await message.channel.send(json.dumps(i['mail']))
+            await message.channel.send(json.dumps(i['tipo']))
+            
+    #LIST_GRUPOS
+    if user_message == '!list_grupos':
+        users = db.listGruposName()
+        for i in users:
+            await message.channel.send(json.dumps(i['nombre']))
+            
+    #LIST_ASIGNATURAS
+    if user_message == '!list_asignaturas':
+        users = db.listAsignaturasName()
         for i in users:
             await message.channel.send(json.dumps(i['nombre']))
     

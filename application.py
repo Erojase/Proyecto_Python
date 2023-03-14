@@ -172,7 +172,12 @@ def crear_fich():
             cont += 1
             
     return 'Archivo creado'
-    
+
+@application.route('/listUsers', methods=['GET'])
+def listUsers():
+    users = db.getOneUser({},{"_id":0,"mail":1})
+    return jsonify(list(users))    
+
 @application.route('/attendance/mongo', methods=['GET'])
 def getGrupos():
     return jsonify(db.getGrupos())
@@ -184,20 +189,7 @@ def getGrupos():
 @application.route('/bot', methods=['GET'])
 def discord():
     return open('pages/bot.html', 'r', encoding='utf-8')
-@application.route('/listUsers', methods=['GET'])
-def listUsers():
-    users = db.listUsers()
-    userlist = []
-    for user in users:
-        userlist.append(user['mail'])
-    return jsonify(userlist)
 
-@application.route('/token', methods=['POST'])
-def token():
-    authToken = request.headers["Authorization"].split()[1]
-    data = parseToken(authToken)
-    
-    return data
 
 
 

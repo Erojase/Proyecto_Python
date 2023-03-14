@@ -25,34 +25,112 @@
 
 
     <div class="infoForm" id="infoForm">
-        <label for="nick">nick:</label>
+        <label for="nick">Nick:</label>
         <input type="text" name="nick" id="nick">
 
-        <label for="nombre">nombre:</label>
+        <label for="nombre">Nombre:</label>
         <input type="text" name="nombre" id="nombre">
 
-        <label for="mail">mail:</label>
+        <label for="mail">Mail:</label>
         <input type="text" name="mail" id="mail">
 
-        <label for="tipo">tipo:</label>
+        <label for="tipo">Tipo:</label>
         <select name="tipo" id="tipo">
             <option value="Profesor">Profesor</option>
             <option value="Alumno">Alumno</option>
         </select>
 
-        <label for="tutor">tutor:</label>
+        <label for="tutor">Tutor:</label>
         <input type="checkbox" name="tutor" id="tutor">
 
-        <label for="asignaturas">asignaturas:</label>
-        <div class="asignaturas" id="asignaturas">
-            
+        <div class="marco">
+            <div class="marco2">
+                <label for="asignaturas">Asignaturas:</label>
+        
+                <div class="asignaturas" id="asignaturas">
+
+                    <div class="caja">
+                        <ul id="lista_asignaturas" class="lista">
+                            <li>
+        
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="caja">
+                        <button name="introducir" onclick="añadirAsignaturas()">Añadir</button>
+                        <div class="insert" id="asignaturas"></div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="marco2">
+                <label for="horario">Horario:</label>
+    
+                <div class="horario">
+                    <h3 style="color: white;">Lunes</h3>
+                    <div class="caja">
+                        <label for="Entrada">Entrada:</label>
+                        <input type="time" name="Entrada" value="8:00" max="21:30" min="8:00">
+                    </div>
+
+                    <div class="caja">
+                        <label for="Salida">Salida:</label>
+                        <input type="time" name="Salida" value="8:00" max="21:30" min="8:00">
+                    </div>
+
+                    <br>
+                    <h3 style="color: white;">Martes</h3>
+                    <div class="caja">
+                        <label for="Entrada">Entrada:</label>
+                        <input type="time" name="Entrada" value="8:00" max="21:30" min="8:00">
+                    </div>
+
+                    <div class="caja">
+                        <label for="Salida">Salida:</label>
+                        <input type="time" name="Salida" value="8:00" max="21:30" min="8:00">
+                    </div>
+
+                    <br>
+                    <h3 style="color: white;">Miércoles</h3>
+                    <div class="caja">
+                        <label for="Entrada">Entrada:</label>
+                        <input type="time" name="Entrada" value="8:00" max="21:30" min="8:00">
+                    </div>
+
+                    <div class="caja">
+                        <label for="Salida">Salida:</label>
+                        <input type="time" name="Salida" value="8:00" max="21:30" min="8:00">
+                    </div>
+
+                    <br>
+                    <h3 style="color: white;">Jueves</h3>
+                    <div class="caja">
+                        <label for="Entrada">Entrada:</label>
+                        <input type="time" name="Entrada" value="8:00" max="21:30" min="8:00">
+                    </div>
+
+                    <div class="caja">
+                        <label for="Salida">Salida:</label>
+                        <input type="time" name="Salida" value="8:00" max="21:30" min="8:00">
+                    </div>
+
+                    <br>
+                    <h3 style="color: white;">Viernes</h3>
+                    <div class="caja">
+                        <label for="Entrada">Entrada:</label>
+                        <input type="time" name="Entrada" value="8:00" max="21:30" min="8:00">
+                    </div>
+
+                    <div class="caja">
+                        <label for="Salida">Salida:</label>
+                        <input type="time" name="Salida" value="8:00" max="21:30" min="8:00">
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <label for="horario">horario:</label>
-        <div class="horario" id="horario">
-            
-        
-        </div>
+
         <button onclick="updateUser()">Modificar</button>
     </div>
 </body>

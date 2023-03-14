@@ -93,8 +93,8 @@ class DbManager:
         db = self.database["Grupos"]
         
         filter = {"nombre":grupo}
-        projection = {"alumnos":1}
-        return db.find_one(filter,projection)
+        projection = {"_id":0,"alumnos":1}
+        return db.find_one(filter,projection) # devuelve un array de alumnos, por eso el find_one
             
     def historicoCrear(self, alumnos:list[str], profesor:str):
         db = self.database['Historico']
@@ -105,8 +105,8 @@ class DbManager:
         
         
     def crearClase(self, objectId: object, alumnos:list[str], profesor:str, clave:str):
-        db = self.database['Clase']
-        return db.insert_one({'hObjectId': objectId, 'Alumnos': alumnos, 'Profesor': profesor, 'Clave': clave})
+        db = self.database['Clases']
+        return db.insert_one({'ObjectId': objectId, 'Alumnos': alumnos, 'Profesor': profesor, 'Clave': clave})
     
     def getProfesores(self) ->list[str]:
         db = self.database["Usuarios"]
@@ -132,5 +132,53 @@ class DbManager:
     def crearGrupo(self, grupo:Grupo):
         db = self.database["Grupos"]
         return str(db.insert_one( grupo.toJson()).inserted_id)
+    
+    
+    
+    # #######################################    Bot
         
+    def listUsersNick(self) -> list[dict]:
+        """
+            Lista Los usuarios de la base de datos
+        """
+        db = self.database["Usuarios"]
+        list = []
         
+        filter = {}
+        projection = {"nick":1}       
+        for item in db.find(filter,projection):
+            list.append(item)
+        return list
+    
+    def listOneUserStats(self, user:str) -> list[dict]:
+        """
+            Lista Los usuarios de la base de datos
+        """
+        db = self.database["Usuarios"]
+        list = []
+        
+        filter = {"nick":user}
+        projection = {"_id":0}       
+        for item in db.find(filter,projection):
+            list.append(item)
+        return list
+        
+    def listGruposName(self) ->list[str]:
+        db = self.database["Grupos"]
+        grupos:list[str] = []
+        
+        filter = {}
+        projection = {"nombre":1}
+        for grup in db.find(filter,projection):
+            grupos.append(grup)
+        return grupos
+    
+    def listAsignaturasName(self) ->list[str]:
+        db = self.database["Asignaturas"]
+        grupos:list[str] = []
+        
+        filter = {}
+        projection = {"nombre":1}
+        for grup in db.find(filter,projection):
+            grupos.append(grup)
+        return grupos
