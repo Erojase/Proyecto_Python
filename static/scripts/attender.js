@@ -127,16 +127,10 @@ async function create_clase_Click() {
 
 async function add_alumno() {
     
-    let token = window.localStorage.getItem("token");
-    headersList["Authorization"] = "Bearer "+token;
-    let response = await fetch('/token', { 
-        method: "POST",
-        headers: headersList,
-     });
+    let token = parseJwt(window.localStorage.getItem("token"));
+    
 
-    let data = await response.text();
-
-    if (JSON.parse(data)["tipo"] == 'Profesor') {
+    if (token["tipo"] == 'Profesor') {
             headersList["Authorization"] = "Bearer "+token;
             let response = await fetch('/attendance/getclass', { 
             method: "POST",
@@ -217,4 +211,15 @@ async function crear_informe() {
     document.body.removeChild(a)
     
 
+}
+
+
+function parseJwt (token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
 }
