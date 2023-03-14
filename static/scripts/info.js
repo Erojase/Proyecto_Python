@@ -5,7 +5,9 @@ let headersList = {
 
 
 document.addEventListener('DOMContentLoaded', ()=>{
+    getAsignaturas();
     loadUserData(window.localStorage.getItem("token"));
+
 });
 
 async function loadUserData(token){
@@ -79,4 +81,50 @@ function parseJwt (token) {
     }).join(''));
 
     return JSON.parse(jsonPayload);
+}
+
+async function getAsignaturas() {
+    
+    let token = window.localStorage.getItem("token");
+    headersList["Authorization"] = "Bearer "+token;
+
+    let response = await fetch('horario/mongo/asignaturas', {
+        method: "GET",
+        headers: headersList
+    })
+
+    let data = await response.text()
+
+    let div = document.getElementById("asignaturas")
+    let select = document.createElement("select")
+    select.id = "Asignaturas"
+    JSON.parse(data).forEach(asign => {
+        let op = document.createElement("option")
+        op.value = asign
+        op.innerText = asign
+        select.appendChild(op)
+    });
+    div.appendChild(select)
+}
+
+let asignaturas = [];
+function añadirAsignaturas(){
+    let asign = document.getElementById("Asignaturas").value;
+    let ul = document.getElementById("lista_asignaturas");
+    let li = document.createElement('li');
+    li.className = "asignatura"
+
+    let quitar = document.createElement('input');
+    quitar.type = 'button';
+    quitar.style.margin = "10px";
+    quitar.value = "x";
+    quitar.addEventListener("click", (e)=>{quitarAsignaturas(e)});
+
+    li.innerText = asign;
+    ul.appendChild(li);
+    li.appendChild(quitar);
+}
+
+function quitarAsignaturas(e){
+    e.target.parentNode.remove();
 }

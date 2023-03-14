@@ -132,5 +132,53 @@ class DbManager:
     def crearGrupo(self, grupo:Grupo):
         db = self.database["Grupos"]
         return str(db.insert_one( grupo.toJson()).inserted_id)
+    
+    
+    
+    # #######################################    Bot
         
+    def listUsersNick(self) -> list[dict]:
+        """
+            Lista Los usuarios de la base de datos
+        """
+        db = self.database["Usuarios"]
+        list = []
         
+        filter = {}
+        projection = {"nick":1}       
+        for item in db.find(filter,projection):
+            list.append(item)
+        return list
+    
+    def listOneUserStats(self, user:str) -> list[dict]:
+        """
+            Lista Los usuarios de la base de datos
+        """
+        db = self.database["Usuarios"]
+        list = []
+        
+        filter = {"nick":user}
+        projection = {"_id":0}       
+        for item in db.find(filter,projection):
+            list.append(item)
+        return list
+        
+    def listGruposName(self) ->list[str]:
+        db = self.database["Grupos"]
+        grupos:list[str] = []
+        
+        filter = {}
+        projection = {"nombre":1}
+        for grup in db.find(filter,projection):
+            grupos.append(grup)
+        return grupos
+    
+    def listAsignaturasName(self) ->list[str]:
+        db = self.database["Asignaturas"]
+        grupos:list[str] = []
+        
+        filter = {}
+        projection = {"nombre":1}
+        for grup in db.find(filter,projection):
+            grupos.append(grup)
+        return grupos
