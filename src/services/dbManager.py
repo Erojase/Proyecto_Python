@@ -94,7 +94,7 @@ class DbManager:
         
         filter = {"nombre":grupo}
         projection = {"alumnos":1}
-        return db.find_one(filter,projection)
+        return db.find_one(filter,projection) # devuelve un array de alumnos, por eso el find_one
             
     def historicoCrear(self, alumnos:list[str], profesor:str):
         db = self.database['Historico']
