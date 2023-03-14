@@ -3,7 +3,6 @@ from src.components.users import *
 from src.services.scheduler import *
 from src.services.dbManager import *
 from src.services.serviceManager import *
-from src.bot.bot import *
 
 from datetime import datetime as d 
 import json
@@ -46,9 +45,9 @@ prof8 = Profesor(8, False, "Isabel/John", hor_prof8, list_prof8)
 
 list_asignaturas1 = [asig1, asig2, asig3, asig4, asig5, asig6, asig7, asig8, asig9, asig10]
 list_profesores1 = [prof1, prof2, prof3, prof4, prof5, prof6, prof7, prof8]
-grp1 = Grupo("Dam-2b" ,list_asignaturas1, prof1, list_profesores1, "TARDE")
+grp1 = Grupo("Dam-2b" ,list_asignaturas1, prof1, [], "TARDE")
 
-grp2 = Grupo("Dam-2a" ,list_asignaturas1, prof1, list_profesores1, "TARDE")
+grp2 = Grupo("Dam-2a" ,list_asignaturas1, prof1, [], "TARDE")
 
 grp3 = Grupo("Dam-2c" ,list_asignaturas1, prof1, list_profesores1, "TARDE")
 
@@ -59,7 +58,7 @@ grp6 = Grupo("Dam-2f" ,list_asignaturas1, prof1, list_profesores1, "TARDE")
 grp4 = Grupo("Dam-2d" ,list_asignaturas1, prof1, list_profesores1, "TARDE")
 
 
-h1:Hora_horario = Hora_horario(asig1, d(2023, 10, 21, 13, 45, 00, 00), grp1, prof1)
+# h1:Hora_horario = Hora_horario(asig1, d(2023, 10, 21, 13, 45, 00, 00), grp1, prof1)
 
 if __name__ == '__main__':
     # bd:DbManager = DbManager()
@@ -70,9 +69,9 @@ if __name__ == '__main__':
 
 
     # # print(bd.listUsers())
-    # sm:ServiceManager = ServiceManager()
-    # sm.CalendarTestRun()
+    sm:ServiceManager = ServiceManager()
+    sm.CalendarTestRun()
     # # print(h1.toJson())
 
-    bot.run(f'{TOKEN}')    
+    # bot.run(f'{TOKEN}')    
  

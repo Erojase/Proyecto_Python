@@ -14,7 +14,7 @@ asig9 = Asignatura("Acceso a datos", 5)
 asig10 = Asignatura("Big data", 2)
 
 hor_prof1 = [["8", "20:30"], ["8","20:30"], ["8", "20:30"], ["8", "20:30"], ["8", "20:30"]]
-list_prof1 = [asig7, asig8]
+list_prof1 = [asig7, asig8, asig1]
 prof1 = Profesor(1,True, "Paco", hor_prof1, list_prof1)
 hor_prof2 = [["8", "20:30"], ["8","20:30"], ["8", "20:30"], ["8", "20:30"], ["8", "20:30"]]
 list_prof2 = [asig1, asig4]
@@ -40,9 +40,9 @@ prof8 = Profesor(8, False, "Isabel/John", hor_prof8, list_prof8)
 
 list_asignaturas1 = [asig1, asig2, asig3, asig4, asig5, asig6, asig7, asig8, asig9, asig10]
 list_profesores1 = [prof1, prof2, prof3, prof4, prof5, prof6, prof7, prof8]
-grp1 = Grupo("Dam-2b" ,list_asignaturas1, prof1, list_profesores1, "TARDE")
+grp1 = Grupo("Dam-2b" ,list_asignaturas1, prof1, [], "TARDE")
 
-grp2 = Grupo("Dam-2a" ,list_asignaturas1, prof1, list_profesores1, "TARDE")
+grp2 = Grupo("Dam-2a" ,list_asignaturas1, prof1, [], "TARDE")
 
 grp3 = Grupo("Dam-2c" ,list_asignaturas1, prof1, list_profesores1, "TARDE")
 
@@ -75,8 +75,95 @@ def generar(_grupos:list[Grupo], numero_clases_dia:int=7) -> list[semana]:
 
     # print("hola y david si ves esto significa q ahora te toca currar cual hdp mucha suerte con cariño david del pasado :)")
 
-    for profe in list_profesores1:
+    profes_posibles:list[Profesor] = []
+    profe_elegido:Profesor = Profesor
+    flag:bool = False
+
+    for i in range(len(_grupos)):
+        _grupos[i].profesores = []
+        for asig in _grupos[i].asignaturas:
+            profes_posibles = []
+            for profe in list_profesores1:
+                if asig in profe.asignaturas:
+                    profes_posibles.append(profe)
+            if len(profes_posibles) == 1:
+                _grupos[i].profesores.append(profes_posibles[0])
+            else:
+                profe_elegido = None
+                for profe in profes_posibles:
+                    flag = False
+                    for hora in profe.horario:
+                        if _grupos[i].horario == 'TARDE' and int(hora[1].split(':')[0]) < 14:
+                            flag = True
+                        if _grupos[i].horario == 'MAÑANA' and int(hora[0].split(':')[0]) >= 14:
+                            flag = True
+                    if flag == False:
+                        for j in range(i):
+                            if profe in _grupos[i].profesores:
+                                flag = True
+                        if flag == False:
+                            profe_elegido = profe
+                if _grupos[i].tutor in profes_posibles and profe_elegido == None:
+                    _grupos[i].profesores.append(_grupos[i].tutor)   
+                elif _grupos[i].tutor in profes_posibles and profe_elegido != None:
+                    if profe_elegido == _grupos[i].tutor:
+                        _grupos[i].profesores.append(_grupos[i].tutor)    
+                    elif _grupos[i].tutor not in _grupos[i].profesores and profe_elegido in _grupos[i].profesores:
+                        _grupos[i].profesores.append(_grupos[i].tutor)  
+                    elif _grupos[i].tutor not in _grupos[i].profesores and profe_elegido not in _grupos[i].profesores:
+                        cont1:int = 0
+                        cont2:int = 0
+                        for j in range(i):
+                            if _grupos[i].tutor in _grupos[i].profesores:
+                                for profe in _grupos[i].profesores:
+                                    if _grupos[i].tutor == profe:
+                                        cont1 += 1
+                            if profe_elegido in _grupos[i].profesores:
+                                for profe in _grupos[i].profesores:
+                                    if profe_elegido == profe:
+                                        cont2 += 1
+                        if cont1 < cont2:
+                            _grupos[i].profesores.append(_grupos[i].tutor)
+                        else:
+                            _grupos[i].profesores.append(profe_elegido)    
+                    else:
+                        _grupos[i].profesores.append(profe_elegido)     
+                elif profe_elegido != None:
+                    _grupos[i].profesores.append(profe_elegido) 
+                elif profe_elegido == None:
+                    conts:list[int] = []
+                    for profe in profes_posibles:
+                        cont:int = 0
+                        for j in range(i):
+                            if profe in _grupos[i].profesores:
+                                for teacher in _grupos[i].profesores:
+                                    if profe == teacher:
+                                        cont += 1
+                        conts.append(cont)
+                    pos:int = 0
+                    for t in range(len(conts)):
+                        if conts[t] < conts[pos]:
+                            pos = t
+                    _grupos[i].profesores.append(profes_posibles[pos])
+                
+    for grupo in _grupos:
+        list_profes:list[Profesor] = []
+        for i in range(len(grupo.profesores)):
+            if grupo.profesores[i] not in list_profes:
+                grupo.profesores[i].asignaturas = []
+                grupo.profesores[i].asignaturas.append(grupo.asignaturas[i])
+                list_profes.append(grupo.profesores[i])
+            else:
+                grupo.profesores[i].asignaturas.append(grupo.asignaturas[i])
+        grupo.profesores = list_profes
         
+        
+    for grupo in _grupos:
+        print()
+        for profe in grupo.profesores:
+            print(profe.nombre)
+            for asig in profe.asignaturas:
+                print(asig.nombre)
 
     rtn:list[semana] = []
 
