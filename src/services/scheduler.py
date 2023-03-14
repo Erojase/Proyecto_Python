@@ -73,7 +73,10 @@ def generar(_grupos:list[Grupo], numero_clases_dia:int=7) -> list[semana]:
         Returns -> list[semana]
     """
 
-    # # # # # # print("hola y david si ves esto significa q ahora te toca currar cual hdp mucha suerte con cariño david del pasado :)")
+    # print("hola y david si ves esto significa q ahora te toca currar cual hdp mucha suerte con cariño david del pasado :)")
+
+    for profe in list_profesores1:
+        
 
     rtn:list[semana] = []
 
