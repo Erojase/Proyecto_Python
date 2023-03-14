@@ -93,7 +93,7 @@ class DbManager:
         db = self.database["Grupos"]
         
         filter = {"nombre":grupo}
-        projection = {"alumnos":1}
+        projection = {"_id":0,"alumnos":1}
         return db.find_one(filter,projection) # devuelve un array de alumnos, por eso el find_one
             
     def historicoCrear(self, alumnos:list[str], profesor:str):
@@ -105,8 +105,8 @@ class DbManager:
         
         
     def crearClase(self, objectId: object, alumnos:list[str], profesor:str, clave:str):
-        db = self.database['Clase']
-        return db.insert_one({'hObjectId': objectId, 'Alumnos': alumnos, 'Profesor': profesor, 'Clave': clave})
+        db = self.database['Clases']
+        return db.insert_one({'ObjectId': objectId, 'Alumnos': alumnos, 'Profesor': profesor, 'Clave': clave})
     
     def getProfesores(self) ->list[str]:
         db = self.database["Usuarios"]
