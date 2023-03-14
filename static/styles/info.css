@@ -1,0 +1,25 @@
+label{
+    color: white;
+    font-size: 20px;
+}
+.infoForm{
+    margin: 10%;
+    margin-top: 5%;
+    border: 1px black solid;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.asignaturas{
+    padding: 5%;
+    border: 1px black solid;
+    border-radius: 5px;
+}
+
+.horario{
+    padding: 5%;
+    border: 1px black solid;
+    border-radius: 5px;
+}

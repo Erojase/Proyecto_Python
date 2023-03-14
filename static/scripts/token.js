@@ -86,7 +86,7 @@ function click(event) {
         document.getElementById("loginAnchor").appendChild(div);
        
     } else{
-        document.getElementById("cerrarSesion").remove();
+        document.getElementById("containeroo").remove();
     }
     toggleSession = !toggleSession;
     
@@ -94,5 +94,9 @@ function click(event) {
 
 function logout() {
     window.localStorage.removeItem("token");
-    window.location.href = window.location.href;
+    window.location.href = "/web";
+}
+
+function info() {
+    window.location.href = "/info";
 }

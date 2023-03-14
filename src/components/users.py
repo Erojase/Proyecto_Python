@@ -31,7 +31,7 @@ class Usuario:
         id: dict = None
     ) -> dict:
         self.id = id
-        self._nick = nick
+        self.nick = nick
         self.nombre = nombre
         self.apellido = apellido
         self.passwd = passwd
@@ -42,7 +42,6 @@ class Usuario:
     def toJson(self):
         if self.tipo == Tipo.Alumno:
             return {
-                "id": self.id,
                 "nick": self.nick,
                 "nombre": self.nombre,
                 "apellido": self.apellido,
@@ -51,9 +50,8 @@ class Usuario:
                 "tipo": self.tipo.name,
             }
         else:
-            self.profesor = Profesor(self.Id(), None, None, None, None)
+            self.profesor = Profesor(self.id, None, None, None, None)
             return {
-                "id": self.id,
                 "nick": self.nick,
                 "nombre": self.nombre,
                 "apellido": self.apellido,

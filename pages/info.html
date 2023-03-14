@@ -22,5 +22,38 @@
             </li>
         </ul>
     </div>
+
+
+    <div class="infoForm" id="infoForm">
+        <label for="nick">nick:</label>
+        <input type="text" name="nick" id="nick">
+
+        <label for="nombre">nombre:</label>
+        <input type="text" name="nombre" id="nombre">
+
+        <label for="mail">mail:</label>
+        <input type="text" name="mail" id="mail">
+
+        <label for="tipo">tipo:</label>
+        <select name="tipo" id="tipo">
+            <option value="Profesor">Profesor</option>
+            <option value="Alumno">Alumno</option>
+        </select>
+
+        <label for="tutor">tutor:</label>
+        <input type="checkbox" name="tutor" id="tutor">
+
+        <label for="asignaturas">asignaturas:</label>
+        <div class="asignaturas" id="asignaturas">
+            
+        </div>
+
+        <label for="horario">horario:</label>
+        <div class="horario" id="horario">
+            
+        
+        </div>
+        <button onclick="updateUser()">Modificar</button>
+    </div>
 </body>
 </html>

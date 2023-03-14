@@ -13,15 +13,19 @@ PATH_BASE = os.path.dirname(os.path.abspath(__file__))
 
 SECRET_KEY = "JOYFE"
 
+
+# Root endpoint
 @application.route('/', methods=['GET','POST'])
 def root():
     clientIp = request.remote_addr
     return f'server up -- your ip is {clientIp}'
 
+# Landing Page
 @application.route('/web', methods=['GET'])
 def webMain():
     return open('pages/index.html', 'r', encoding='utf-8')
 
+# Login endpoints
 @application.route('/login/auth', methods=['POST'])
 def googleAuth():
     data = parseToken(request.get_data().decode(encoding="utf-8").split('=')[1].split('&')[0], False) 
@@ -48,13 +52,12 @@ def webLogin():
 def login():
     tokenData = {}
     data = request.get_json(silent=True)
-    if "user" not in data or "password" not in data:
+    if "nick" not in data or "password" not in data:
         return jsonify("Expected more from you"), 400
     
-    user = db.getOneUser({"user":data["username"], "password":data["password"]})
-    if len(user) > 0:
+    user = db.getOneUser({"nick":data["nick"], "password":data["password"]},{"_id":0})
+    if user is not None:
         tokenData = {"exp": dt.utcnow() + timedelta(days=1)} #expira en 1 dia
-        data["id"] = user["id"]
         data["mail"] = user["mail"]
         data["tipo"] = user["tipo"] 
         del data['password']
@@ -62,7 +65,9 @@ def login():
         return jwt.encode(tokenData, SECRET_KEY, algorithm='HS256')
             
     return jsonify("We do not do that here"), 400        
-    
+
+
+# Register endpoints
 @application.route('/register', methods=['POST'])
 def register():
     data = request.get_json(silent=True)
@@ -71,28 +76,38 @@ def register():
     
 
     if data["tipo"] == Tipo.Alumno.name: 
-        tmpUsr:Usuario = Usuario(None, data["user"], "", "", data["password"], data["mail"], Tipo.Alumno)
+        tmpUsr:Usuario = Usuario(data["user"], None, None, data["password"], data["mail"], Tipo.Alumno)
     else:
-        tmpUsr:Usuario = Usuario(None, data["user"], "", "", data["password"], data["mail"], Tipo.Profesor)
+        tmpUsr:Usuario = Usuario(data["user"], None, None, data["password"], data["mail"], Tipo.Profesor)
     return  db.insertUser(tmpUsr)
 
-@application.route('/testAction', methods=['POST'])
-def testAction():
-    print("Test Action Triggered")
-    return "Test Action Triggered"
 
+# Calendar endpoints
 @application.route('/calendario', methods=['GET'])
 def calendario():
     return open('pages/calendar.html', 'r', encoding='utf-8')
-
-
-
 
 @application.route('/calTest', methods=['GET'])
 def calTest():
     return sm.CalendarTestRun()
 
+@application.route('/horario/mongo/profesores', methods=['GET'])
+def getProfesores():
+    return jsonify(db.getProfesores())
 
+@application.route('/horario/mongo/asignaturas', methods=['GET'])
+def getAsignaturas():
+    return jsonify(db.getAsignaturas())
+
+@application.route('/horario/mongo/crear', methods=['POST'])
+def crearGrupo():
+    data = request.get_json(silent=True)
+    return jsonify(db.crearGrupo(Grupo(data["nombre"], data["asignaturas"], data["tutor"], data["profesores"], data["horario"])))
+
+
+
+
+# Attendance endpoints
 @application.route('/attendance', methods=['GET'])
 def asistencia():
     tipo = parseToken(request.args.get('token'))
@@ -100,7 +115,6 @@ def asistencia():
         return open('pages/attender_profesor.html', 'r', encoding='utf-8')
     elif tipo['tipo'] == Tipo.Alumno.name:
         return open('pages/attender_alumno.html', 'r', encoding='utf-8')
-
 
 @application.route('/attendance', methods=['POST'])
 def crear_buscar_clase():
@@ -111,7 +125,6 @@ def crear_buscar_clase():
         data = request.get_json(silent=True)
         profe:str = tokenData['nick']
         alumnos = db.getAlumnos(data[1])
-        # Me he quedado aqui
         return jsonify(db.crearClase(db.historicoCrear(alumnos, profe), alumnos, profe, data[0]))
     elif tokenData['tipo'] == Tipo.Alumno.name:
         clave = request.headers["clave"]
@@ -121,10 +134,6 @@ def crear_buscar_clase():
             if tokenData["mail"] in clase.Alumnos():
                 clase.Checked()[clase.Alumnos().index(tokenData["mail"])] = 1
                 return "Checkeado"
-            # if  clase.Alumnos() == None or tokenData['user'] not in clase.Alumnos():
-            #     clase.addAlumno(tokenData['user'])
-            #     clase.addImage(img, tokenData['user'])
-                # return jsonify(clase.toJson())
         return ''
 
 @application.route('/attendance/getclass', methods=['POST'])
@@ -164,25 +173,14 @@ def crear_fich():
             
     return 'Archivo creado'
     
-
 @application.route('/attendance/mongo', methods=['GET'])
 def getGrupos():
     return jsonify(db.getGrupos())
 
-@application.route('/horario/mongo/profesores', methods=['GET'])
-def getProfesores():
-    return jsonify(db.getProfesores())
-
-@application.route('/horario/mongo/asignaturas', methods=['GET'])
-def getAsignaturas():
-    return jsonify(db.getAsignaturas())
-
-@application.route('/horario/mongo/crear', methods=['POST'])
-def crearGrupo():
-    data = request.get_json(silent=True)
-    return jsonify(db.crearGrupo(Grupo(data["nombre"], data["asignaturas"], data["tutor"], data["profesores"], data["horario"])))
 
 
+
+# Discord bot
 @application.route('/bot', methods=['GET'])
 def discord():
     return open('pages/bot.html', 'r', encoding='utf-8')
@@ -200,8 +198,36 @@ def token():
     data = parseToken(authToken)
     
     return data
-    
 
+
+
+# User information endpoint
+@application.route('/info', methods=['GET'])
+def userInfo():
+    return open('pages/info.html', 'r', encoding='utf-8')
+
+@application.route('/info/<nick>', methods=['GET'])
+def currentUserInfo(nick:str):
+    authToken = request.headers["Authorization"].split()[1]
+    data = parseToken(authToken)
+    if nick == data["nick"]:
+        info = db.getOneUser({"nick":nick},{"_id":0})
+        return jsonify(info)
+    else:
+        return "User not authorized to do this action", 400
+
+@application.route('/info/update/<nick>', methods=['PUT'])
+def UpdateUser(nick):
+    authToken = request.headers["Authorization"].split()[1]
+    token = parseToken(authToken)
+    data = request.get_json(silent=True)
+    
+    if nick == token["nick"]:
+        pass
+    else:
+        return "User not authorized to do this action", 400
+
+# Utils
 def parseToken(token:str, verify_signature=True):
     data = jwt.decode(token, SECRET_KEY, algorithms=['HS256'], options={"verify_signature": verify_signature})
     return data
@@ -213,6 +239,8 @@ def purgeTmpDirs():
     dirlist = os.listdir(os.getcwd()+'\\static\\attender\\')
     for dir in dirlist:
         os.remove(os.getcwd()+'\\static\\attender\\'+dir)
+
+
 
 if __name__ == '__main__':
     purgeTmpDirs()

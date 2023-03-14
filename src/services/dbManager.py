@@ -63,13 +63,10 @@ class DbManager:
             return item
     
     def insertUser(self, usuario:Usuario):
-        insertDict = usuario.toJson()
-        for user in self.listUsers():
-            if user["id"] == insertDict["id"]:
-                return "Not a valid id"
         db = self.database["Usuarios"]
+        insertDict = usuario.toJson()
         db.insert_one(insertDict)
-        return "donete"
+        return "User successfully registered"
         
     
     def insertTarea(self, tarea:Tarea):

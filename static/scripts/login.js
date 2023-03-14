@@ -22,7 +22,7 @@ async function login() {
     let username = document.getElementById("log_username").value;
     let password = MD5.generate(document.getElementById("log_passwd").value)
     let content = JSON.stringify({
-        "user": username,
+        "nick": username,
         "password": password
     });
     if (username.length < 3 || document.getElementById("log_passwd").value.length < 8) {
