@@ -134,8 +134,7 @@ async function add_alumno() {
             headersList["Authorization"] = "Bearer "+token;
             let response = await fetch('/attendance/getclass', { 
             method: "POST",
-            headers: headersList,
-            body: JSON.parse(data)["user"]
+            headers: headersList
         });
 
         let dato = await response.text();
