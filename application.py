@@ -196,6 +196,9 @@ def listUsers():
     users = db.getOneUser({},{"_id":0,"mail":1})
     return jsonify(list(users))    
 
+@application.route('/attendance/mongo', methods=['GET'])
+def getGrupos():
+    return jsonify(db.getGroupNames())
 
 
 
