@@ -19,7 +19,10 @@ class ServiceManager:
         return newclase
     
     def Buscar_clase_clave(self, clave:str) -> Clase:
-        return buscar_clase_clave(clave)
+        for clase in arr_clas:
+            if clase.clave == clave:
+                return clase
+        return None
     
     def Buscar_clase_profe(self, profe:str) -> Clase:
         return buscar_clase_profe(profe)

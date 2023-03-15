@@ -102,7 +102,7 @@ async function create_clase_Click() {
     let ul = document.getElementById('lista_alumnos');
     ul.innerHTML = '';
 
-    JSON.parse(data)['alumnos'].forEach(alumno => {
+    JSON.parse(data)['Alumnos'].forEach(alumno => {
         let nombre = alumno.split("@")[0].replaceAll("."," ");
         let li = document.createElement('li');
         li.innerText = nombre;
@@ -131,7 +131,7 @@ async function add_alumno() {
     
 
     if (token["tipo"] == 'Profesor') {
-            headersList["Authorization"] = "Bearer "+token;
+            headersList["Authorization"] = "Bearer "+window.localStorage.getItem("token");
             let response = await fetch('/attendance/getclass', { 
             method: "POST",
             headers: headersList
@@ -143,9 +143,9 @@ async function add_alumno() {
 
         let checks = document.getElementsByClassName("checks");
 
-        if (dato != '' && JSON.parse(dato)['alumnos'] != null) {
+        if (dato != '' && JSON.parse(dato)['Checks'] != null) {
             let cont = 0;
-            JSON.parse(dato)['checked'].forEach(check => {
+            JSON.parse(dato)['Checks'].forEach(check => {
                 if (check == "1"){
                     checks[cont].checked = true;
                 }

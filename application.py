@@ -124,24 +124,29 @@ def crear_buscar_clase():
     if tokenData['tipo'] == Tipo.Profesor.name:
         data = request.get_json(silent=True)
         profe:str = tokenData['nick']
-        alumnos = db.getAlumnos(data[1])
-        return jsonify(db.crearClase(db.historicoCrear(alumnos, profe), alumnos, profe, data[0]))
+        alumnos = db.getAlumnos(data[1])['alumnos']
+        
+        rtn = {
+            "Historico": str(db.historicoCrear(alumnos, profe)),
+            "Clase": str(db.crearClase(alumnos, profe, data[0])), 
+            "Alumnos": alumnos
+        }
+        return rtn
     elif tokenData['tipo'] == Tipo.Alumno.name:
+        token = request.headers["Authorization"].split()[1]
+        tipo = parseToken(token)
         clave = request.headers["clave"]
-        img = request.files.get("img")
-        clase:Clase = sm.Buscar_clase_clave(clave)
-        if clase != None:
-            if tokenData["mail"] in clase.Alumnos():
-                clase.Checked()[clase.Alumnos().index(tokenData["mail"])] = 1
-                return "Checkeado"
-        return ''
+        return db.buscarClaseClave(clave, tipo['mail'])
+        
+        
 
 @application.route('/attendance/getclass', methods=['POST'])
 def getclase():
     token = request.headers["Authorization"].split()[1]
     tipo = parseToken(token)
-    if sm.Buscar_clase_profe(tipo['nick']) != None:
-        return jsonify(sm.Buscar_clase_profe(tipo['nick']).toJson())
+    rtn = db.buscarClaseProfe(tipo['nick']) 
+    if rtn != None:
+        return jsonify(rtn)
     return ''
     
 @application.route('/attendance/fichero', methods=['POST'])

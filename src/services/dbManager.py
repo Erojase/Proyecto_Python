@@ -3,6 +3,7 @@ import urllib.parse
 from src.components.colegio import *
 from src.components.users import *
 from datetime import datetime
+from bson import ObjectId
 import json
 
 
@@ -101,13 +102,43 @@ class DbManager:
         horas_conexion = []
         for al in alumnos:
             horas_conexion.append(None)
-        return db.insert_one({'Alumnos': alumnos, 'Hora_creacion': datetime.now().strftime("%d/%m/%Y %H:%M:%S"), 'Hora_conexion_alumno': horas_conexion})
+        return db.insert_one({'Alumnos': alumnos, 'Hora_creacion': datetime.now().strftime("%d/%m/%Y %H:%M:%S"), 'Hora_conexion_alumno': horas_conexion}).inserted_id
         
         
-    def crearClase(self, objectId: object, alumnos:list[str], profesor:str, clave:str):
+    def crearClase(self, alumnos:list[str], profesor:str, clave:str):
         db = self.database['Clases']
-        return db.insert_one({'ObjectId': objectId, 'Alumnos': alumnos, 'Profesor': profesor, 'Clave': clave})
+        checks:list[int] = []
+        for al in alumnos:
+            checks.append(0)
+        return db.insert_one({'Alumnos': alumnos, 'Profesor': profesor, 'Clave': clave, 'Checks': checks}).inserted_id
     
+    def buscarClaseClave(self, clave:str, al:str):
+        db = self.database['Clases']
+        filter = {"Clave":clave}
+        row = db.find_one(filter)
+        cont:int = 0
+        for alumno in row['Alumnos']:
+            if alumno == al:
+                row['Checks'][cont] = 1
+            cont += 1
+        checks = row["Checks"]
+        newvalues = {"$set": {'Checks':checks}}
+        db.update_one(filter, newvalues)
+        return 'Checkeado'
+
+    def buscarClaseProfe(self, profe:str, objectId:str):
+        db = self.database['Clases']
+        filter = {"Profesor":profe}
+        projection = {"_id":0,"Checks":1}
+        row = db.find_one(filter, projection)
+        db = self.database['Historico']
+        oid = ObjectId()
+        filter = {"_id": ObjectId(objectId)}
+        hrow = db.find_one(filter)
+        # for r in hrow['Hora_conexion_alumno']:
+            
+        return row
+
     def getProfesores(self) ->list[str]:
         db = self.database["Usuarios"]
         grupos:list[str] = []

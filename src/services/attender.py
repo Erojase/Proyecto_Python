@@ -19,11 +19,11 @@ def crear_clase(clave:str, profe:str, alumnos:list[str]) -> Clase:
     arr_clas.append(newclase)
     return newclase
 
-def buscar_clase_clave(clave:str) -> Clase:
-    for clase in arr_clas:
-        if clase.clave == clave:
-            return clase
-    return None
+#def buscar_clase_clave(clave:str) -> Clase:
+ #   for clase in arr_clas:
+  #      if clase.clave == clave:
+   #         return clase
+    #return None
 
 def buscar_clase_profe(profe:str) -> Clase:
     if arr_clas != None:
