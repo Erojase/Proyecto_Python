@@ -93,7 +93,10 @@ def calTest():
 
 @application.route('/horario/mongo/profesores', methods=['GET'])
 def getProfesores():
-    return jsonify(db.getProfesores())
+    grupos = []
+    for grup in db.getProfesores({"_id":0}):
+            grupos.append(grup["nick"])
+    return jsonify(grupos)
 
 @application.route('/horario/mongo/asignaturas', methods=['GET'])
 def getAsignaturas():
@@ -104,7 +107,15 @@ def crearGrupo():
     data = request.get_json(silent=True)
     return jsonify(db.crearGrupo(Grupo(data["nombre"], data["asignaturas"], data["tutor"], data["profesores"], data["horario"])))
 
+@application.route('/horario/getGroupNames')
+def getGroups():
+    return jsonify(db.getGroupNames())
 
+@application.route('/horario/generarPara/<groupName>')
+def generarPara(groupName):
+    currGrp:Grupo = db.getGrupo(groupName)
+    return sm.GenerarCalendar(currGrp)
+    
 
 
 # Attendance endpoints
@@ -182,10 +193,6 @@ def crear_fich():
 def listUsers():
     users = db.getOneUser({},{"_id":0,"mail":1})
     return jsonify(list(users))    
-
-@application.route('/attendance/mongo', methods=['GET'])
-def getGrupos():
-    return jsonify(db.getGrupos())
 
 
 

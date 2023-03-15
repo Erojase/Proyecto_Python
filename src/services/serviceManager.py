@@ -49,3 +49,6 @@ class ServiceManager:
                 semana.append(dia)
             data.append(semana)
         return json.dumps(data)
+    
+    def GenerarCalendar(self, grp:Grupo):
+        return generar([grp])

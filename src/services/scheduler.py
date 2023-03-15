@@ -36,7 +36,7 @@ list_prof7 = [asig9]
 prof7 = Profesor(7, False, "pedro", hor_prof7, list_prof7)
 hor_prof8 = [["8", "20:30"], ["8","20:30"], ["8", "20:30"], ["8", "20:30"], ["8", "19:30"]]
 list_prof8 = [asig6]
-prof8 = Profesor(8, False, "Isabel/John", hor_prof8, list_prof8)
+prof8 = Profesor(8, False, "Isabel_John", hor_prof8, list_prof8)
 
 list_asignaturas1 = [asig1, asig2, asig3, asig4, asig5, asig6, asig7, asig8, asig9, asig10]
 list_profesores1 = [prof1, prof2, prof3, prof4, prof5, prof6, prof7, prof8]
@@ -78,7 +78,6 @@ def generar(_grupos:list[Grupo], numero_clases_dia:int=7) -> list[semana]:
     # Obtiene de la base de datos Todos los profesores |||||| para edu guardalo en list_profesores1
     
     
-
     # Le mete a cada grupo sus profesores
 
     profes_posibles:list[Profesor] = []

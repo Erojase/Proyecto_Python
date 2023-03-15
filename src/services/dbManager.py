@@ -4,7 +4,7 @@ from src.components.colegio import *
 from src.components.users import *
 from datetime import datetime
 from bson import ObjectId
-import json
+import json, random
 
 
 
@@ -27,6 +27,8 @@ class DbManager:
     def __init__(self) -> None:
         pass
     
+    
+    # User-related functions -----------------------------------------------------------------------------------------------------------
     def listUsers(self) -> list[dict]:
         """
             Lista Los usuarios de la base de datos
@@ -47,18 +49,7 @@ class DbManager:
     def updateUser(self, filter:dict, newValues:dict):
         db = self.database["Usuarios"]
         return db.update_one(filter,{"$set": newValues}).acknowledged
-    
-    def listTareas(self) -> list[dict]:
-        db = self.database["Tareas"]
-        list = []
-        
-        filter = {}
-        projection = {"_id":0}       
-        for item in db.find(filter,projection):
-            list.append(item)
-        return list
-        
-    
+
     def getUser(self, id:int) -> dict:
         db = self.database["Usuarios"]
         
@@ -72,19 +63,22 @@ class DbManager:
         insertDict = usuario.toJson()
         db.insert_one(insertDict)
         return "User successfully registered"
-        
     
-    def insertTarea(self, tarea:Tarea):
-        insertDict = json.loads(tarea)
-        njlk =  self.listTareas()
-        for tarea in njlk:
-            if tarea["id"] == insertDict["id"]:
-                return "Not a valid id"
-        db = self.database["Tareas"]
-        db.insert_one(insertDict) 
+    #Users -> Profesores -------------------------------
+    def getProfesores(self,projection:dict,filterplus:dict = None) ->list[str]:
+        db = self.database["Usuarios"]
+               
+        filter = {"tipo":Tipo.Profesor.name}
+        if filterplus is not None:
+            filter.update(filterplus)
+        return db.find(filter,projection)
+          
+         
     
     
-    def getGrupos(self) ->list[str]:
+    
+    # Group-related functions -----------------------------------------------------------------------------------------------------------
+    def getGroupNames(self) ->list[str]:
         db = self.database["Grupos"]
         grupos:list[str] = []
         
@@ -94,13 +88,38 @@ class DbManager:
             grupos.append(grup["nombre"])
         return grupos
     
+    def getGrupo(self, groupName) -> Grupo:
+        db = self.database["Grupos"]
+        
+        filter = {"nombre":groupName}
+        projection = {"_id":0}
+        raw = db.find_one(filter,projection)
+        
+        rawProfestor = list(self.getProfesores({"_id":0},{"nick":raw["tutor"][0]}))[0]
+        tutor = Profesor(random.randint(100000, 9999999), True, rawProfestor["nick"], rawProfestor["horario"], rawProfestor["asignaturas"])
+        
+        prflist = []
+        for ProfNick in raw["profesores"]:
+            rawProfestor = list(self.getProfesores({"_id":0},{"nick":ProfNick}))[0]
+            tmpPrf = Profesor(random.randint(100000, 9999999), True, rawProfestor["nick"], rawProfestor["horario"], rawProfestor["asignaturas"])
+            prflist.append(tmpPrf)
+        
+        return Grupo(raw["nombre"], raw["asignaturas"], tutor, prflist, raw["horario"])
+        
     def getAlumnos(self, grupo) -> list[str]:
         db = self.database["Grupos"]
         
         filter = {"nombre":grupo}
         projection = {"_id":0,"alumnos":1}
         return db.find_one(filter,projection) # devuelve un array de alumnos, por eso el find_one
+    
+    def crearGrupo(self, grupo:Grupo):
+        db = self.database["Grupos"]
+        return str(db.insert_one( grupo.toJson()).inserted_id)
+    
             
+            
+    # Historico ----------------------------------------------------------------------------------------------------------------------------------------------
     def historicoCrear(self, alumnos:list[str], profesor:str):
         db = self.database['Historico']
         horas_conexion = []
@@ -109,6 +128,10 @@ class DbManager:
         return db.insert_one({'Alumnos': alumnos, 'Hora_creacion': datetime.now().strftime("%d/%m/%Y %H:%M:%S"), 'Hora_conexion_alumno': horas_conexion}).inserted_id
         
         
+        
+        
+        
+    # Clases ------------------------------------------------------------- ---------------------------------------------------------------------------------------
     def crearClase(self, alumnos:list[str], profesor:str, clave:str):
         db = self.database['Clases']
         checks:list[int] = []
@@ -143,15 +166,9 @@ class DbManager:
             
         return row
 
-    def getProfesores(self) ->list[str]:
-        db = self.database["Usuarios"]
-        grupos:list[str] = []
-        
-        filter = {"tipo":Tipo.Profesor.name}
-        projection = {"_id":0}
-        for grup in db.find(filter,projection):
-            grupos.append(grup["nick"])
-        return grupos
+    
+    
+    
     
     def getAsignaturas(self) ->list[str]:
         db = self.database["Asignaturas"]
@@ -164,13 +181,12 @@ class DbManager:
         return grupos
     
     
-    def crearGrupo(self, grupo:Grupo):
-        db = self.database["Grupos"]
-        return str(db.insert_one( grupo.toJson()).inserted_id)
     
     
     
-    # #######################################    Bot
+    
+    
+    # Bot functions -----------------------------------------------------------------------------------------------------------
         
     def listUsersNick(self) -> list[dict]:
         """

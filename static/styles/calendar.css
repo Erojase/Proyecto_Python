@@ -90,7 +90,7 @@ tr, th{
     border: none;
 }
 
-#group{
+.group{
     align-self: center;
     padding: 7px 40px 7px 12px;
     width: 15%;

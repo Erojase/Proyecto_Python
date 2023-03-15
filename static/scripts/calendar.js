@@ -9,13 +9,59 @@ let grupos = {}
 document.addEventListener('DOMContentLoaded', () => {
     let token = window.localStorage.getItem("token");
     headersList["Authorization"] = "Bearer " + token;
-    document.getElementById("main").click();
     selector = document.getElementById("group");
+    cargarGrupos();
+
+    document.getElementById("main").click();
+    
     selector.addEventListener('change', cargarGrupo);
     getProfesores();
     getAsignaturas();
 
 });
+
+async function cargarGrupos() {
+    let mySelector = document.getElementById("rgroup");
+    let res = await fetch('/horario/getGroupNames',{
+        method: "GET",
+        headers: headersList
+    })
+
+    let data = JSON.parse(await res.text());
+    console.log(data);
+
+
+    mySelector.innerHTML = "";
+
+    let vacio = document.createElement('option');
+    vacio.value = "none";
+    vacio.text = "vacio";
+    mySelector.appendChild(vacio);
+
+
+    data.forEach(grupo => {
+        let opt = document.createElement('option');
+        opt.value = grupo;
+        opt.text = grupo;
+        mySelector.appendChild(opt);
+    });
+
+    mySelector.addEventListener("change", (e)=>{fetchGroupCalendar(e.target.value)})
+
+}
+
+async function fetchGroupCalendar(groupName) {
+    
+    let res = await fetch('/horario/generarPara/'+groupName,{
+        method: 'GET',
+        headers: headersList
+    });
+
+    let data = await res.text();
+    console.log(data);
+    // loadTable(data);
+
+}
 
 function hideAllTabs() {
     let tabs = document.getElementsByClassName("tab");
@@ -42,7 +88,7 @@ async function testData() {
     });
 
     let data = await response.text();
-    // console.log(JSON.parse(data));
+    console.log(JSON.parse(data));
     loadTable(JSON.parse(data))
 }
 
@@ -71,7 +117,7 @@ function loadTable(data) {
     for (const grupo in grupos) {
         cont = 0;
         grupos[grupo].forEach(dia => {
-            grupos[grupo][dias[cont]] = dia; cargarGrupo
+            grupos[grupo][dias[cont]] = dia;
             delete grupos[grupo][cont];
             cont++;
         });
