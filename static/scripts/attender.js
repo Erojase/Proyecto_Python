@@ -110,15 +110,7 @@ async function create_clase_Click() {
         check.type = "checkbox";
         check.className = "checks";
         check.disabled = true;
-        // boton_elim.innerText = "X"
-        // boton_elim.id = nombre;
-        // boton_elim.addEventListener("click", hechar_de_clase, false);
-        // let imglink = document.createElement("a");
-        // imglink.download
-        // imglink.href = "/static/attender/"+alumno+".png";
-        // imglink.target = "_blank";
-        // imglink.innerText = " Abrir Imagen"
-        // li.appendChild(imglink)    
+ 
         li.appendChild(check)
         ul.appendChild(li)
     });
@@ -131,7 +123,7 @@ async function add_alumno() {
     
 
     if (token["tipo"] == 'Profesor') {
-            headersList["Authorization"] = "Bearer "+token;
+            headersList["Authorization"] = "Bearer "+window.localStorage.getItem("token");
             let response = await fetch('/attendance/getclass', { 
             method: "POST",
             headers: headersList
