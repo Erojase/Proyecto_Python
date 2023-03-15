@@ -38,7 +38,7 @@ async function getGrupos() {
     })
 
     let data = await response.text()
-
+    console.log(data);
     let div = document.getElementById("profe")
     let select = document.createElement("select")
     select.id = "Grupos"

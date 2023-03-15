@@ -89,7 +89,10 @@ def generar(_grupos:list[Grupo], numero_clases_dia:int=7) -> list[semana]:
         for asig in _grupos[i].asignaturas:
             profes_posibles = []
             for profe in list_profesores1:
-                if asig in profe.asignaturas:
+                asignaturas:list[str] = []
+                for asign in profe.asignaturas:
+                    asignaturas.append(asign.nombre)
+                if asig.nombre in asignaturas:
                     profes_posibles.append(profe)
             if len(profes_posibles) == 1:
                 _grupos[i].profesores.append(profes_posibles[0])

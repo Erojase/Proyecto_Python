@@ -100,7 +100,7 @@ def getProfesores():
 
 @application.route('/horario/mongo/asignaturas', methods=['GET'])
 def getAsignaturas():
-    return jsonify(db.getAsignaturas())
+    return jsonify(list(db.getAsignaturas({"_id":0, "nombre":1})))
 
 @application.route('/horario/mongo/crear', methods=['POST'])
 def crearGrupo():
@@ -114,7 +114,8 @@ def getGroups():
 @application.route('/horario/generarPara/<groupName>')
 def generarPara(groupName):
     currGrp:Grupo = db.getGrupo(groupName)
-    return sm.GenerarCalendar(currGrp)
+    var = sm.GenerarCalendar(currGrp)
+    return var
     
 
 

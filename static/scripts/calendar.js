@@ -4,6 +4,8 @@ let headersList = {
 }
 const dias = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"]
 let selector;
+let mySelector;
+let currValue = "";
 let grupos = {}
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -13,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     cargarGrupos();
 
     document.getElementById("main").click();
-    
+    mySelector = document.getElementById("rgroup");
     selector.addEventListener('change', cargarGrupo);
     getProfesores();
     getAsignaturas();
@@ -58,8 +60,9 @@ async function fetchGroupCalendar(groupName) {
     });
 
     let data = await res.text();
-    console.log(data);
-    // loadTable(data);
+    console.log(JSON.parse(data));
+    loadTable(JSON.parse(data));
+    cargarGrupo();
 
 }
 
@@ -81,27 +84,24 @@ function toggleTab(curr, thisTab) {
     curr.style.borderBottom = "none";
 }
 
-async function testData() {
-    let response = await fetch('/calTest', {
-        method: "GET",
-        headers: headersList,
-    });
+// async function testData() {
+//     let response = await fetch('/calTest', {
+//         method: "GET",
+//         headers: headersList,
+//     });
 
-    let data = await response.text();
-    console.log(JSON.parse(data));
-    loadTable(JSON.parse(data))
-}
+//     let data = await response.text();
+//     console.log(JSON.parse(data));
+//     loadTable(JSON.parse(data))
+// }
 
 function loadTable(data) {
-    selector.innerHTML = "";
     // semana data[0]
     // dia data[0][0]
     // hora data [0][0][0]
 
-    let vacio = document.createElement('option');
-    vacio.value = "none";
-    vacio.text = "vacio";
-    selector.appendChild(vacio);
+
+    console.log(data);
 
     data.forEach(grupo => {
 
@@ -109,7 +109,7 @@ function loadTable(data) {
         let opt = document.createElement('option');
         opt.value = grpName;
         opt.text = grpName;
-        selector.appendChild(opt);
+        mySelector.appendChild(opt);
 
         grupos[grpName] = grupo;
     });
@@ -117,6 +117,7 @@ function loadTable(data) {
     for (const grupo in grupos) {
         cont = 0;
         grupos[grupo].forEach(dia => {
+            // console.log(grupos);
             grupos[grupo][dias[cont]] = dia;
             delete grupos[grupo][cont];
             cont++;
@@ -128,10 +129,12 @@ function loadTable(data) {
 function cargarGrupo() {
     let ElHoras = document.getElementsByClassName("hora");
     let currgrp = {}
-    currgrp = Object.create(grupos[selector.value]);
+    console.log(mySelector.value);
+    currgrp = Object.create(grupos[mySelector.value]);
+    
     for (const key in currgrp) {
         tmpdict = {}
-        grupos[selector.value][key].forEach((hora, i) => {
+        grupos[mySelector.value][key].forEach((hora, i) => {
             if (hora != "None") {
                 let newkey = parseInt(JSON.parse(hora)['tiempo'].split(':')[0]) - 1 + ":" + JSON.parse(hora)['tiempo'].split(':')[1] + " - " + parseInt(JSON.parse(hora)['tiempo'].split(':')[0]) + ":" + JSON.parse(hora)['tiempo'].split(':')[1];
                 tmpdict[newkey] = JSON.parse(hora);
@@ -206,12 +209,13 @@ async function getAsignaturas() {
         headers: headersList
     })
 
-    let data = await response.text()
-
+    let data = JSON.parse(await response.text())
+    console.log(data);
     let div = document.getElementById("asignaturas")
     let select = document.createElement("select")
     select.id = "Asignaturas"
-    JSON.parse(data).forEach(asign => {
+    data.forEach(asign => {
+        asign = asign["nombre"];
         let op = document.createElement("option")
         op.value = asign
         op.innerText = asign

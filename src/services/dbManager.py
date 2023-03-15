@@ -104,7 +104,13 @@ class DbManager:
             tmpPrf = Profesor(random.randint(100000, 9999999), True, rawProfestor["nick"], rawProfestor["horario"], rawProfestor["asignaturas"])
             prflist.append(tmpPrf)
         
-        return Grupo(raw["nombre"], raw["asignaturas"], tutor, prflist, raw["horario"])
+        asList = []
+        for Asign in raw["asignaturas"]:
+            rawAsignatura = list(self.getAsignaturas({"_id":0},{"nombre":Asign}))[0]
+            tmpAs = Asignatura(rawAsignatura["nombre"], rawAsignatura["h_semanales"])
+            asList.append(tmpAs)
+        
+        return Grupo(raw["nombre"], asList, tutor, prflist, raw["horario"])
         
     def getAlumnos(self, grupo) -> list[str]:
         db = self.database["Grupos"]
@@ -131,7 +137,7 @@ class DbManager:
         
         
         
-    # Clases ------------------------------------------------------------- ---------------------------------------------------------------------------------------
+    # Clases ----------------------------------------------------------------------------------------------------------------------------------------------------
     def crearClase(self, alumnos:list[str], profesor:str, clave:str):
         db = self.database['Clases']
         checks:list[int] = []
@@ -186,15 +192,13 @@ class DbManager:
     
     
     
-    def getAsignaturas(self) ->list[str]:
+    def getAsignaturas(self, projection:dict, filterplus:dict = None) ->list[str]:
         db = self.database["Asignaturas"]
-        grupos:list[str] = []
         
         filter = {}
-        projection = {"_id":0}
-        for grup in db.find(filter,projection):
-            grupos.append(grup["nombre"])
-        return grupos
+        if filterplus is not None:
+            filter.update(filterplus)
+        return db.find(filter,projection)
     
     
     

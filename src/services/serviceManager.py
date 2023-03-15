@@ -51,4 +51,21 @@ class ServiceManager:
         return json.dumps(data)
     
     def GenerarCalendar(self, grp:Grupo):
-        return generar([grp])
+        cal = generar([grp])
+        
+        data = []
+        semana = []
+        dia = []
+        
+        for sem in cal:
+            semana = []
+            for day in sem.horario:
+                dia = []
+                for hour in day.horario:
+                    if hour.nombre is not None:
+                        dia.append(hour.toJson())
+                    else:
+                        dia.append("None")
+                semana.append(dia)
+            data.append(semana)
+        return json.dumps(data)
