@@ -2,15 +2,21 @@
 
 let headersList = {
     "Accept": "*/*",
+    "Content-Type": "application/json"
 }
 
+let historico = ' '
+
 document.addEventListener('DOMContentLoaded', ()=>{
+    
+    
     setInterval(() => {
         add_alumno();
     }, 1000);
 
     getGrupos();
 
+    
     // let div = document.getElementById("profe")
     // let select = document.createElement("select")
     // select.id = clases
@@ -102,6 +108,8 @@ async function create_clase_Click() {
     let ul = document.getElementById('lista_alumnos');
     ul.innerHTML = '';
 
+    historico = JSON.parse(data)["Historico"]
+
     JSON.parse(data)['Alumnos'].forEach(alumno => {
         let nombre = alumno.split("@")[0].replaceAll("."," ");
         let li = document.createElement('li');
@@ -121,12 +129,14 @@ async function add_alumno() {
     
     let token = parseJwt(window.localStorage.getItem("token"));
     
+    console.log(historico);
 
     if (token["tipo"] == 'Profesor') {
             headersList["Authorization"] = "Bearer "+window.localStorage.getItem("token");
             let response = await fetch('/attendance/getclass', { 
             method: "POST",
-            headers: headersList
+            headers: headersList,
+            body: JSON.stringify(historico)
         });
 
         let dato = await response.text();
@@ -182,10 +192,12 @@ async function crear_informe() {
 
     let dat = JSON.stringify(document.getElementById("poa").value)
 
+    bdy = [dat,historico]
+
     let responce = await fetch('/attendance/fichero', { 
         method: "POST",
         headers: headersList,
-        body: dat
+        body: JSON.stringify(bdy)
     });
 
     let dato = await responce.text();

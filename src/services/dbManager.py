@@ -130,18 +130,34 @@ class DbManager:
         db.update_one(filter, newvalues)
         return 'Checkeado'
 
-    def buscarClaseProfe(self, profe:str, objectId:str):
+    def buscarClaseProfe(self, profe:str, Id:str):
         db = self.database['Clases']
         filter = {"Profesor":profe}
         projection = {"_id":0,"Checks":1}
         row = db.find_one(filter, projection)
-        db = self.database['Historico']
-        oid = ObjectId()
-        filter = {"_id": ObjectId(objectId)}
-        hrow = db.find_one(filter)
-        # for r in hrow['Hora_conexion_alumno']:
-            
+        if Id != ' ':
+            db = self.database['Historico']
+            filter = {"_id": ObjectId(Id)}
+            hrow = db.find_one(filter)
+            cont:int = 0
+            checks = []
+            for r in hrow['Hora_conexion_alumno']:
+                if row['Checks'][cont] == 1 and r == None:
+                    checks.append(datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
+                elif row['Checks'][cont] == 1 and r != None:
+                    checks.append(r)
+                else:
+                    checks.append(None)
+                cont+= 1
+            newvalues = {"$set": {'Hora_conexion_alumno':checks}}
+            db.update_one(filter, newvalues)
         return row
+
+    def getHistorico(self, Id:str):
+        db = self.database['Historico']
+        filter = {"_id": ObjectId(Id)}
+        hrow = db.find_one(filter)
+        return hrow
 
     def getProfesores(self) ->list[str]:
         db = self.database["Usuarios"]
