@@ -43,6 +43,10 @@ class DbManager:
         db = self.database["Usuarios"]
         return db.find_one(filter,projection)
     
+    def updateUser(self, filter:dict, newValues:dict):
+        db = self.database["Usuarios"]
+        return db.update_one(filter,{"$set": newValues}).acknowledged
+    
     def listTareas(self) -> list[dict]:
         db = self.database["Tareas"]
         list = []

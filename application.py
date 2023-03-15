@@ -215,7 +215,8 @@ def UpdateUser(nick):
     data = request.get_json(silent=True)
     
     if nick == token["nick"]:
-        pass
+        jamon = db.updateUser({"nick":nick},data)
+        return jsonify(jamon)
     else:
         return "User not authorized to do this action", 400
 
