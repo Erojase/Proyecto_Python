@@ -74,10 +74,14 @@ class DbManager:
         return db.find(filter,projection)
           
          
-    
+
     
     
     # Group-related functions -----------------------------------------------------------------------------------------------------------
+    def updateGroup(self, filter:dict, newValues:dict):
+        db = self.database["Grupos"]
+        return db.update_one(filter,{"$set": newValues}).acknowledged
+    
     def getGroupNames(self) ->list[str]:
         db = self.database["Grupos"]
         grupos:list[str] = []
@@ -87,6 +91,10 @@ class DbManager:
         for grup in db.find(filter,projection):
             grupos.append(grup["nombre"])
         return grupos
+    
+    def getGrupoMongo(self, filter:dict, projection:dict):
+        db = self.database["Grupos"]
+        return db.find_one(filter,projection)
     
     def getGrupo(self, groupName) -> Grupo:
         db = self.database["Grupos"]

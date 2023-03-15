@@ -34,11 +34,11 @@
         </div>
         <div class="tab main">
             <div class="edits">
-                <button onclick="testData()">Cargar datos de prueba</button>
-                <select name="grupos" id="group" class="group">
+                <button style="display: none;" onclick="testData()">Cargar datos de prueba</button>
+                <select style="display: none;" name="grupos" id="group" class="group">
                     <option value="none">vacio</option>
                 </select>
-                <select id="rgroup" class="group">
+                <select style="width: 30%;" id="rgroup" class="group">
                     <option value="none">vacio</option>
                 </select>
             </div>
@@ -182,6 +182,10 @@
 
         <div class="tab data">
 
+            <select id="grupos_">
+
+            </select>
+
             <button style="margin-bottom: 25px;" name="introducir" onclick="crearGrupos()">Crear Grupo</button>
 
             <div class="caja">
@@ -209,7 +213,7 @@
                    </div>
             </div>
             
-            <div class="caja">  
+            <div class="caja" id="listas">  
                 <div>
                     <ul id="lista_profesores" class="lista">
                         <li>
@@ -227,8 +231,8 @@
                 </div>
             </div>
             
+            <button onclick="modify()">Modificar</button>
         </div>
-
     </div>
 
 

@@ -111,11 +111,24 @@ def crearGrupo():
 def getGroups():
     return jsonify(db.getGroupNames())
 
+@application.route('/horario/getFullGroup/<nombre>')
+def getGroupsSinMas(nombre):
+    return jsonify(db.getGrupoMongo({"nombre":nombre},{"_id":0}))
+
 @application.route('/horario/generarPara/<groupName>')
 def generarPara(groupName):
     currGrp:Grupo = db.getGrupo(groupName)
     var = sm.GenerarCalendar(currGrp)
     return var
+
+@application.route('/horario/update/<nombre>', methods=['PUT'])
+def UpdateGroup(nombre):
+    data = request.get_json(silent=True)
+    
+    if db.updateGroup({"nombre":nombre},data):
+        return "Group Updated", 200
+    else:
+        return "User not authorized to do this action", 400
     
 
 

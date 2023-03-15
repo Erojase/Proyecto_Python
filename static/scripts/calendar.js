@@ -12,7 +12,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let token = window.localStorage.getItem("token");
     headersList["Authorization"] = "Bearer " + token;
     selector = document.getElementById("group");
-    cargarGrupos();
+
+    let mySelector = document.getElementById("rgroup");
+    let actualGrupos = document.getElementById("grupos_");
+    cargarGrupos(mySelector);
+    cargarGrupos(actualGrupos);
+
+    mySelector.addEventListener("change", (e)=>{fetchGroupCalendar(e.target.value)})
+    actualGrupos.addEventListener("change", (e)=>{fetchGroupSinMas(e.target.value)})
 
     document.getElementById("main").click();
     mySelector = document.getElementById("rgroup");
@@ -22,8 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-async function cargarGrupos() {
-    let mySelector = document.getElementById("rgroup");
+async function cargarGrupos(objetivo) {
+    
     let res = await fetch('/horario/getGroupNames',{
         method: "GET",
         headers: headersList
@@ -33,22 +40,22 @@ async function cargarGrupos() {
     console.log(data);
 
 
-    mySelector.innerHTML = "";
+    objetivo.innerHTML = "";
 
     let vacio = document.createElement('option');
     vacio.value = "none";
     vacio.text = "vacio";
-    mySelector.appendChild(vacio);
+    objetivo.appendChild(vacio);
 
 
     data.forEach(grupo => {
         let opt = document.createElement('option');
         opt.value = grupo;
         opt.text = grupo;
-        mySelector.appendChild(opt);
+        objetivo.appendChild(opt);
     });
 
-    mySelector.addEventListener("change", (e)=>{fetchGroupCalendar(e.target.value)})
+    
 
 }
 
@@ -65,6 +72,150 @@ async function fetchGroupCalendar(groupName) {
     cargarGrupo();
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+let prevName = "";
+async function fetchGroupSinMas(groupName) {
+    
+    let res = await fetch('/horario/getFullGroup/'+groupName,{
+        method: 'GET',
+        headers: headersList
+    });
+
+    let data = JSON.parse(await res.text());
+    console.log(data);
+
+    prevName = data["nombre"];
+
+    let listas = document.getElementById("listas").children;
+    console.log(listas);
+    //listas[0] profesores
+    //listas[1] asignaturas
+
+    document.getElementById("nombre_grupo").value = data["nombre"];
+    document.getElementById("turno").value = data["horario"];
+
+
+    console.log(data["profesores"]);
+
+    document.getElementById("lista_profesores").innerHTML = "";
+    data["profesores"].forEach(prof => {
+        
+        console.log(prof);
+        let li = document.createElement("li");
+        li.innerText = prof;
+        li.className = "profesor";
+
+        let inp = document.createElement("input");
+        inp.type = "checkbox";
+        if (data["tutor"][0] == prof) {
+            inp.checked = true;
+        }
+
+        li.appendChild(inp);
+        document.getElementById("lista_profesores").appendChild(li);
+    });
+
+    document.getElementById("lista_asignaturas").innerHTML = "";
+    data["asignaturas"].forEach(asign => {
+
+        let li = document.createElement("li");
+        li.innerText = asign;
+        li.className = "asignatura";
+
+        document.getElementById("lista_asignaturas").appendChild(li);
+    });
+
+
+}
+
+async function modify() {
+    let nombre = document.getElementById("nombre_grupo").value;
+    let turno = document.getElementById("turno").value;
+
+    let lista_asignaturas = document.getElementsByClassName("asignatura");
+    let lista_profesores = document.getElementsByClassName("profesor");
+    let asignaturas = [];
+    let profesores = [];
+
+    for(const elem of lista_asignaturas){
+        asignaturas.push(elem.innerText);
+    }
+
+    for(const elem of lista_profesores){
+        console.log("--------------------------------------");
+        if (elem.children[0].checked) {
+            tutores = [];
+            tutores.push(elem.innerText);
+        } 
+        profesores.push(elem.innerText);
+    }
+    
+    // headersList["Authorization"] = "Bearer "+token;
+
+    let response = await fetch('/horario/update/'+prevName, {
+        method: "PUT",
+        headers: headersList,
+        body: JSON.stringify({
+            "nombre":nombre,
+            "asignaturas": asignaturas,
+            "profesores": profesores,
+            "tutor": tutores,
+            "horario": turno 
+        })
+    });
+
+    let res = await response.text();
+    console.log(res);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function hideAllTabs() {
     let tabs = document.getElementsByClassName("tab");
@@ -99,12 +250,14 @@ function loadTable(data) {
     // semana data[0]
     // dia data[0][0]
     // hora data [0][0][0]
-
+    mySelector = document.getElementById("rgroup");
 
     console.log(data);
 
     data.forEach(grupo => {
 
+        console.log("jamopopn");
+        console.log(mySelector);
         grpName = JSON.parse(grupo[0][0])['grupo'];
         let opt = document.createElement('option');
         opt.value = grpName;
@@ -284,5 +437,4 @@ async function crearGrupos() {
     let res = await response.text();
     console.log(res);
 }
-
 
