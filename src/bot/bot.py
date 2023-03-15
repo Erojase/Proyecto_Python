@@ -82,9 +82,10 @@ async def on_message(message):
         for i in users:
             await message.channel.send(json.dumps(i['nick']))
             await message.channel.send(json.dumps(i['nombre']))
-            await message.channel.send(json.dumps(i['apellido']))
             await message.channel.send(json.dumps(i['mail']))
             await message.channel.send(json.dumps(i['tipo']))
+            await message.channel.send(json.dumps(i['asignaturas']))
+            await message.channel.send(json.dumps(i['horario']))
             
     #LIST_GRUPOS
     if user_message == '!list_grupos':
