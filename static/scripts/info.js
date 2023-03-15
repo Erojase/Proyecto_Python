@@ -164,12 +164,13 @@ async function getAsignaturas() {
         headers: headersList
     })
 
-    let data = await response.text()
-
+    let data = JSON.parse( await response.text())
+    console.log(data);
     let div = document.getElementById("asignaturas")
     let select = document.createElement("select")
     select.id = "Asignaturas"
-    JSON.parse(data).forEach(asign => {
+    data.forEach(asign => {
+        asign = asign["nombre"];
         let op = document.createElement("option")
         op.value = asign
         op.innerText = asign

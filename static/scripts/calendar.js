@@ -131,7 +131,6 @@ function cargarGrupo() {
     let currgrp = {}
     console.log(mySelector.value);
     currgrp = Object.create(grupos[mySelector.value]);
-    
     for (const key in currgrp) {
         tmpdict = {}
         grupos[mySelector.value][key].forEach((hora, i) => {
