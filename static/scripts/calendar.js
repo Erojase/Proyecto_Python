@@ -147,6 +147,7 @@ function cargarGrupo() {
     for (const elem of ElHoras) {
         for (const key in currgrp) {
             for (const key2 in currgrp[key]) {
+                console.log(key2);
                 if (key2 == elem.innerText) {
                     // console.log("");
                     // console.log(key);// dia de la semana
