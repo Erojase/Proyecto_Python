@@ -155,7 +155,8 @@ def crear_buscar_clase():
 def getclase():
     token = request.headers["Authorization"].split()[1]
     tipo = parseToken(token)
-    rtn = db.buscarClaseProfe(tipo['nick']) 
+    data = request.get_json(silent=True)
+    rtn = db.buscarClaseProfe(tipo['nick'], data) 
     if rtn != None:
         return jsonify(rtn)
     return ''
@@ -165,22 +166,23 @@ def crear_fich():
     token = request.headers["Authorization"].split()[1]
     tipo = parseToken(token)
     data = request.get_json(silent=True)
-    clase:Clase = sm.Buscar_clase_profe(tipo['nick'])
+    historico = db.getHistorico(data[1])
     
     file = open(f'{PATH_BASE}/static/attender/Asistencia.txt','w')  
-    if data == 'Presente':
+    if data[0] == '"Presente"':
         cont:int = 0
-        for al in clase.alumnos:
-            if clase.Checked()[cont] == 1:
+        for al in historico['Alumnos']:
+            if historico['Hora_conexion_alumno'][cont] != None:
                 comp:str = al.split('@')[0]
                 apellidios:str = comp.split('.')[1] + ' ' + comp.split('.')[2]
                 nombre:str = comp.split('.')[0]
-                file.write(f'{apellidios} {nombre} \n')
+                hora = historico['Hora_conexion_alumno'][cont]
+                file.write(f'{apellidios} {nombre} {hora} \n')
             cont += 1
     else:
         cont:int = 0
-        for al in clase.alumnos:
-            if clase.Checked()[cont] == 0:
+        for al in historico['Alumnos']:
+            if historico['Hora_conexion_alumno'][cont] == None:
                 comp:str = al.split('@')[0]
                 apellidios:str = comp.split('.')[1] + ' ' + comp.split('.')[2]
                 nombre:str = comp.split('.')[0]
